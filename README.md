@@ -2,10 +2,10 @@
 
 Software requerido:
 
-- JDK 8
+- JDK 10
 - Maven
 - IDE Java (Eclipse ou IntelliJ)
-- Node.js 9
+- Node.js 10+
 - Yarn
 - PostgreSQL 9.6 ou superior
 
@@ -52,5 +52,3 @@ na pasta `src/main/ts`.
 - Para compilar o frontend para que ele seja acessível pela porta 8080: `yarn run mavenbuild`
 
 Não é possível fazer login pelo frontend em desenvolvimento. Você deve acessar a tela de login pela porta 8080.
-
-Pacotes incluídos no metapacote `eits-ng-starter-2018-01`: https://github.com/eitsopensource/eits-ng-starter/blob/master/eits-ng-starter-2018-01/package.json
