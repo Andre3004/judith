@@ -1,5 +1,6 @@
 package portal.projeto.test.domain.service;
 
+import br.com.projeto.portal.domain.entity.usuario.Usuario;
 import portal.projeto.test.domain.AbstractIntegrationTest;
 
 import br.com.projeto.portal.domain.service.UsuarioService;
@@ -37,6 +38,14 @@ public class UsuarioServiceIntegrationTests extends AbstractIntegrationTest
 //	@WithUserDetails("admin@admin.com")
 	public void insertUsuarioMustPass()
 	{
+		final Usuario newUsuario = new Usuario();
+
+		newUsuario.setNome( "André Damasceno"  );
+
+		final Usuario usuarioSaved = this.usuarioService.insertUsuario( newUsuario );
+
+		Assert.assertNotNull( usuarioSaved );
+		Assert.assertNotNull( usuarioSaved.getNome() );
 
 	}
 
@@ -45,8 +54,13 @@ public class UsuarioServiceIntegrationTests extends AbstractIntegrationTest
 			"/dataset/usuario/usuario.sql",
 	})
 //	@WithUserDetails("admin@admin.com")
-	public void insertUsuarioMustFail()
+	public void insertUsuarioMustFailWithSameName()
 	{
+		final Usuario newUsuario = new Usuario();
+
+		newUsuario.setNome( "André"  );
+
+		final Usuario usuarioSaved = this.usuarioService.insertUsuario( newUsuario );
 
 		Assert.fail();
 	}
