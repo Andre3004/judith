@@ -1,0 +1,24 @@
+<mat-sidenav-container class="header-container" autosize>
+  
+    <mat-sidenav #sidenav mode="over">
+       
+        <button mat-button (click)="sidenav.close()">FECHAR</button>
+    </mat-sidenav>
+
+    <td-layout-nav class="header-toolbar">
+        <div td-toolbar-content fxLayout="row" fxLayoutAlign="start center" fxFlex>
+            <button mat-icon-button (click)="sidenav.toggle()">
+                <mat-icon>menu</mat-icon>
+            </button>
+           
+            <button mat-button class="push-left-md" [matMenuTriggerFor]="menu">
+            </button>
+            <mat-menu #menu="matMenu" [overlapTrigger]="false">
+                <button (click)="logout()" class="pad-left-lg" mat-menu-item>
+                    <span class="tc-grey-800 mat-body-1">Sair</span>
+                </button>
+            </mat-menu>
+        </div>
+        <router-outlet></router-outlet>
+    </td-layout-nav>
+</mat-sidenav-container>

@@ -9,6 +9,7 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 import br.com.eits.common.domain.entity.AbstractEntity;
+import br.com.projeto.portal.domain.entity.conta.Conta;
 import br.com.projeto.portal.domain.entity.enums.FormaPagamento;
 import br.com.projeto.portal.domain.entity.enums.Periodo;
 import br.com.projeto.portal.domain.entity.enums.SituacaoLancamento;
@@ -68,6 +69,10 @@ public class Lancamento extends AbstractEntity implements Serializable
 	@NotNull
 	@ManyToOne
 	private Categoria categoria;
+
+	@NotNull
+	@ManyToOne
+	private Conta conta;
 	/*-------------------------------------------------------------------
 	 * 		 					CONSTRUCTORS
 	 *-------------------------------------------------------------------*/

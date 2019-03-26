@@ -27,7 +27,7 @@ import
   MatToolbarModule,
   MatTooltipModule,
   MAT_DATE_LOCALE,
-  MAT_DATE_FORMATS
+  MAT_DATE_FORMATS, MatGridListModule
 } from '@angular/material';
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -61,10 +61,16 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule, appRoutingProviders } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { BROKER_CONFIGURATION } from 'src/generated/services-wrapper';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { LayoutModule } from '@angular/cdk/layout';
+import { OpenSnackBarService } from './open-snackbar/open-snackbar.service';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    DashboardComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -110,9 +116,12 @@ import { BROKER_CONFIGURATION } from 'src/generated/services-wrapper';
     MatExpansionModule,
     MatAutocompleteModule,
     RouterModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MatGridListModule,
+    LayoutModule
   ],
   providers: [
+    OpenSnackBarService,
     appRoutingProviders,
     TdLayoutComponent,
     TdDialogService,
