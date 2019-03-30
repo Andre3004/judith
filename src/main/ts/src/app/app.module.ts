@@ -27,7 +27,7 @@ import
   MatToolbarModule,
   MatTooltipModule,
   MAT_DATE_LOCALE,
-  MAT_DATE_FORMATS, MatGridListModule
+  MAT_DATE_FORMATS, MatGridListModule, MatTreeModule, MatNativeDateModule
 } from '@angular/material';
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -49,8 +49,10 @@ import
   CovalentPagingModule,
   CovalentStepsModule,
   TdDialogService,
-  TdLayoutComponent,
+  TdLayoutComponent
 } from '@covalent/core';
+
+import { CovalentSearchModule } from '@covalent/core/search';
 //==============================OTHER COMPONENTS===================================
 
 //==============================APP COMPONENTS===================================
@@ -65,12 +67,20 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { OpenSnackBarService } from './open-snackbar/open-snackbar.service';
 import { HeaderComponent } from './header/header.component';
+import { ContaFormComponent } from './conta/conta-form/conta-form.component';
+import { CategoriaFormComponent } from './categoria/categoria-form/categoria-form.component';
+import { LancamentFormComponent } from './lancamento/lancament-form/lancament-form.component';
+import { LancamentListComponent } from './lancamento/lancament-list/lancament-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
-    HeaderComponent
+    HeaderComponent,
+    ContaFormComponent,
+    CategoriaFormComponent,
+    LancamentFormComponent,
+    LancamentListComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -118,8 +128,12 @@ import { HeaderComponent } from './header/header.component';
     RouterModule,
     AppRoutingModule,
     MatGridListModule,
-    LayoutModule
+    LayoutModule,
+    MatTreeModule,
+    CovalentSearchModule,
+    MatNativeDateModule
   ],
+  entryComponents: [ContaFormComponent, LancamentFormComponent],
   providers: [
     OpenSnackBarService,
     appRoutingProviders,

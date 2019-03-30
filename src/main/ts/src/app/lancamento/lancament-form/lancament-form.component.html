@@ -1,0 +1,86 @@
+<div>
+  <mat-dialog-title>
+    <h2>Lançamentos</h2>
+  </mat-dialog-title>
+
+  <mat-dialog-content fxLayout="column">
+
+    <div fxFlex>
+      <mat-form-field fxFlex>
+        <mat-select placeholder="Tipo de lançamento">
+          <mat-option *ngFor="let tipo of tipos" value="tipo">{{tipo}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field fxFlex class="push-left-md">
+        <mat-select placeholder="Conta">
+          <!-- <mat-option *ngFor="let tipo of tipos" value="tipo">{{tipo}}</mat-option> -->
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div fxFlex>
+      <mat-form-field fxFlex>
+        <input matInput placeholder="Valor" type="number">
+      </mat-form-field>
+
+      <mat-form-field fxFlex class="push-left-md">
+        <input placeholder="Data" matInput [matDatepicker]="data">
+        <mat-datepicker-toggle matSuffix [for]="data"></mat-datepicker-toggle>
+        <mat-datepicker #data></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <mat-form-field>
+      <textarea matInput placeholder="Descrição"></textarea>
+    </mat-form-field>
+
+
+    <div fxFlex>
+      <div fxFlex>
+        <label>ADICIONAR CATEGORIAS</label>
+      </div>
+
+      <mat-divider class="push-right-md push-left-md" [vertical]="true"></mat-divider>
+
+      <div fxFlex  fxLayout="column">
+        <label>Repetir</label>
+        
+        <mat-radio-group class="push-top-sm" >
+          <mat-radio-button value="1">Fixo</mat-radio-button>
+          <mat-radio-button class="push-left-md" value="2">Parcelado</mat-radio-button>
+        </mat-radio-group>
+      </div>
+
+    </div>
+
+    <mat-divider class="push-bottom-md push-top-md"></mat-divider>
+
+    <div fxFlex>
+      <mat-form-field fxFlex>
+          <mat-select placeholder="Periodo">
+            <mat-option *ngFor="let periodo of periodos" value="periodo">{{periodo}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field fxFlex class="push-left-md">
+            <input matInput placeholder="Quantidade parcelas" type="number">
+          </mat-form-field>
+
+    </div>
+
+
+  </mat-dialog-content>
+
+
+  <mat-dialog-actions fxLayoutAlign="end">
+    <button mat-dialog-close mat-raised-button class="default-white-button"
+      color="primary">
+      SALVAR
+    </button>
+    <button mat-dialog-close mat-raised-button class="default-white-button
+      push-left-md bgc-grey-800">
+      CANCELAR
+    </button>
+  </mat-dialog-actions>
+
+</div>

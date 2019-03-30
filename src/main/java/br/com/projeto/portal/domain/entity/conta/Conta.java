@@ -1,6 +1,7 @@
 package br.com.projeto.portal.domain.entity.conta;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 import br.com.eits.common.domain.entity.AbstractEntity;
+import br.com.projeto.portal.domain.entity.enums.TipoConta;
 import br.com.projeto.portal.domain.entity.lancamento.Lancamento;
 import br.com.projeto.portal.domain.entity.usuario.Usuario;
 import lombok.Data;
@@ -30,6 +32,12 @@ public class Conta extends AbstractEntity
 	private String nome;
 
 	private BigDecimal saldo;
+
+	private TipoConta tipo;
+
+	private String banco;
+
+	private LocalDateTime dataUltAltSaldo;
 
 	@NotNull
 	@ManyToOne

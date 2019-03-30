@@ -1,0 +1,49 @@
+<mat-card class="pad-md">
+
+  <mat-card-title fxLayoutAlign="space-between">
+    Categorias
+    <button (click)="addCategoria()" mat-fab color="primary">
+      <mat-icon>add</mat-icon>
+    </button>
+  </mat-card-title>
+
+  <div fxLayout="row wrap">
+  <div *ngFor="let categoria of categorias; let j = index" fxLayout="column" fxLayoutAlign=" end" class="pad-md push-right-md">
+
+      <div fxLayout="row" fxLayoutAlign=" center">
+        <button (click)="removeCategoria(j)" class="push-right-sm hover-icon-button-remove" mat-icon-button>
+          <mat-icon>remove_circle_outline</mat-icon>
+        </button>
+        <mat-icon>bookmark</mat-icon>
+        <mat-form-field>
+          <input matInput placeholder="Nome da categoria" [(ngModel)]="categoria.nome" name="categoria">
+        </mat-form-field>
+        <button (click)="addSubCategoria(categoria)" class="push-left-md hover-icon-button-add" mat-icon-button>
+          <mat-icon >add_circle_outline</mat-icon>
+        </button>
+      </div>
+
+
+      <div  *ngFor="let subCategoria of categoria.subCategorias; let i = index" fxLayout="column">
+
+        <div fxLayout="row" fxLayoutAlign=" center">
+          
+          <mat-icon>bookmark_border</mat-icon>
+          <mat-form-field>
+            <input matInput placeholder="Nome da Sub Categoria" [(ngModel)]="subCategoria.nome" name="subCategoria">
+          </mat-form-field>
+
+          <button class="push-left-md hover-icon-button-remove" (click)="removeSubCategoria(categoria, i)" mat-icon-button>
+            <mat-icon >remove_circle_outline</mat-icon>
+          </button>
+        </div>
+
+      </div>
+
+      
+      
+    </div>
+    </div>
+
+
+</mat-card>

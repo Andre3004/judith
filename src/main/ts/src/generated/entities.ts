@@ -34,8 +34,27 @@ export interface IntlString {
     };
 }
 
-export interface Lancamento {
-    valor?: number,
+export let SituacaoLancamentoValues: string[] = ['LIQUIDADO', 'PENDENTE'];
+export type SituacaoLancamento = 'LIQUIDADO' | 'PENDENTE';
+
+
+export interface Terceiro {
+    nome?: string,
+    tipo?: TipoPessoa,
+    id?: number,
+    created?: Date,
+    updated?: Date
+}
+
+
+export interface Conta {
+    nome?: string,
+    saldo?: number,
+    tipo?: TipoConta,
+    banco?: string,
+    dataUltAltSaldo?: Date,
+    usuario?: Usuario,
+    lancamentos?: Lancamento[],
     id?: number,
     created?: Date,
     updated?: Date
@@ -44,10 +63,81 @@ export interface Lancamento {
 
 export interface Usuario {
     nome?: string,
+    cpf?: string,
+    email?: string,
+    senha?: string,
+    telefone?: string,
+    endereco?: Endereco,
+    contas?: Conta[],
     id?: number,
     created?: Date,
     updated?: Date
 }
+
+
+export let TipoLancamentoValues: string[] = ['RECEITA', 'DESPESA', 'TRANSFERENCIA'];
+export type TipoLancamento = 'RECEITA' | 'DESPESA' | 'TRANSFERENCIA';
+
+
+export let TipoContaValues: string[] = ['CONTROLE_INTERNO', 'CARTAO_CREDITO', 'CONTA_CORRENTE', 'POUPANCA'];
+export type TipoConta = 'CONTROLE_INTERNO' | 'CARTAO_CREDITO' | 'CONTA_CORRENTE' | 'POUPANCA';
+
+
+export let FormaPagamentoValues: string[] = ['FIXA', 'PARCELADO'];
+export type FormaPagamento = 'FIXA' | 'PARCELADO';
+
+
+export interface Categoria {
+    nome?: string,
+    categoriaPai?: Categoria,
+    id?: number,
+    created?: Date,
+    updated?: Date
+}
+
+
+export interface Endereco {
+    bairro?: string,
+    complemento?: string,
+    cidade?: string,
+    cep?: string,
+    numero?: number,
+    id?: number,
+    created?: Date,
+    updated?: Date
+}
+
+
+export interface Lancamento {
+    tipo?: TipoLancamento,
+    situacaoLancamento?: SituacaoLancamento,
+    valor?: number,
+    dataPagamento?: Date,
+    descricao?: string,
+    formaPagamento?: FormaPagamento,
+    parcelasTotal?: number,
+    parcelasPagas?: number,
+    quantidadePeriodo?: number,
+    favorecidoPagador?: Terceiro,
+    periodoPagamento?: Periodo,
+    quantidadeRepeticaoRecorrencia?: number,
+    periodoNotificacao?: Periodo,
+    quantidadeNotificacaoVencimento?: number,
+    baixaAutomatica?: Boolean,
+    categoria?: Categoria,
+    conta?: Conta,
+    id?: number,
+    created?: Date,
+    updated?: Date
+}
+
+
+export let PeriodoValues: string[] = ['SEGUNDO', 'MINUTO', 'HORA', 'DIA', 'SEMANA', 'MES', 'ANO'];
+export type Periodo = 'SEGUNDO' | 'MINUTO' | 'HORA' | 'DIA' | 'SEMANA' | 'MES' | 'ANO';
+
+
+export let TipoPessoaValues: string[] = ['FAVORECIDO', 'PAGADOR'];
+export type TipoPessoa = 'FAVORECIDO' | 'PAGADOR';
 
 
 

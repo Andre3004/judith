@@ -1,0 +1,60 @@
+<mat-card>
+
+    <div fxLayoutAlign="space-between">
+        <h2 class="push-left-md">Lançamentos</h2>
+
+        <div  fxLayout="row" fxLayoutAlign=" center">
+
+            <button mat-icon-button (click)="changeMonth('left')">
+                <mat-icon>chevron_left</mat-icon>
+            </button>
+            <label>{{meses[currentMonth]}} {{currentYear}}</label>
+            <button mat-icon-button class="push-right-lg" (click)="changeMonth('right')">
+                <mat-icon>chevron_right</mat-icon>
+            </button>
+
+            <mat-form-field>
+                <mat-select placeholder="Selecione o tipo">
+                    <mat-option *ngFor="let tipo of tipos" value="tipo">{{tipo}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+        </div>
+
+        <div>
+            <button (click)="onOpenDialogLancamento()" class="push-left-md push-md" mat-fab color="primary">
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
+    </div>
+
+    <mat-list>
+
+        <td-search-box backIcon="arrow_back" 
+        placeholder="Procurar por nome" 
+        [(ngModel)]="searchInputTerm" 
+        [showUnderline]="true" 
+        [debounce]="500" 
+        [alwaysVisible]="true" 
+        (searchDebounce)="searchInputTerm = $event"
+         (search)="searchInputTerm = $event"
+          (clear)="searchInputTerm = ''"
+           (blur)="onBlurEvent()">
+        </td-search-box>
+                
+        <h3 mat-subheader>Folders</h3>
+        <mat-list-item *ngFor="let folder of folders">
+            <mat-icon mat-list-icon>folder</mat-icon>
+            <h4 mat-line>{{folder.name}}</h4>
+            <p mat-line> {{folder.updated | date}} </p>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <h3 mat-subheader>Notes</h3>
+        <mat-list-item *ngFor="let note of notes">
+            <mat-icon mat-list-icon>note</mat-icon>
+            <h4 mat-line>{{note.name}}</h4>
+            <p mat-line> {{note.updated | date}} </p>
+        </mat-list-item>
+    </mat-list>
+
+</mat-card>

@@ -66,6 +66,8 @@ public class Lancamento extends AbstractEntity implements Serializable
 
 	private Integer quantidadeNotificacaoVencimento;
 
+	private Boolean baixaAutomatica;
+
 	@NotNull
 	@ManyToOne
 	private Categoria categoria;

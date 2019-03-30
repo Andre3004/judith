@@ -1,0 +1,35 @@
+<div>
+  <mat-dialog-title>
+    <h2>INSERIR CONTA</h2>
+  </mat-dialog-title>
+
+  <mat-dialog-content fxLayout="column">
+
+    <mat-form-field>
+      <input matInput placeholder="Nome">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Banco">
+    </mat-form-field>
+
+    <mat-form-field >
+      <mat-select placeholder="Tipo">
+        <mat-option *ngFor="let tipo of tipos" value="tipo">{{tipo}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    
+  </mat-dialog-content>
+
+
+  <mat-dialog-actions fxLayoutAlign="end ">
+    <button mat-dialog-close mat-raised-button class="default-white-button" color="primary">
+      SALVAR
+    </button>
+    <button mat-dialog-close mat-raised-button class="default-white-button push-left-md bgc-grey-800">
+      CANCELAR
+    </button>
+  </mat-dialog-actions>
+
+</div>

@@ -18,6 +18,11 @@ export class HeaderComponent implements OnInit
   *                           ATRIBUTES
   *-------------------------------------------------------------------*/
  
+  public menus : any[] = [
+    {title: "Dashboard", icon: 'dashboard', router: 'dashboard'},
+    {title: "Categorias", icon: 'bookmark', router: 'categorias'},
+    {title: "Lançamentos", icon: 'attach_money', router: 'lancamentos'}
+  ]
 
   /*-------------------------------------------------------------------
   *                           CONSTRUCTOR

@@ -12,10 +12,14 @@
 
 .more-button {
   position: absolute;
-  top: 5px;
-  right: 10px;
+  top: -20px;
+  right: -20px;
 }
 
 .dashboard-card-content {
   text-align: center;
+}
+
+.mat-list-icon {
+  color: rgba(0, 0, 0, 0.54);
 }

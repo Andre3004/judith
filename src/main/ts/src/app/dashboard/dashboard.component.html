@@ -3,12 +3,57 @@
     <mat-grid-tile *ngFor="let card of cards | async" [colspan]="card.cols" [rowspan]="card.rows">
       <mat-card class="dashboard-card">
         <mat-card-header>
-          <mat-card-title>
+          <mat-card-title *ngIf="card.id != 3">
             {{card.title}}
           </mat-card-title>
+          <mat-card-title  *ngIf="card.id == 3">
+              <label>{{card.title}}</label>
+
+              <button (click)="openDialogFormConta(null)" class="more-button" mat-fab color="primary">
+                <mat-icon>add</mat-icon>
+              </button>
+          </mat-card-title>
         </mat-card-header>
-        <mat-card-content class="dashboard-card-content">
-          <div>Card Content Here</div>
+        <mat-card-content *ngIf="card.id == 2"  fxLayoutAlign="space-around center" class="push-top-lg">
+          
+          <div fxLayout="column">
+            <button routerLink="../lancamentos" mat-fab >
+              <mat-icon>add</mat-icon>
+            </button>
+            <label class="push-top-sm">RECEITA</label>            
+          </div>
+
+          <div fxLayout="column" >
+            <button routerLink="../lancamentos" mat-fab color="warn">
+              <mat-icon>remove</mat-icon>
+            </button>
+            <label class="push-top-sm">DESPESA</label>
+          </div>
+
+          <div fxLayout="column" fxLayoutAlign=" center" >
+            <button routerLink="../lancamentos" mat-fab style="background-color: green">
+              <mat-icon>euro_symbol</mat-icon>
+            </button>
+            <label class="push-top-sm">TRANSFERENCIA</label>
+          </div>
+        </mat-card-content>
+        <mat-card-content *ngIf="card.id == 3">
+            <mat-list>
+              <h3 mat-subheader>Minhas contas</h3>
+              <mat-list-item *ngFor="let folder of folders">
+                <mat-icon mat-list-icon>account_balance_wallet</mat-icon>
+                <h4 mat-line>{{folder.name}}</h4>
+                <p mat-line>Data de criação: {{folder.updated | date}} </p>
+                <button mat-icon-button>
+                    <mat-icon mat-icon-button (click)="openDialogFormConta(null)">edit</mat-icon>
+                </button>
+                <button mat-icon-button (click)="openConfirm()">
+                    <mat-icon mat-icon-button >delete</mat-icon>
+                </button>
+                <mat-divider *ngIf="!last"></mat-divider>
+              </mat-list-item>
+             
+            </mat-list>
         </mat-card-content>
       </mat-card>
     </mat-grid-tile>
