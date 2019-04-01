@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -24,9 +25,6 @@ import org.directwebremoting.annotations.DataTransferObject;
 @Entity
 @EqualsAndHashCode(callSuper = true)
 @DataTransferObject(javascript = "Categoria")
-@Table(
-		uniqueConstraints = {@UniqueConstraint(columnNames = {"nome", "tipo"})}
-)
 public class Conta extends AbstractEntity
 {
 	/*-------------------------------------------------------------------
@@ -34,6 +32,7 @@ public class Conta extends AbstractEntity
 	 *-------------------------------------------------------------------*/
 
 	@NotNull
+	@Column(unique = true)
 	private String nome;
 
 	@NotNull

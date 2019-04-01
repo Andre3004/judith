@@ -2,6 +2,7 @@ package br.com.projeto.portal.domain.entity.lancamento;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
@@ -35,15 +36,41 @@ public class Lancamento extends AbstractEntity implements Serializable
 	 *				 		     ATTRIBUTES
 	 *-------------------------------------------------------------------*/
 
+	@NotNull
+	@ManyToOne
+	private Categoria categoria;
+
+	@NotNull
+	@ManyToOne
+	private Conta conta;
+
+	@NotNull
 	private TipoLancamento tipo;
 
-	private SituacaoLancamento situacaoLancamento;
+	@NotNull
+	private String descricao;
 
+	@NotNull
+	private LocalDate dataVencimento;
+
+	@NotNull
 	private BigDecimal valor;
 
+	@NotNull
+	private SituacaoLancamento situacaoLancamento;
+
+	@NotNull
+	private Boolean baixaAutomatica;
+
+	@NotNull
 	private LocalDateTime dataPagamento;
 
-	private String descricao;
+	private BigDecimal valorPago;
+
+	private Conta contaDestino;
+
+	@NotNull
+	private Boolean repetir;
 
 	private FormaPagamento formaPagamento;
 
@@ -57,25 +84,18 @@ public class Lancamento extends AbstractEntity implements Serializable
 	private Integer quantidadePeriodo;
 
 	@ManyToOne
+	@NotNull
 	private Terceiro favorecidoPagador;
 
 	private Periodo periodoPagamento;
 
 	private Integer quantidadeRepeticaoRecorrencia;
 
+	@NotNull
 	private Periodo periodoNotificacao;
 
+	@NotNull
 	private Integer quantidadeNotificacaoVencimento;
-
-	private Boolean baixaAutomatica;
-
-	@NotNull
-	@ManyToOne
-	private Categoria categoria;
-
-	@NotNull
-	@ManyToOne
-	private Conta conta;
 
 	/*-------------------------------------------------------------------
 	 * 		 					CONSTRUCTORS
