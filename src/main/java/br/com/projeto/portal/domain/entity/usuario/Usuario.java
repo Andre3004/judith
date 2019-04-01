@@ -11,6 +11,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
 
 import br.com.projeto.portal.domain.entity.conta.Conta;
 import org.directwebremoting.annotations.DataTransferObject;
@@ -42,17 +45,22 @@ public class Usuario extends AbstractEntity implements Serializable
 	 *				 		     ATTRIBUTES
 	 *-------------------------------------------------------------------*/
 
-	@Column(unique = true)
+	@NotNull
 	private String nome;
 
+	@NotNull
+	@Column(unique = true)
 	private String cpf;
 
+	@NotNull
 	private String email;
 
+	@NotNull
 	private String senha;
 
 	private String telefone;
 
+	@NotNull
 	@ManyToOne
 	private Endereco endereco;
 
