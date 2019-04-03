@@ -33,6 +33,7 @@ public class UsuarioServiceIntegrationTests extends AbstractIntegrationTest
 
 	@Test
 	@Sql({
+			"/dataset/usuario/endereco.sql",
 			"/dataset/usuario/usuario.sql",
 	})
 //	@WithUserDetails("admin@admin.com")
@@ -51,6 +52,7 @@ public class UsuarioServiceIntegrationTests extends AbstractIntegrationTest
 
 	@Test( expected = IllegalArgumentException.class )
 	@Sql({
+			"/dataset/usuario/endereco.sql",
 			"/dataset/usuario/usuario.sql",
 	})
 //	@WithUserDetails("admin@admin.com")

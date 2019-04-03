@@ -1,6 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule, LOCALE_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { registerLocaleData } from '@angular/common';
+import localeBr from '@angular/common/locales/pt';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 import
@@ -61,7 +63,7 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule, appRoutingProviders } from './app-routing.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { BROKER_CONFIGURATION } from 'src/generated/services-wrapper';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -71,6 +73,13 @@ import { ContaFormComponent } from './conta/conta-form/conta-form.component';
 import { CategoriaFormComponent } from './categoria/categoria-form/categoria-form.component';
 import { LancamentFormComponent } from './lancamento/lancament-form/lancament-form.component';
 import { LancamentListComponent } from './lancamento/lancament-list/lancament-list.component';
+
+// import ngx-translate and the http loader
+import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+
+
+registerLocaleData(localeBr, 'pt')
 
 @NgModule({
   declarations: [
@@ -131,7 +140,14 @@ import { LancamentListComponent } from './lancamento/lancament-list/lancament-li
     LayoutModule,
     MatTreeModule,
     CovalentSearchModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    TranslateModule.forRoot({
+      loader: {
+          provide: TranslateLoader,
+          useFactory: HttpLoaderFactory,
+          deps: [HttpClient]
+      }
+  })
   ],
   entryComponents: [ContaFormComponent, LancamentFormComponent],
   providers: [
@@ -146,7 +162,7 @@ import { LancamentListComponent } from './lancamento/lancament-list/lancament-li
         useMoment: true
       }
     },
-    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
+    { provide: LOCALE_ID, useValue: 'pt' },
   ],
   bootstrap: [AppComponent],
   schemas: [
@@ -154,3 +170,8 @@ import { LancamentListComponent } from './lancamento/lancament-list/lancament-li
   ]
 })
 export class AppModule { }
+
+// required for AOT compilation
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}

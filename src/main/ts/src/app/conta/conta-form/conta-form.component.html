@@ -1,21 +1,23 @@
 <div>
   <mat-dialog-title>
-    <h2>INSERIR CONTA</h2>
+    <h2>{{conta.id ? 'ALTERAR CONTA' : 'INSERIR CONTA'}}</h2>
   </mat-dialog-title>
 
   <mat-dialog-content fxLayout="column">
 
     <mat-form-field>
-      <input matInput placeholder="Nome">
-    </mat-form-field>
-
-    <mat-form-field>
-      <input matInput placeholder="Banco">
+      <input matInput placeholder="Nome" [(ngModel)]="conta.nome" name="nome">
     </mat-form-field>
 
     <mat-form-field >
-      <mat-select placeholder="Tipo">
-        <mat-option *ngFor="let tipo of tipos" value="tipo">{{tipo}}</mat-option>
+      <mat-select [compareWith]="compareObjects" placeholder="Banco" [(ngModel)]="conta.banco"  name="banco">
+        <mat-option *ngFor="let banco of bancos" [value]="banco">{{banco.nome}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field >
+      <mat-select placeholder="Tipo"  [(ngModel)]="conta.tipo"  name="tipo">
+        <mat-option *ngFor="let tipo of tipos" [value]="tipo">{{tipo | translate}}</mat-option>
       </mat-select>
     </mat-form-field>
 
@@ -24,7 +26,7 @@
 
 
   <mat-dialog-actions fxLayoutAlign="end ">
-    <button mat-dialog-close mat-raised-button class="default-white-button" color="primary">
+    <button (click)="onNoClick()" mat-dialog-close mat-raised-button class="default-white-button" color="primary">
       SALVAR
     </button>
     <button mat-dialog-close mat-raised-button class="default-white-button push-left-md bgc-grey-800">

@@ -36,7 +36,7 @@ public class Conta extends AbstractEntity
 	private String nome;
 
 	@NotNull
-	private BigDecimal saldo = new BigDecimal(0.0 );
+	private Double saldo = 0.0;
 
 	@NotNull
 	private TipoConta tipo;
@@ -46,7 +46,6 @@ public class Conta extends AbstractEntity
 
 	private LocalDateTime dataUltAltSaldo;
 
-	@NotNull
 	@ManyToOne
 	private Usuario usuario;
 

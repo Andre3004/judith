@@ -1,12 +1,16 @@
+import { OpenSnackBarService } from './../open-snackbar/open-snackbar.service';
 import { LancamentFormComponent } from './../lancamento/lancament-form/lancament-form.component';
-import { Component, ViewContainerRef } from '@angular/core';
+import { Component, ViewContainerRef, OnInit } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { MatDialog } from '@angular/material';
 import { ContaFormComponent } from '../conta/conta-form/conta-form.component';
 import { TdDialogService } from '@covalent/core';
+import { ContaService } from 'src/generated/services';
+import { Conta } from 'src/generated/entities';
 
-export interface Section {
+export interface Section
+{
   name: string;
   updated: Date;
 }
@@ -17,11 +21,17 @@ export interface Section {
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit
+{
+
+  public contas : Conta[] = [];
+
   /** Based on the screen size, switch from standard to one column per row */
   cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
-    map(({ matches }) => {
-      if (matches) {
+    map(({ matches }) =>
+    {
+      if (matches)
+      {
         return [
           { id: 1, title: 'SALDO', cols: 1, rows: 1 },
           { id: 2, title: 'LANÇAMENTO RÁPIDO', cols: 1, rows: 1 },
@@ -41,53 +51,83 @@ export class DashboardComponent {
     })
   );
 
-  folders: Section[] = [
-    {
-      name: 'Conta 1',
-      updated: new Date('1/1/16'),
-    },
-    {
-      name: 'Conta 2',
-      updated: new Date('1/17/16'),
-    },
-    {
-      name: 'Conta 3',
-      updated: new Date('1/28/16'),
-    }
-  ];
 
-  constructor(private breakpointObserver: BreakpointObserver, 
-              public dialog: MatDialog,
-              private _dialogService: TdDialogService,
-              private _viewContainerRef: ViewContainerRef) {}
+  constructor(private breakpointObserver: BreakpointObserver,
+    public openSnackBarService: OpenSnackBarService,
+    public dialog: MatDialog,
+    private contaService: ContaService,
+    private _dialogService: TdDialogService,
+    private _viewContainerRef: ViewContainerRef) { }
+
+  ngOnInit(): void
+  {
+    this.onListAllContasWithoutUser();
+  }
 
   //CONTA
-  openDialogFormConta(conta): void {
+  public openDialogFormConta(conta): void
+  {
     const dialogRef = this.dialog.open(ContaFormComponent, {
       width: '600px',
-      height: 'auto'
+      height: 'auto',
+      data: {conta: conta}
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+    dialogRef.afterClosed().subscribe((resultConta: Conta) =>
+    {
+      if(resultConta)
+      {
+        resultConta = Object.assign({}, resultConta);
+        if(resultConta.id)
+          this.contaService.updateConta(resultConta).subscribe( result => {
+            this.openSnackBarService.open("Conta atualizada com sucesso!");
+            this.onListAllContasWithoutUser();
+          }, err =>  this.openSnackBarService.open(err.message))
+        else
+          this.contaService.insertConta(resultConta).subscribe( result => {
+            this.openSnackBarService.open("Conta cadastrada com sucesso!");
+            this.onListAllContasWithoutUser();
+          }, err =>  this.openSnackBarService.open(err.message))
+      }
     });
   }
 
-  openConfirm(): void {
+  public openConfirmExcluirConta(id): void
+  {
     this._dialogService.openConfirm({
       message: 'Tem certeza que deseja excluir esta conta ?',
       viewContainerRef: this._viewContainerRef,
-      title: 'Excluir conta', 
-      cancelButton: 'CANCELAR', 
+      title: 'Excluir conta',
+      cancelButton: 'CANCELAR',
       acceptButton: 'CONFIMAR',
       width: '500px',
-    }).afterClosed().subscribe((accept: boolean) => {
-      if (accept) {
-        // DO SOMETHING
-      } 
+    }).afterClosed().subscribe((accept: boolean) =>
+    {
+      if (accept)
+      {
+        this.contaService.deleteConta(id).subscribe( result => {
+          this.openSnackBarService.open("Conta excluída com sucesso!");
+          this.onListAllContasWithoutUser();
+        }, err =>  this.openSnackBarService.open(err.message))
+      }
     });
   }
 
-  
+  private onListAllContasWithoutUser()
+  {
+    this.contaService.listAllContas().subscribe( contas => {this.contas = contas}, err => console.log(err) )
+  }
+
+  private cleanObjet(obj: any)
+  {
+    for (let key of Object.keys(obj))
+    {
+      if(obj[key] == null)
+        delete obj[key];
+    }
+
+  }
+
+
 
 }

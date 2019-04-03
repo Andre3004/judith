@@ -76,7 +76,7 @@ public class ExceptionHandlerAspect
 			//Verifica o tipo da exceção
 			if ( annotationType.equals( "javax.validation.constraints.NotNull" ) || annotationType.equals( "org.hibernate.validator.constraints.NotEmpty" ) )
 			{
-				message.append( "\nO campo " + constraint.getPropertyPath() + " deve ser setado." );
+				message.append( "\nO campo " + constraint.getPropertyPath() + " deve ser preenchido." );
 			}
 			else
 			{
@@ -137,7 +137,8 @@ public class ExceptionHandlerAspect
 						key = key.replace( "lower(", "" );
 						key = key.replace( "::text", "" );
 					}
-					throw new DataIntegrityViolationException( this.messageSource.getMessage( "repository.uniqueViolation", new String[]{key}, LocaleContextHolder.getLocale() ) );
+//					this.messageSource.getMessage( "repository.uniqueViolation", new String[]{key}, LocaleContextHolder.getLocale() );Key (nome)=(asd) already exists.
+					throw new DataIntegrityViolationException( "O campo "+ key + " já está cadastrado em outro regitro." );
 				}
 				case "23502": // not_null_violation
 				{
