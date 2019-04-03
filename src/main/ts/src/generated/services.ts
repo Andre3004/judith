@@ -5,6 +5,32 @@ import { Terceiro, Lancamento, Usuario, SituacaoLancamento, SortOrder, Page, Con
 
 
 @Injectable()
+export class UsuarioService {
+    constructor(@Inject(BROKER_CONFIGURATION) private brokerConfiguration: BrokerConfiguration) { }
+
+        public findUsuarioById(arg0?: number): Observable<Usuario> {
+        return dwrWrapper(this.brokerConfiguration, 'usuarioService', 'findUsuarioById', arg0) as Observable<Usuario>;
+    }
+
+    public updateUsuario(arg0?: Usuario): Observable<Usuario> {
+        return dwrWrapper(this.brokerConfiguration, 'usuarioService', 'updateUsuario', arg0) as Observable<Usuario>;
+    }
+
+    public insertUsuario(arg0?: Usuario): Observable<Usuario> {
+        return dwrWrapper(this.brokerConfiguration, 'usuarioService', 'insertUsuario', arg0) as Observable<Usuario>;
+    }
+
+    public deleteUsuario(arg0?: number): Observable<void> {
+        return dwrWrapper(this.brokerConfiguration, 'usuarioService', 'deleteUsuario', arg0) as Observable<void>;
+    }
+
+
+}
+
+
+
+
+@Injectable()
 export class ContaService {
     constructor(@Inject(BROKER_CONFIGURATION) private brokerConfiguration: BrokerConfiguration) { }
 
@@ -16,46 +42,20 @@ export class ContaService {
         return dwrWrapper(this.brokerConfiguration, 'contaService', 'updateConta', arg0) as Observable<Conta>;
     }
 
-    public deleteConta(arg0?: number): Observable<void> {
-        return dwrWrapper(this.brokerConfiguration, 'contaService', 'deleteConta', arg0) as Observable<void>;
+    public listAllContas(): Observable<Conta[]> {
+        return dwrWrapper(this.brokerConfiguration, 'contaService', 'listAllContas') as Observable<Conta[]>;
     }
 
     public insertConta(arg0?: Conta): Observable<Conta> {
         return dwrWrapper(this.brokerConfiguration, 'contaService', 'insertConta', arg0) as Observable<Conta>;
     }
 
-    public listAllContas(): Observable<Conta[]> {
-        return dwrWrapper(this.brokerConfiguration, 'contaService', 'listAllContas') as Observable<Conta[]>;
+    public deleteConta(arg0?: number): Observable<void> {
+        return dwrWrapper(this.brokerConfiguration, 'contaService', 'deleteConta', arg0) as Observable<void>;
     }
 
     public listAllBancos(): Observable<Banco[]> {
         return dwrWrapper(this.brokerConfiguration, 'contaService', 'listAllBancos') as Observable<Banco[]>;
-    }
-
-
-}
-
-
-
-
-@Injectable()
-export class UsuarioService {
-    constructor(@Inject(BROKER_CONFIGURATION) private brokerConfiguration: BrokerConfiguration) { }
-
-        public deleteUsuario(arg0?: number): Observable<void> {
-        return dwrWrapper(this.brokerConfiguration, 'usuarioService', 'deleteUsuario', arg0) as Observable<void>;
-    }
-
-    public findUsuarioById(arg0?: number): Observable<Usuario> {
-        return dwrWrapper(this.brokerConfiguration, 'usuarioService', 'findUsuarioById', arg0) as Observable<Usuario>;
-    }
-
-    public updateUsuario(arg0?: Usuario): Observable<Usuario> {
-        return dwrWrapper(this.brokerConfiguration, 'usuarioService', 'updateUsuario', arg0) as Observable<Usuario>;
-    }
-
-    public insertUsuario(arg0?: Usuario): Observable<Usuario> {
-        return dwrWrapper(this.brokerConfiguration, 'usuarioService', 'insertUsuario', arg0) as Observable<Usuario>;
     }
 
 

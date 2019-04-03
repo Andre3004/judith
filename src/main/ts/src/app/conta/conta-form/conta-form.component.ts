@@ -24,7 +24,7 @@ export class ContaFormComponent implements OnInit
   ngOnInit()
   {
     if(this.data.conta)
-      this.conta = this.data.conta;
+      this.conta = Object.assign({}, this.data.conta) ;
 
     this.onListAllBancos();
   }
