@@ -1,7 +1,11 @@
+import { OpenSnackBarService } from './../../open-snackbar/open-snackbar.service';
+import { LancamentoService } from './../../../generated/services';
 import { Categoria } from './../../../generated/entities';
 import { Component, OnInit } from '@angular/core';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatTreeNestedDataSource } from '@angular/material';
+import { Router } from '@angular/router';
+import { Observable, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-categoria-form',
@@ -10,37 +14,24 @@ import { MatTreeNestedDataSource } from '@angular/material';
 })
 export class CategoriaFormComponent implements OnInit
 {
+  
 
   public categorias: any[] = [];
 
-  constructor()
+  public categoriasRemovedIds: any[] =  [];
+
+  constructor(private lancamentoService: LancamentoService,
+    public openSnackBarService: OpenSnackBarService,
+    private router: Router)
   {
-
-    let categoria1: any = {
-      nome: "Categoria 1",
-      subCategorias: [
-        { nome: "Sub Categoria 1", categoriaPai: null },
-        { nome: "Sub Categoria 1", categoriaPai: null },
-      ]
-
-    }
-
-    let categoria2: any = {
-      nome: "Categoria 2",
-      subCategorias: [
-        { nome: "Sub Categoria 2", categoriaPai: null },
-        { nome: "Sub Categoria 2", categoriaPai: null },
-      ]
-    }
-
-    this.categorias.push(categoria1);
-    this.categorias.push(categoria2);
+   
 
   }
 
 
   ngOnInit()
   {
+    this.listAllCategorias();
   }
 
   public removeSubCategoria(categoria, i)
@@ -50,17 +41,48 @@ export class CategoriaFormComponent implements OnInit
 
   public removeCategoria(i)
   {
+    if(this.categorias[i].id)
+      this.categoriasRemovedIds.push(this.categorias[i].id);
     this.categorias.splice(i, 1);
   }
 
   public addSubCategoria(categoria)
   {
-    categoria.subCategorias.push({nome: "Sub Categoria 3"});
+    categoria.subCategorias.push({nome: "", categoriaPai: categoria});
   }
 
   public addCategoria()
   {
-    this.categorias.push({nome: "Categoria 3", subCategorias: []})
+    this.categorias.push({nome: "", subCategorias: []})
+  }
+
+
+  public saveCategoria()
+  {
+    this.lancamentoService.insertAndRemoveAllCategorias(this.categorias, this.categoriasRemovedIds).subscribe( result => {
+      this.openSnackBarService.open("Categoria salvas com sucesso!");
+      this.router.navigate(['/dashboard']);
+      this.listAllCategorias();
+    }, err => {
+      this.openSnackBarService.open(err.message);
+    })
+    // if(error)
+    // {
+    //   this.openSnackBarService.open("Categoria salvas com sucesso!");
+    //   this.router.navigate(['/dashboard']);
+    // }
+    // else
+    // {
+    //   this.router.navigate(['/dashboard']);
+    // }
+
+  }
+
+  public listAllCategorias(): any
+  {
+    this.lancamentoService.listAllCategorias().subscribe( categorias => {
+      this.categorias = categorias;
+    }, err => console.log(err.message))
   }
 
 

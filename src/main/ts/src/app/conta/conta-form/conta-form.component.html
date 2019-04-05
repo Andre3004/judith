@@ -8,8 +8,8 @@
 
     <form #myForm="ngForm" fxLayout="column">
       <mat-form-field>
-        <input matInput placeholder="Nome" required [(ngModel)]="conta.nome" name="nome">
-      </mat-form-field>
+      <input maxlength="144" matInput placeholder="Nome" [(ngModel)]="conta.nome" name="nome">
+    </mat-form-field>
 
       <mat-form-field>
         <mat-select [compareWith]="compareObjects" placeholder="Banco" [(ngModel)]="conta.banco" name="banco">

@@ -74,7 +74,7 @@ public class ExceptionHandlerAspect
 			String annotationType = constraint.getConstraintDescriptor().getAnnotation().annotationType().getName();
 
 			//Verifica o tipo da exceção
-			if ( annotationType.equals( "javax.validation.constraints.NotNull" ) || annotationType.equals( "org.hibernate.validator.constraints.NotEmpty" ) )
+			if ( annotationType.equals( "org.hibernate.validator.constraints.NotBlank" ) || annotationType.equals( "javax.validation.constraints.NotNull" ) || annotationType.equals( "org.hibernate.validator.constraints.NotEmpty" ) )
 			{
 				message.append( "\nO campo " + constraint.getPropertyPath() + " deve ser preenchido." );
 			}
