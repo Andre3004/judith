@@ -9,11 +9,12 @@
           <mat-card-title  *ngIf="card.id == 3">
               <label>{{card.title}}</label>
 
-              <button (click)="openDialogFormConta(null)" class="more-button" mat-fab color="primary">
+              <button matTooltip="Adicionar conta" (click)="openDialogFormConta(null)" class="more-button" mat-fab color="primary">
                 <mat-icon>add</mat-icon>
               </button>
           </mat-card-title>
         </mat-card-header>
+        
         <mat-card-content *ngIf="card.id == 2"  fxLayoutAlign="space-around center" class="push-top-lg">
           
           <div fxLayout="column">
@@ -37,17 +38,25 @@
             <label class="push-top-sm">TRANSFERENCIA</label>
           </div>
         </mat-card-content>
+
+        <mat-card-content *ngIf="card.id == 1"  fxLayoutAlign="center center">
+              <label  [ngClass]="(getSaldo > 0)?'saldo-positivo':'saldo-negativo'"
+              class="push-top-md mat-display-4">R$ {{getSaldo}}</label>
+        </mat-card-content>
+
+
         <mat-card-content *ngIf="card.id == 3">
             <mat-list *ngIf="contas.length > 0">
               <h3 mat-subheader>Minhas contas</h3>
               <mat-list-item *ngFor="let conta of contas">
                 <mat-icon mat-list-icon>account_balance_wallet</mat-icon>
                 <h4 mat-line>{{conta.nome}}</h4>
+                <p mat-line>Saldo final: {{getSaldoConta(conta)}} </p>
                 <p mat-line>Data de criação: {{conta.created | date}} </p>
-                <button mat-icon-button>
-                    <mat-icon mat-icon-button (click)="openDialogFormConta(conta)">edit</mat-icon>
+                <button (click)="openDialogFormConta(conta)" matTooltip="Editar conta" mat-icon-button class="hover-icon-button-add">
+                    <mat-icon>edit</mat-icon>
                 </button>
-                <button mat-icon-button (click)="openConfirmExcluirConta(conta.id)">
+                <button matTooltip="Remover conta" class="hover-icon-button-remove" mat-icon-button (click)="openConfirmExcluirConta(conta.id)">
                     <mat-icon mat-icon-button >delete</mat-icon>
                 </button>
                 <mat-divider *ngIf="!last"></mat-divider>
@@ -55,7 +64,9 @@
              
             </mat-list>
 
-            <label *ngIf="!contas.length">Nenhuma conta encontrada.</label>
+            <div *ngIf="!contas.length" fxLayoutAlign="center center">
+              <h3 >Nenhuma conta encontrada.</h3>
+            </div>
         </mat-card-content>
       </mat-card>
     </mat-grid-tile>

@@ -138,7 +138,7 @@ public class ExceptionHandlerAspect
 						key = key.replace( "::text", "" );
 					}
 //					this.messageSource.getMessage( "repository.uniqueViolation", new String[]{key}, LocaleContextHolder.getLocale() );Key (nome)=(asd) already exists.
-					throw new DataIntegrityViolationException( "O campo "+ key + " já está cadastrado em outro regitro." );
+					throw new DataIntegrityViolationException( "O campo "+ key + " já está cadastrado em outro registro." );
 				}
 				case "23502": // not_null_violation
 				{
@@ -154,6 +154,9 @@ public class ExceptionHandlerAspect
 
 		throw new DataIntegrityViolationException( this.messageSource.getMessage( "repository.dataIntegrityViolation", null, LocaleContextHolder.getLocale() ) );
 	}
+
+
+
 
 	//---------
 	// Segurança

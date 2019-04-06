@@ -5,4 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IContaRepository extends JpaRepository<Conta, Long>
 {
+	boolean existsByNomeIgnoreCase(String nome);
+
+	boolean existsByNomeIgnoreCaseAndIdNot(String nome, Long id );
 }

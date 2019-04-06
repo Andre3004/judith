@@ -10,6 +10,7 @@ import org.directwebremoting.annotations.RemoteProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 @Service
 @RemoteProxy
@@ -37,6 +38,8 @@ public class ContaService
 	 */
 	public Conta insertConta( Conta conta)
 	{
+		Assert.isTrue(conta.getNome() != null && !conta.getNome().equals( "" ), "O campo nome deve ser preenchido");
+		Assert.isTrue(!this.contaRepository.existsByNomeIgnoreCase( conta.getNome() ), "O campo nome já está cadastrado em outro registro.");
 		return this.contaRepository.save( conta );
 	}
 
@@ -47,6 +50,8 @@ public class ContaService
 	 */
 	public Conta updateConta(Conta conta)
 	{
+		Assert.isTrue(conta.getNome() != null && !conta.getNome().equals( "" ), "O campo nome deve ser preenchido");
+		Assert.isTrue(!this.contaRepository.existsByNomeIgnoreCaseAndIdNot( conta.getNome(), conta.getId() ), "O campo nome já está cadastrado em outro registro.");
 		return this.contaRepository.save( this.contaRepository.save( conta ) );
 	}
 

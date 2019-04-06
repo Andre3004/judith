@@ -20,6 +20,7 @@ import br.com.projeto.portal.domain.entity.usuario.Usuario;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.directwebremoting.annotations.DataTransferObject;
+import org.hibernate.validator.constraints.NotBlank;
 
 @Data
 @Entity
@@ -31,9 +32,11 @@ public class Conta extends AbstractEntity
 	 *				 		     ATTRIBUTES
 	 *-------------------------------------------------------------------*/
 
-	@NotNull
+	@NotBlank
 	@Column(unique = true)
 	private String nome;
+
+	private Double saldoInicial = 0.0;
 
 	@NotNull
 	private Double saldo = 0.0;

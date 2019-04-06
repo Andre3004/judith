@@ -9,6 +9,7 @@ import org.directwebremoting.annotations.RemoteProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 @Service
 @RemoteProxy
@@ -76,15 +77,33 @@ public class LancamentoService
 				.collect( Collectors.toList());
 	}
 
-	public void insertAndRemoveAllCategorias(List<Categoria> categorias, List<Long> idsRemoved)
+	public void insertAndRemoveAllCategorias(List<Categoria> categorias, List<Long> idsRemoved, List<Long> idsSubRemoved)
 	{
-		this.categoriaRepository.save( categorias );
+
+		for ( Long removedId : idsSubRemoved )
+		{
+			this.categoriaRepository.delete( removedId );
+			this.categoriaRepository.flush();
+		}
+
 
 		for ( Long removedId : idsRemoved )
 		{
 			this.categoriaRepository.delete( removedId );
 			this.categoriaRepository.flush();
 		}
+
+		if(categorias != null && categorias.size() > 0)
+			categorias.forEach( categoria -> {
+
+				Categoria categoriaSaved = this.categoriaRepository.saveAndFlush( categoria );
+
+				categoria.getSubCategorias().forEach( subCategoria -> {
+					subCategoria.setCategoriaPai( categoriaSaved );
+					this.categoriaRepository.saveAndFlush( subCategoria );
+				});
+
+			});
 
 	}
 

@@ -1,17 +1,9 @@
-<<<<<<< refs/remotes/origin/dev
-import { UsuarioService, ContaService } from './services';
-=======
-import { LancamentoService, ContaService, UsuarioService } from './services';
->>>>>>> Categorias
+import { ContaService, UsuarioService, LancamentoService } from './services';
 import { NgModule } from '@angular/core';
 
 @NgModule({
     providers: [
-<<<<<<< refs/remotes/origin/dev
-        UsuarioService, ContaService
-=======
-        LancamentoService, ContaService, UsuarioService
->>>>>>> Categorias
+        ContaService, UsuarioService, LancamentoService
     ]
 })
 export class GeneratedModule {

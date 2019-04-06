@@ -24,7 +24,7 @@ export interface Section
 export class DashboardComponent implements OnInit
 {
 
-  public contas : Conta[] = [];
+  public contas: Conta[] = [];
 
   /** Based on the screen size, switch from standard to one column per row */
   cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
@@ -70,25 +70,12 @@ export class DashboardComponent implements OnInit
     const dialogRef = this.dialog.open(ContaFormComponent, {
       width: '600px',
       height: 'auto',
-      data: {conta: conta}
+      data: { conta: conta }
     });
 
     dialogRef.afterClosed().subscribe((resultConta: Conta) =>
     {
-      if(resultConta)
-      {
-        resultConta = Object.assign({}, resultConta);
-        if(resultConta.id)
-          this.contaService.updateConta(resultConta).subscribe( result => {
-            this.openSnackBarService.open("Conta atualizada com sucesso!");
-            this.onListAllContasWithoutUser();
-          }, err =>  this.openSnackBarService.open(err.message))
-        else
-          this.contaService.insertConta(resultConta).subscribe( result => {
-            this.openSnackBarService.open("Conta cadastrada com sucesso!");
-            this.onListAllContasWithoutUser();
-          }, err =>  this.openSnackBarService.open(err.message))
-      }
+      this.onListAllContasWithoutUser();
     });
   }
 
@@ -105,27 +92,90 @@ export class DashboardComponent implements OnInit
     {
       if (accept)
       {
-        this.contaService.deleteConta(id).subscribe( result => {
+        this.contaService.deleteConta(id).subscribe(result =>
+        {
           this.openSnackBarService.open("Conta excluída com sucesso!");
+          
           this.onListAllContasWithoutUser();
-        }, err =>  this.openSnackBarService.open(err.message))
+        }, err => this.openSnackBarService.open(err.message))
       }
     });
   }
 
   private onListAllContasWithoutUser()
   {
-    this.contaService.listAllContas().subscribe( contas => {this.contas = contas}, err => console.log(err) )
+    this.contaService.listAllContas().subscribe(contas =>
+    {
+    this.contas = contas.sort((a, b) =>
+    {
+      if (a.nome < b.nome) { return -1; }
+      if (a.nome > b.nome) { return 1; }
+      return 0;
+    })
+    }, err => console.log(err))
   }
 
   private cleanObjet(obj: any)
   {
     for (let key of Object.keys(obj))
     {
-      if(obj[key] == null)
+      if (obj[key] == null)
         delete obj[key];
     }
 
+  }
+
+  public getSaldoConta(conta)
+  {
+    let lancamentosDespensa = 0;
+    let lancamentosReceita = 0;
+
+
+    if(conta.lancamentos && conta.lancamentos.length > 0)
+    {
+      conta.lancamentos
+        .filter(lancamento => lancamento.situacaoLancamento == "LIQUIDADO")
+        .forEach(lancamento => {
+          if(lancamento.tipo == "RECEITA")
+            lancamentosReceita += lancamento.valorPago;
+          else if (lancamento.tipo == "DESPESA")
+            lancamentosDespensa += lancamento.valorPago;
+          else
+            lancamentosDespensa += lancamento.valorPago;        
+      })
+    }
+
+
+    return conta.saldoInicial + lancamentosReceita - lancamentosDespensa;
+
+    
+  }
+
+  get getSaldo()
+  {
+    let saldoIncial = this.contas.map(conta => conta.saldoInicial ).reduce((partial_sum, a) => partial_sum + a); 
+    let lancamentosDespensa = 0;
+    let lancamentosReceita = 0;
+
+    this.contas.forEach(conta => {
+
+      if(conta.lancamentos && conta.lancamentos.length > 0)
+      {
+        conta.lancamentos
+          .filter(lancamento => lancamento.situacaoLancamento == "LIQUIDADO")
+          .forEach(lancamento => {
+            if(lancamento.tipo == "RECEITA")
+              lancamentosReceita += lancamento.valorPago;
+            else if (lancamento.tipo == "DESPESA")
+              lancamentosDespensa += lancamento.valorPago;
+            else
+              lancamentosDespensa += lancamento.valorPago;        
+        })
+      }
+
+    })
+
+    return saldoIncial + lancamentosReceita - lancamentosDespensa;
   }
 
 

@@ -1,3 +1,4 @@
+import { ContaService } from 'src/generated/services';
 import { MatDialog } from '@angular/material';
 import { Component, OnInit } from '@angular/core';
 import { TipoLancamentoValues } from 'src/generated/entities';
@@ -8,26 +9,39 @@ import { LancamentFormComponent } from '../lancament-form/lancament-form.compone
   templateUrl: './lancament-list.component.html',
   styleUrls: ['./lancament-list.component.scss']
 })
-export class LancamentListComponent implements OnInit {
+export class LancamentListComponent implements OnInit
+{
 
   public tipos = TipoLancamentoValues;
-  constructor(public dialog: MatDialog) { console.log(this.currentYear) }
 
-  ngOnInit() {
+  public contas = [];
+
+  constructor(public dialog: MatDialog, private contaService: ContaService) { console.log(this.currentYear) }
+
+  ngOnInit()
+  {
+    this.onListAllContasWithoutUser();
   }
 
-  public meses = [  'Janeiro',
-                   'Fevereiro',
-                   'Março',
-                   'Abril',
-                   'Maio',
-                   'Junho',
-                   'Julho',
-                   'Agosto',
-                   'Setembro',
-                   'Outubro',
-                   'Novembro',
-                   'Dezembro']
+  private onListAllContasWithoutUser(): any
+  {
+    this.contaService.listAllContas().subscribe( contas => {
+      this.contas = contas;
+    })
+  }
+
+  public meses = ['Janeiro',
+    'Fevereiro',
+    'Março',
+    'Abril',
+    'Maio',
+    'Junho',
+    'Julho',
+    'Agosto',
+    'Setembro',
+    'Outubro',
+    'Novembro',
+    'Dezembro']
   public currentMonth = new Date().getMonth();
 
   public currentYear = new Date().getFullYear();
@@ -60,10 +74,10 @@ export class LancamentListComponent implements OnInit {
 
   public changeMonth(direction)
   {
-    if(direction == 'left')
+    if (direction == 'left')
     {
       this.currentMonth -= 1
-      if(this.currentMonth < 0)
+      if (this.currentMonth < 0)
       {
         this.currentMonth = 11;
         this.currentYear -= 1;
@@ -71,22 +85,25 @@ export class LancamentListComponent implements OnInit {
     }
     else if (direction == 'right')
       this.currentMonth += 1
-      if(this.currentMonth > 11)
-      {
-        this.currentMonth = 0;
-        this.currentYear += 1;
-      }
+    if (this.currentMonth > 11)
+    {
+      this.currentMonth = 0;
+      this.currentYear += 1;
+    }
   }
 
   public onOpenDialogLancamento(receita)
   {
     const dialogRef = this.dialog.open(LancamentFormComponent, {
-      width: '600px',
+      width: '1000px',
       height: 'auto'
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(result =>
+    {
       console.log('The dialog was closed');
     });
   }
+
+
 }

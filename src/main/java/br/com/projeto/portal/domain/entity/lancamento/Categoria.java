@@ -36,7 +36,7 @@ public class Categoria extends AbstractEntity
 	@ManyToOne
 	private Categoria categoriaPai;
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "categoriaPai", orphanRemoval = true)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "categoriaPai")
 	private List<Categoria> subCategorias = new ArrayList<Categoria>();
 
 }

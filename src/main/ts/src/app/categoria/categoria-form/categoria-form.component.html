@@ -4,27 +4,30 @@
     Categorias
 
     <div>
-      <button (click)="addCategoria()"  mat-fab color="primary">
+      <button matTooltip="Adicionar categoria" (click)="addCategoria()"  mat-fab color="primary">
         <mat-icon>add</mat-icon>
       </button>
-      <button class="push-left-md"  (click)="saveCategoria()" mat-fab color="primary">
+      <button matTooltip="Salvar categorias" class="push-left-md"  (click)="saveCategoria()" mat-fab color="primary">
         <mat-icon>check</mat-icon>
       </button>
     </div>
   </mat-card-title>
 
-  <div fxLayout="row wrap">
+  <div *ngIf="!categorias.length"  fxLayoutAlign="center center">
+    <h3>Nenhum registro encontrado</h3>
+  </div>
+  <div *ngIf="categorias.length" fxLayout="row wrap">
   <div *ngFor="let categoria of categorias; let j = index" fxLayout="column" fxLayoutAlign=" end" class="pad-md push-right-md">
 
       <div fxLayout="row" fxLayoutAlign=" center">
-        <button (click)="removeCategoria(j)" class="push-right-sm hover-icon-button-remove" mat-icon-button>
+        <button  matTooltip="Remover categoria" (click)="removeCategoria(j)" class="push-right-sm hover-icon-button-remove" mat-icon-button>
           <mat-icon>remove_circle_outline</mat-icon>
         </button>
         <mat-icon>bookmark</mat-icon>
         <mat-form-field>
           <input maxlength="144" matInput placeholder="Nome da categoria" [(ngModel)]="categoria.nome" name="categoria">
         </mat-form-field>
-        <button (click)="addSubCategoria(categoria)" class="push-left-md hover-icon-button-add" mat-icon-button>
+        <button matTooltip="Adicionar Sub categoria" (click)="addSubCategoria(categoria)" class="push-left-md hover-icon-button-add" mat-icon-button>
           <mat-icon >add_circle_outline</mat-icon>
         </button>
       </div>
@@ -39,7 +42,7 @@
             <input maxlength="144" matInput placeholder="Nome da Sub Categoria" [(ngModel)]="subCategoria.nome" name="subCategoria">
           </mat-form-field>
 
-          <button class="push-left-md hover-icon-button-remove" (click)="removeSubCategoria(categoria, i)" mat-icon-button>
+          <button matTooltip="Remover Sub categoria" class="push-left-md hover-icon-button-remove" (click)="removeSubCategoria(categoria, i)" mat-icon-button>
             <mat-icon >remove_circle_outline</mat-icon>
           </button>
         </div>

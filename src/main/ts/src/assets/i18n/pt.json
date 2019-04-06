@@ -2,5 +2,10 @@
     "CONTROLE_INTERNO": "Controle interno",
 	"CARTAO_CREDITO": "Cartão de crédito",	
 	"CONTA_CORRENTE": "Contra corrente",
-	"POUPANCA": "Poupança"		
+	"POUPANCA": "Poupança",
+	"RECEITA": "Receita",
+	"DESPESA": "Despesa",
+	"TRANSFERENCIA": "Transferência",
+	"LIQUIDADO": "Liquidado",
+	"PENDENTE": "Pendente"
 }

@@ -20,6 +20,8 @@ export class CategoriaFormComponent implements OnInit
 
   public categoriasRemovedIds: any[] =  [];
 
+  public subCategoriasRemovedIds: any[] =  [];
+
   constructor(private lancamentoService: LancamentoService,
     public openSnackBarService: OpenSnackBarService,
     private router: Router)
@@ -36,14 +38,25 @@ export class CategoriaFormComponent implements OnInit
 
   public removeSubCategoria(categoria, i)
   {
+    if(categoria.subCategorias[i].id)
+      this.subCategoriasRemovedIds.push(categoria.subCategorias[i].id);
     categoria.subCategorias.splice(i, 1);
   }
 
   public removeCategoria(i)
   {
     if(this.categorias[i].id)
-      this.categoriasRemovedIds.push(this.categorias[i].id);
-    this.categorias.splice(i, 1);
+    {
+      if(this.categorias[i].subCategorias && this.categorias[i].subCategorias.length > 0)
+        this.openSnackBarService.open("Não é possível excluir uma categoria que possua Sub categorias.")
+      else
+      {
+        this.categoriasRemovedIds.push(this.categorias[i].id);
+        this.categorias.splice(i, 1);
+      }
+    }
+    else
+      this.categorias.splice(i, 1);
   }
 
   public addSubCategoria(categoria)
@@ -59,7 +72,7 @@ export class CategoriaFormComponent implements OnInit
 
   public saveCategoria()
   {
-    this.lancamentoService.insertAndRemoveAllCategorias(this.categorias, this.categoriasRemovedIds).subscribe( result => {
+    this.lancamentoService.insertAndRemoveAllCategorias(this.categorias, this.categoriasRemovedIds, this.subCategoriasRemovedIds).subscribe( result => {
       this.openSnackBarService.open("Categoria salvas com sucesso!");
       this.router.navigate(['/dashboard']);
       this.listAllCategorias();

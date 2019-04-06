@@ -23,3 +23,13 @@
 .mat-list-icon {
   color: rgba(0, 0, 0, 0.54);
 }
+
+.saldo-negativo
+{
+  color: red;
+}
+
+.saldo-positivo
+{
+  color: green;
+}
