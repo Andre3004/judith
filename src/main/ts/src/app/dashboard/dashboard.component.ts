@@ -1,3 +1,4 @@
+import { TipoLancamento } from './../../generated/entities';
 import { OpenSnackBarService } from './../open-snackbar/open-snackbar.service';
 import { LancamentFormComponent } from './../lancamento/lancament-form/lancament-form.component';
 import { Component, ViewContainerRef, OnInit } from '@angular/core';
@@ -8,6 +9,7 @@ import { ContaFormComponent } from '../conta/conta-form/conta-form.component';
 import { TdDialogService } from '@covalent/core';
 import { ContaService } from 'src/generated/services';
 import { Conta } from 'src/generated/entities';
+import { Router } from '@angular/router';
 
 export interface Section
 {
@@ -57,6 +59,7 @@ export class DashboardComponent implements OnInit
     public dialog: MatDialog,
     private contaService: ContaService,
     private _dialogService: TdDialogService,
+    private _router: Router,
     private _viewContainerRef: ViewContainerRef) { }
 
   ngOnInit(): void
@@ -149,6 +152,12 @@ export class DashboardComponent implements OnInit
     return conta.saldoInicial + lancamentosReceita - lancamentosDespensa;
 
     
+  }
+
+  public onClickLancamentoRapido(tipo: TipoLancamento)
+  {
+    this._router.navigate(['lancamentos/', tipo]);
+
   }
 
   get getSaldo()

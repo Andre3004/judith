@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -53,6 +54,6 @@ public class Conta extends AbstractEntity
 	private Usuario usuario;
 
 
-	@OneToMany(mappedBy = "conta")
+	@OneToMany(mappedBy = "conta", fetch = FetchType.EAGER)
 	private List<Lancamento> lancamentos = new ArrayList<Lancamento>();
 }

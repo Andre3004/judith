@@ -9,7 +9,8 @@ const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'categorias', component: CategoriaFormComponent },
-  { path: 'lancamentos', component: LancamentListComponent }
+  { path: 'lancamentos', component: LancamentListComponent },
+  { path: 'lancamentos/:tipo', component: LancamentListComponent }
 ];
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(routes, { useHash: true });

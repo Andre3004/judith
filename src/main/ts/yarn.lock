@@ -4440,6 +4440,11 @@ neo-async@^2.5.0, neo-async@^2.6.0:
   resolved "https://npm.eits.com.br:443/neo-async/-/neo-async-2.6.0.tgz#b9d15e4d71c6762908654b5183ed38b753340835"
   integrity sha512-MFh0d/Wa7vkKO3Y3LlacqAEeHK0mckVqzDieUKTT+KGxi+zIpeVsFxymkIiRpbpDziHc290Xr9A1O4Om7otoRA==
 
+ng6-breadcrumbs@~1.0.7:
+  version "1.0.7"
+  resolved "https://npm.eits.com.br:443/ng6-breadcrumbs/-/ng6-breadcrumbs-1.0.7.tgz#535be3a31c8c0f12a2bf74f2d5d193ddc93852a0"
+  integrity sha512-U/WRZ/iFMFq1zxwnY9VnvhT556+5XythO5g3EXidR5wIctUWwb6WCIevLExmFyU/ATaplruGtVZR8zQyyABA3g==
+
 nice-try@^1.0.4:
   version "1.0.5"
   resolved "https://npm.eits.com.br:443/nice-try/-/nice-try-1.0.5.tgz#a3378a7696ce7d223e88fc9b764bd7ef1089e366"

@@ -23,7 +23,7 @@ import org.directwebremoting.annotations.DataTransferObject;
 
 @Data
 @Entity
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, exclude = {"categoria"})
 @DataTransferObject(javascript = "Lancamento")
 public class Lancamento extends AbstractEntity implements Serializable
 {

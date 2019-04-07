@@ -14,20 +14,26 @@
       </mat-form-field>
 
       <mat-form-field fxFlex class="push-left-md">
-        <mat-select required  placeholder="Conta"  [(ngModel)]="lancamento.conta"  name="conta">
+        <mat-select required  [compareWith]="compareObjects" placeholder="Conta"  [(ngModel)]="lancamento.conta"  name="conta">
           <mat-option *ngFor="let conta of contas" [value]="conta">{{conta.nome}}</mat-option>
         </mat-select>
       </mat-form-field>
 
       <mat-form-field *ngIf="lancamento.tipo == 'TRANSFERENCIA'" fxFlex class="push-left-md">
-        <mat-select required placeholder="Conta destino" [(ngModel)]="lancamento.contaDestino"  name="contaDestino">
+        <mat-select required [compareWith]="compareObjects" placeholder="Conta destino" [(ngModel)]="lancamento.contaDestino"  name="contaDestino">
           <mat-option *ngFor="let contaDestino of contas" [value]="contaDestino">{{contaDestino.nome}}</mat-option>
         </mat-select>
       </mat-form-field>
 
       <mat-form-field fxFlex class="push-left-md">
-        <mat-select required placeholder="Situação" [(ngModel)]="lancamento.situacao" name="situacao">
+        <mat-select required placeholder="Situação" [(ngModel)]="lancamento.situacaoLancamento" name="situacaoLancamento">
           <mat-option *ngFor="let situacao of situacoes" [value]="situacao" >{{situacao | translate}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field fxFlex class="push-left-md">
+        <mat-select required placeholder="Terceiro" [compareWith]="compareObjects" [(ngModel)]="lancamento.favorecidoPagador" name="favorecidoPagador">
+          <mat-option *ngFor="let terceiro of terceiros" [value]="terceiro" >{{terceiro.nome | translate}}</mat-option>
         </mat-select>
       </mat-form-field>
       
@@ -63,8 +69,9 @@
     <div fxFlex  fxLayout="column">
 
       <div  fxLayout="row" fxFlex fxLayoutAlign=" center">
+
         <mat-form-field fxFlex >
-          <mat-select required placeholder="Categoria" [(ngModel)]="lancamento.categoria" name="categoria">
+          <mat-select required placeholder="Categoria" [compareWith]="compareObjects" [(ngModel)]="lancamento.categoria" name="categoria">
             <mat-option *ngFor="let categoria of categorias" [value]="categoria" >{{categoria.nome | translate}}</mat-option>
           </mat-select>
         </mat-form-field>
@@ -78,12 +85,16 @@
       <div  fxLayout="row wrap" *ngIf="lancamento.categoria" >
         <div  class="push-right-md" fxLayout="row"  fxLayoutAlign=" center" *ngFor="let subCategoria of lancamento.categoria.subCategorias; let i = index" >
           
+          <button matTooltip="Remover Sub categoria" class="hover-icon-button-remove" (click)="removeSubCategoria(lancamento.categoria, i)" mat-icon-button>
+            <mat-icon >remove_circle_outline</mat-icon>
+          </button>
+
           <mat-icon>bookmark_border</mat-icon>
           <mat-form-field>
             <input maxlength="144" matInput placeholder="Nome da Sub Categoria" [(ngModel)]="subCategoria.nome" name="subCategoria{{i}}">
           </mat-form-field>
 
-          <mat-checkbox></mat-checkbox>
+          <mat-checkbox  [checked]="subCategoria.isSelected" name="isSelected" (change)="onChangeSelectSubCategoria(subCategoria.id, i ,$event)"></mat-checkbox>
           
         </div>
       </div>
@@ -122,7 +133,7 @@
 
 
   <mat-dialog-actions fxLayoutAlign="end">
-    <button mat-dialog-close mat-raised-button class="default-white-button"
+    <button (click)="onNoClick()" mat-raised-button class="default-white-button"
       color="primary">
       SALVAR
     </button>

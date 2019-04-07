@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import br.com.eits.common.domain.entity.AbstractEntity;
@@ -35,6 +36,9 @@ public class Categoria extends AbstractEntity
 
 	@ManyToOne
 	private Categoria categoriaPai;
+
+	@Transient
+	private Boolean isSelected;
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "categoriaPai")
 	private List<Categoria> subCategorias = new ArrayList<Categoria>();

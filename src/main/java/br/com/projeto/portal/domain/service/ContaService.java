@@ -4,8 +4,10 @@ import java.util.List;
 
 import br.com.projeto.portal.domain.entity.conta.Banco;
 import br.com.projeto.portal.domain.entity.conta.Conta;
+import br.com.projeto.portal.domain.entity.lancamento.Lancamento;
 import br.com.projeto.portal.domain.repository.IBancoRepository;
 import br.com.projeto.portal.domain.repository.IContaRepository;
+import br.com.projeto.portal.domain.repository.ILancamentoRepository;
 import org.directwebremoting.annotations.RemoteProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,9 @@ public class ContaService
 
 	@Autowired
 	private IContaRepository contaRepository;
+
+	@Autowired
+	private ILancamentoRepository lancamentoRepository;
 
 	@Autowired
 	private IBancoRepository bancoRepository;
@@ -61,6 +66,12 @@ public class ContaService
 	 */
 	public void deleteConta(long id)
 	{
+		List<Lancamento> lancamentos = this.lancamentoRepository.findByContaId( id );
+		for ( Lancamento lancamento : lancamentos )
+		{
+			this.lancamentoRepository.delete( lancamento );
+		}
+
 		this.contaRepository.delete( id );
 		this.contaRepository.flush();
 	}

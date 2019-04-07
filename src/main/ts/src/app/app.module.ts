@@ -77,6 +77,7 @@ import { LancamentListComponent } from './lancamento/lancament-list/lancament-li
 // import ngx-translate and the http loader
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import {BreadcrumbsModule} from "ng6-breadcrumbs";
 
 
 registerLocaleData(localeBr, 'pt')
@@ -141,6 +142,7 @@ registerLocaleData(localeBr, 'pt')
     MatTreeModule,
     CovalentSearchModule,
     MatNativeDateModule,
+    BreadcrumbsModule,
     TranslateModule.forRoot({
       loader: {
           provide: TranslateLoader,

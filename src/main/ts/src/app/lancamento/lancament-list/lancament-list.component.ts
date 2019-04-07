@@ -1,8 +1,11 @@
-import { ContaService } from 'src/generated/services';
+import { OpenSnackBarService } from './../../open-snackbar/open-snackbar.service';
+import { ContaService, LancamentoService } from 'src/generated/services';
 import { MatDialog } from '@angular/material';
 import { Component, OnInit } from '@angular/core';
-import { TipoLancamentoValues } from 'src/generated/entities';
+import { TipoLancamentoValues, Lancamento } from 'src/generated/entities';
 import { LancamentFormComponent } from '../lancament-form/lancament-form.component';
+import { TdDialogService } from '@covalent/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-lancament-list',
@@ -16,20 +19,17 @@ export class LancamentListComponent implements OnInit
 
   public contas = [];
 
-  constructor(public dialog: MatDialog, private contaService: ContaService) { console.log(this.currentYear) }
+  public lancamentosReceita: Lancamento[] = [];
+  public lancamentosDespesa: Lancamento[] = [];
+  public lancamentosTransferencia: Lancamento[] = [];
 
-  ngOnInit()
-  {
-    this.onListAllContasWithoutUser();
+  public filters = {
+    descricao: "", 
+    data: null, 
+    tipo: null,
+    contaId:null
   }
-
-  private onListAllContasWithoutUser(): any
-  {
-    this.contaService.listAllContas().subscribe( contas => {
-      this.contas = contas;
-    })
-  }
-
+  
   public meses = ['Janeiro',
     'Fevereiro',
     'Março',
@@ -46,31 +46,48 @@ export class LancamentListComponent implements OnInit
 
   public currentYear = new Date().getFullYear();
 
-  //todo adicionar lancamentos
-  folders: any[] = [
-    {
-      name: 'Photos',
-      updated: new Date('1/1/16'),
-    },
-    {
-      name: 'Recipes',
-      updated: new Date('1/17/16'),
-    },
-    {
-      name: 'Work',
-      updated: new Date('1/28/16'),
+  constructor(public dialog: MatDialog,
+    private lancamentoService: LancamentoService,
+    private _dialogService: TdDialogService, 
+    private openSnackBarService: OpenSnackBarService,
+    public activatedRoute: ActivatedRoute,
+    private contaService: ContaService)
+  { }
+
+  ngOnInit()
+  {
+    this.onListAllContasWithoutUser();
+    this.onListAllLancamenos();
+
+    if(this.activatedRoute.snapshot.params['tipo'])
+    { 
+      this.onOpenDialogLancamento(null, this.activatedRoute.snapshot.params['tipo']);
     }
-  ];
-  notes: any[] = [
+  }
+
+
+  public onListAllLancamenos()
+  {
+    this.lancamentoService.listLancamentoByFilters(
+      this.filters.descricao, 
+      this.filters.data, 
+      this.filters.tipo, 
+      this.filters.contaId, ).subscribe(lancamentos => {
+
+          this.lancamentosReceita = lancamentos.filter( lancamento => lancamento.tipo == 'RECEITA');
+          this.lancamentosDespesa = lancamentos.filter( lancamento => lancamento.tipo == 'DESPESA');
+          this.lancamentosTransferencia = lancamentos.filter( lancamento => lancamento.tipo == 'TRANSFERENCIA');
+
+      })
+  }
+
+  private onListAllContasWithoutUser(): any
+  {
+    this.contaService.listAllContas().subscribe(contas =>
     {
-      name: 'Vacation Itinerary',
-      updated: new Date('2/20/16'),
-    },
-    {
-      name: 'Kitchen Remodel',
-      updated: new Date('1/18/16'),
-    }
-  ];
+      this.contas = contas;
+    })
+  }
 
   public changeMonth(direction)
   {
@@ -90,20 +107,46 @@ export class LancamentListComponent implements OnInit
       this.currentMonth = 0;
       this.currentYear += 1;
     }
+
+    this.filters.data = new Date(this.currentYear, this.currentMonth, 0);
+
+    this.onListAllLancamenos();
   }
 
-  public onOpenDialogLancamento(receita)
+  public onOpenDialogLancamento(lancamento, tipo)
   {
     const dialogRef = this.dialog.open(LancamentFormComponent, {
-      width: '1000px',
-      height: 'auto'
+      width: '1100px',
+      height: 'auto',
+      data: {lancamento: lancamento, tipo: tipo}
     });
 
     dialogRef.afterClosed().subscribe(result =>
     {
-      console.log('The dialog was closed');
+      this.onListAllLancamenos();
     });
   }
 
+  public openConfirmExcluirLancamento(id)
+  {
+    this._dialogService.openConfirm({
+      message: 'Tem certeza que deseja excluir este lançamento ?',
+      title: 'Excluir lançamento',
+      cancelButton: 'CANCELAR',
+      acceptButton: 'CONFIMAR',
+      width: '500px',
+    }).afterClosed().subscribe((accept: boolean) =>
+    {
+      if (accept)
+      {
+        this.lancamentoService.deleteLancamento(id).subscribe(result =>
+        {
+          this.openSnackBarService.open("Lançamento excluído com sucesso!");
+          
+          this.onListAllLancamenos();
+        }, err => this.openSnackBarService.open(err.message))
+      }
+    });
+  }
 
 }

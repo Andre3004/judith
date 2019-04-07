@@ -5,7 +5,6 @@ import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 
 import br.com.eits.common.domain.entity.AbstractEntity;
-import br.com.projeto.portal.domain.entity.enums.TipoPessoa;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.directwebremoting.annotations.DataTransferObject;
@@ -26,6 +25,4 @@ public class Terceiro extends AbstractEntity
 	@Column(unique = true)
 	private String nome;
 
-	@NotNull
-	private TipoPessoa tipo;
 }

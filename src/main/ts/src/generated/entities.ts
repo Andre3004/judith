@@ -34,16 +34,8 @@ export interface IntlString {
     };
 }
 
-export interface Banco {
-    nome?: string,
-    id?: number,
-    created?: Date,
-    updated?: Date
-}
-
-
-export let PeriodoValues: string[] = ['SEGUNDO', 'MINUTO', 'HORA', 'DIA', 'SEMANA', 'MES', 'ANO'];
-export type Periodo = 'SEGUNDO' | 'MINUTO' | 'HORA' | 'DIA' | 'SEMANA' | 'MES' | 'ANO';
+export let TipoPessoaValues: string[] = ['FAVORECIDO', 'PAGADOR'];
+export type TipoPessoa = 'FAVORECIDO' | 'PAGADOR';
 
 
 export interface Usuario {
@@ -64,10 +56,6 @@ export let TipoContaValues: string[] = ['CONTROLE_INTERNO', 'CARTAO_CREDITO', 'C
 export type TipoConta = 'CONTROLE_INTERNO' | 'CARTAO_CREDITO' | 'CONTA_CORRENTE' | 'POUPANCA';
 
 
-export let FormaPagamentoValues: string[] = ['FIXA', 'PARCELADO'];
-export type FormaPagamento = 'FIXA' | 'PARCELADO';
-
-
 export interface Conta {
     nome?: string,
     saldoInicial?: number,
@@ -83,17 +71,19 @@ export interface Conta {
 }
 
 
-export interface Terceiro {
+export let SituacaoLancamentoValues: string[] = ['LIQUIDADO', 'PENDENTE'];
+export type SituacaoLancamento = 'LIQUIDADO' | 'PENDENTE';
+
+
+export interface Categoria {
     nome?: string,
-    tipo?: TipoPessoa,
+    categoriaPai?: Categoria,
+    isSelected?: Boolean,
+    subCategorias?: Categoria[],
     id?: number,
     created?: Date,
     updated?: Date
 }
-
-
-export let TipoPessoaValues: string[] = ['FAVORECIDO', 'PAGADOR'];
-export type TipoPessoa = 'FAVORECIDO' | 'PAGADOR';
 
 
 export interface Lancamento {
@@ -124,22 +114,12 @@ export interface Lancamento {
 }
 
 
-export let TipoLancamentoValues: string[] = ['RECEITA', 'DESPESA', 'TRANSFERENCIA'];
-export type TipoLancamento = 'RECEITA' | 'DESPESA' | 'TRANSFERENCIA';
+export let FormaPagamentoValues: string[] = ['FIXA', 'PARCELADO'];
+export type FormaPagamento = 'FIXA' | 'PARCELADO';
 
 
-export let SituacaoLancamentoValues: string[] = ['LIQUIDADO', 'PENDENTE'];
-export type SituacaoLancamento = 'LIQUIDADO' | 'PENDENTE';
-
-
-export interface Categoria {
-    nome?: string,
-    categoriaPai?: Categoria,
-    subCategorias?: Categoria[],
-    id?: number,
-    created?: Date,
-    updated?: Date
-}
+export let PeriodoValues: string[] = ['SEGUNDO', 'MINUTO', 'HORA', 'DIA', 'SEMANA', 'MES', 'ANO'];
+export type Periodo = 'SEGUNDO' | 'MINUTO' | 'HORA' | 'DIA' | 'SEMANA' | 'MES' | 'ANO';
 
 
 export interface Endereco {
@@ -148,6 +128,27 @@ export interface Endereco {
     cidade?: string,
     cep?: string,
     numero?: number,
+    id?: number,
+    created?: Date,
+    updated?: Date
+}
+
+
+export let TipoLancamentoValues: string[] = ['RECEITA', 'DESPESA', 'TRANSFERENCIA'];
+export type TipoLancamento = 'RECEITA' | 'DESPESA' | 'TRANSFERENCIA';
+
+
+export interface Banco {
+    nome?: string,
+    id?: number,
+    created?: Date,
+    updated?: Date
+}
+
+
+export interface Terceiro {
+    nome?: string,
+    tipo?: TipoPessoa,
     id?: number,
     created?: Date,
     updated?: Date

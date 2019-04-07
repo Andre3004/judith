@@ -18,24 +18,24 @@
         <mat-card-content *ngIf="card.id == 2"  fxLayoutAlign="space-around center" class="push-top-lg">
           
           <div fxLayout="column">
-            <button routerLink="../lancamentos" mat-fab >
+            <button mat-fab (click)="onClickLancamentoRapido('RECEITA')">
               <mat-icon>add</mat-icon>
             </button>
             <label class="push-top-sm">RECEITA</label>            
           </div>
 
           <div fxLayout="column" >
-            <button routerLink="../lancamentos" mat-fab color="warn">
+            <button  mat-fab color="warn" (click)="onClickLancamentoRapido('DESPESA')">
               <mat-icon>remove</mat-icon>
             </button>
             <label class="push-top-sm">DESPESA</label>
           </div>
 
           <div fxLayout="column" fxLayoutAlign=" center" >
-            <button routerLink="../lancamentos" mat-fab style="background-color: green">
+            <button  mat-fab style="background-color: green" (click)="onClickLancamentoRapido('TRANSFERENCIA')">
               <mat-icon>euro_symbol</mat-icon>
             </button>
-            <label class="push-top-sm">TRANSFERENCIA</label>
+            <label class="push-top-sm">TRANSFERÊNCIA</label>
           </div>
         </mat-card-content>
 
