@@ -28,6 +28,7 @@ import org.springframework.web.servlet.i18n.FixedLocaleResolver;
 
 import br.com.eits.common.application.dwr.DwrAnnotationPostProcessor;
 import br.com.projeto.portal.application.configuration.settings.DWRSettings;
+import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
 /**
  * @author rodrigo
@@ -64,6 +65,17 @@ public class WebConfiguration extends WebMvcConfigurerAdapter implements Embedde
 		final FixedLocaleResolver localeResolver = new FixedLocaleResolver();
 		localeResolver.setDefaultLocale( new Locale( "pt", "BR" ) );
 		return localeResolver;
+	}
+
+	/**
+	 * @return
+	 */
+	@Bean
+	public LocaleChangeInterceptor localeChangeInterceptor()
+	{
+		final LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
+		localeChangeInterceptor.setParamName( "lang" );
+		return localeChangeInterceptor;
 	}
 
 	//---------

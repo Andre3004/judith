@@ -73,10 +73,19 @@ public class ExceptionHandlerAspect
 		{
 			String annotationType = constraint.getConstraintDescriptor().getAnnotation().annotationType().getName();
 
-			//Verifica o tipo da exceção
-			if ( annotationType.equals( "javax.validation.constraints.NotNull" ) || annotationType.equals( "org.hibernate.validator.constraints.NotEmpty" ) )
+			String label = constraint.getPropertyPath().toString();
+			try
 			{
-				message.append( "\nO campo " + constraint.getPropertyPath() + " deve ser setado." );
+				label = messageSource.getMessage( label, null, LocaleContextHolder.getLocale()  );
+			}
+			catch ( Exception e )
+			{
+
+			}
+			//Verifica o tipo da exceção
+			if ( annotationType.equals( "org.hibernate.validator.constraints.NotBlank" ) || annotationType.equals( "javax.validation.constraints.NotNull" ) || annotationType.equals( "org.hibernate.validator.constraints.NotEmpty" ) )
+			{
+				message.append( "\nO campo " + label + " deve ser preenchido." );
 			}
 			else
 			{
@@ -137,7 +146,8 @@ public class ExceptionHandlerAspect
 						key = key.replace( "lower(", "" );
 						key = key.replace( "::text", "" );
 					}
-					throw new DataIntegrityViolationException( this.messageSource.getMessage( "repository.uniqueViolation", new String[]{key}, LocaleContextHolder.getLocale() ) );
+//					this.messageSource.getMessage( "repository.uniqueViolation", new String[]{key}, LocaleContextHolder.getLocale() );Key (nome)=(asd) already exists.
+					throw new DataIntegrityViolationException( "O campo "+ key + " já está cadastrado em outro registro." );
 				}
 				case "23502": // not_null_violation
 				{
@@ -153,6 +163,9 @@ public class ExceptionHandlerAspect
 
 		throw new DataIntegrityViolationException( this.messageSource.getMessage( "repository.dataIntegrityViolation", null, LocaleContextHolder.getLocale() ) );
 	}
+
+
+
 
 	//---------
 	// Segurança

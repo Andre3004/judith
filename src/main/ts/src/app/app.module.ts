@@ -1,6 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule, LOCALE_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { registerLocaleData } from '@angular/common';
+import localeBr from '@angular/common/locales/pt';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 import
@@ -27,7 +29,7 @@ import
   MatToolbarModule,
   MatTooltipModule,
   MAT_DATE_LOCALE,
-  MAT_DATE_FORMATS
+  MAT_DATE_FORMATS, MatGridListModule, MatTreeModule, MatNativeDateModule
 } from '@angular/material';
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -49,8 +51,10 @@ import
   CovalentPagingModule,
   CovalentStepsModule,
   TdDialogService,
-  TdLayoutComponent,
+  TdLayoutComponent
 } from '@covalent/core';
+
+import { CovalentSearchModule } from '@covalent/core/search';
 //==============================OTHER COMPONENTS===================================
 
 //==============================APP COMPONENTS===================================
@@ -59,12 +63,34 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule, appRoutingProviders } from './app-routing.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { BROKER_CONFIGURATION } from 'src/generated/services-wrapper';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { LayoutModule } from '@angular/cdk/layout';
+import { OpenSnackBarService } from './open-snackbar/open-snackbar.service';
+import { HeaderComponent } from './header/header.component';
+import { ContaFormComponent } from './conta/conta-form/conta-form.component';
+import { CategoriaFormComponent } from './categoria/categoria-form/categoria-form.component';
+import { LancamentFormComponent } from './lancamento/lancament-form/lancament-form.component';
+import { LancamentListComponent } from './lancamento/lancament-list/lancament-list.component';
+
+// import ngx-translate and the http loader
+import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import {BreadcrumbsModule} from "ng6-breadcrumbs";
+
+
+registerLocaleData(localeBr, 'pt')
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    DashboardComponent,
+    HeaderComponent,
+    ContaFormComponent,
+    CategoriaFormComponent,
+    LancamentFormComponent,
+    LancamentListComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -110,9 +136,24 @@ import { BROKER_CONFIGURATION } from 'src/generated/services-wrapper';
     MatExpansionModule,
     MatAutocompleteModule,
     RouterModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MatGridListModule,
+    LayoutModule,
+    MatTreeModule,
+    CovalentSearchModule,
+    MatNativeDateModule,
+    BreadcrumbsModule,
+    TranslateModule.forRoot({
+      loader: {
+          provide: TranslateLoader,
+          useFactory: HttpLoaderFactory,
+          deps: [HttpClient]
+      }
+  })
   ],
+  entryComponents: [ContaFormComponent, LancamentFormComponent],
   providers: [
+    OpenSnackBarService,
     appRoutingProviders,
     TdLayoutComponent,
     TdDialogService,
@@ -123,7 +164,7 @@ import { BROKER_CONFIGURATION } from 'src/generated/services-wrapper';
         useMoment: true
       }
     },
-    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
+    { provide: LOCALE_ID, useValue: 'pt' },
   ],
   bootstrap: [AppComponent],
   schemas: [
@@ -131,3 +172,8 @@ import { BROKER_CONFIGURATION } from 'src/generated/services-wrapper';
   ]
 })
 export class AppModule { }
+
+// required for AOT compilation
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}

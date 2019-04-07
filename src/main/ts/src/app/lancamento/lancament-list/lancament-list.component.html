@@ -1,0 +1,109 @@
+<mat-card>
+
+    <div fxLayoutAlign="space-between">
+        <h2 class="push-left-md">Lançamentos</h2>
+
+        <div  fxLayout="row" fxLayoutAlign=" center">
+
+            <button mat-icon-button (click)="changeMonth('left')">
+                <mat-icon>chevron_left</mat-icon>
+            </button>
+            <label>{{meses[currentMonth]}} {{currentYear}}</label>
+            <button mat-icon-button class="push-right-lg" (click)="changeMonth('right')">
+                <mat-icon>chevron_right</mat-icon>
+            </button>
+
+            <mat-form-field class="push-right-lg">
+                <mat-select placeholder="Selecione o tipo" [(ngModel)]="filters.tipo" name="tipo" (selectionChange)="onListAllLancamenos()">
+                    <mat-option *ngFor="let tipo of tipos" [value]="tipo">{{tipo | translate}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-select placeholder="Selecione a conta" [(ngModel)]="filters.contaId" name="contaId" (selectionChange)="onListAllLancamenos()">
+                    <mat-option *ngFor="let conta of contas" [value]="conta.id">{{conta.nome}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+        </div>
+
+        <div>
+            <button (click)="onOpenDialogLancamento()" class="push-left-md push-md" mat-fab color="primary">
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
+    </div>
+
+    <mat-list>
+
+        <td-search-box backIcon="arrow_back" 
+            placeholder="Procurar por descrição do lançamento" 
+            [(ngModel)]="filters.descricao" 
+            [showUnderline]="true" 
+            [debounce]="500" 
+            [alwaysVisible]="true" 
+            (searchDebounce)="onListAllLancamenos()">
+        </td-search-box>
+                
+        <h3 mat-subheader>Receitas</h3>
+        <div *ngIf="lancamentosReceita.length > 0">
+            <mat-list-item *ngFor="let lancamentoReceita of lancamentosReceita">
+                <mat-icon mat-list-icon>add_circle</mat-icon>
+                <h4 mat-line>{{lancamentoReceita.descricao}}</h4>
+                <p mat-line> Data do lançamento: {{lancamentoReceita.created | date}} </p>
+                <p mat-line> Situação: {{lancamentoReceita.situacaoLancamento | translate}} </p>
+                <p mat-line> Valor recebido: {{lancamentoReceita.valorPago ? lancamentoReceita.valorPago : '-' }}  </p>
+                <button (click)="onOpenDialogLancamento(lancamentoReceita)" matTooltip="Editar receita" mat-icon-button class="hover-icon-button-add">
+                        <mat-icon>edit</mat-icon>
+                </button>
+                <button matTooltip="Remover lançamento" class="hover-icon-button-remove" mat-icon-button (click)="openConfirmExcluirLancamento(lancamentoReceita.id)">
+                    <mat-icon mat-icon-button >delete</mat-icon>
+                </button>
+            </mat-list-item>
+        </div>
+        <h4 *ngIf="!lancamentosReceita.length" fxLayoutAlign="center center">Nenhum receita lançada.</h4>
+        <mat-divider></mat-divider>
+
+
+        <h3 mat-subheader>Despesas</h3>
+        <div *ngIf="lancamentosDespesa.length > 0" >
+            <mat-list-item *ngFor="let lancamentoDespesa of lancamentosDespesa">
+                <mat-icon mat-list-icon>remove_circle</mat-icon>
+                <h4 mat-line>{{lancamentoDespesa.descricao}}</h4>
+                <p mat-line> Data do lançamento: {{lancamentoDespesa.created | date}} </p>
+                <p mat-line> Situação: {{lancamentoDespesa.situacaoLancamento | translate}} </p>
+                <p mat-line> Valor pago: {{lancamentoDespesa.valorPago ? lancamentoDespesa.valorPago : '-' }} </p>
+                <button (click)="onOpenDialogLancamento(lancamentoDespesa)" matTooltip="Editar despesa" mat-icon-button class="hover-icon-button-add">
+                        <mat-icon>edit</mat-icon>
+                </button>
+                <button matTooltip="Remover lançamento" class="hover-icon-button-remove" mat-icon-button (click)="openConfirmExcluirLancamento(lancamentoDespesa.id)">
+                    <mat-icon mat-icon-button >delete</mat-icon>
+                </button>
+            </mat-list-item>
+        </div>
+        <h4 *ngIf="!lancamentosDespesa.length" fxLayoutAlign="center center">Nenhum despesa lançada.</h4>
+        <mat-divider></mat-divider>
+
+
+        <h3 mat-subheader>Transferências</h3>
+        <div *ngIf="lancamentosTransferencia.length > 0">
+            <mat-list-item *ngFor="let lancamentoTransferencia of lancamentosTransferencia">
+                <mat-icon mat-list-icon>euro_symbol</mat-icon>
+                <h4 mat-line>{{lancamentoTransferencia.descricao}}</h4>
+                <p mat-line> Data do lançamento: {{lancamentoTransferencia.created | date}} </p>
+                <p mat-line> Situação: {{lancamentoTransferencia.situacaoLancamento | translate}} </p>
+                <p mat-line> Valor transferido: {{lancamentoTransferencia.valorPago ? lancamentoTransferencia.valorPago : '-' }}  </p>
+                <button (click)="onOpenDialogLancamento(lancamentoTransferencia)" matTooltip="Editar transferência" mat-icon-button class="hover-icon-button-add">
+                        <mat-icon>edit</mat-icon>
+                </button>
+                <button matTooltip="Remover lançamento" class="hover-icon-button-remove" mat-icon-button (click)="openConfirmExcluirLancamento(lancamentoTransferencia.id)">
+                    <mat-icon mat-icon-button >delete</mat-icon>
+                </button>
+            </mat-list-item>
+        </div>
+        <h4 *ngIf="!lancamentosTransferencia.length" fxLayoutAlign="center center" class="pad-bottom-lg">Nenhum transferência lançada.</h4>
+
+
+    </mat-list>
+
+</mat-card>

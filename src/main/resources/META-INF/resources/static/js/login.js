@@ -12,7 +12,7 @@ var afterInit = function() {
             type: "POST",
             url: redirectUrl,
             data: {
-                email: $('#email').val().replace(/[\.-]/g, ''),
+                email: $('#email').val(),
                 senha: $('#password').val()
             },
             success: function( redirectUrl ){
@@ -40,7 +40,7 @@ var afterInit = function() {
         });
     };
 
-    $('#email').mask('000.000.000-00', {reverse: true});
+    // $('#email').mask('000.000.000-00', {reverse: true});
 
     $("#submit").click(submit);
     $('#email').keypress(function(e) {

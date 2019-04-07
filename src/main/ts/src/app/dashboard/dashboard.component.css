@@ -1,0 +1,35 @@
+.grid-container {
+  margin: 20px;
+}
+
+.dashboard-card {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+}
+
+.more-button {
+  position: absolute;
+  top: -20px;
+  right: -20px;
+}
+
+.dashboard-card-content {
+  text-align: center;
+}
+
+.mat-list-icon {
+  color: rgba(0, 0, 0, 0.54);
+}
+
+.saldo-negativo
+{
+  color: red;
+}
+
+.saldo-positivo
+{
+  color: green;
+}

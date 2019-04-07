@@ -10,5 +10,5 @@ SET search_path TO public;
 
 TRUNCATE "usuario" CASCADE;
 
-INSERT INTO "usuario" (id, created, nome)
-VALUES (1000, NOW(), 'André');
+INSERT INTO "usuario" (id, created, nome, cpf, email, senha, telefone, endereco_id)
+VALUES (1000, NOW(), 'André', '089.839.659-82', 'andre@gmail.com', '$2a$10$bAdAVLvM.k3DqPaPYi0gnO1OffPSHLref8MElAk.u.fFQ17v9YKC2', '(45) 9 8426-6379', 1000);

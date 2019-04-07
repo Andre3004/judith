@@ -1,6 +1,7 @@
 import { UsuarioService } from './../generated/services';
 import { Component } from '@angular/core';
 import { Usuario } from 'src/generated/entities';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
@@ -12,8 +13,10 @@ export class AppComponent {
 
   public usuario: Usuario = {};
 
-  constructor(public usuarioService: UsuarioService)
+  constructor(public usuarioService: UsuarioService, 
+    private translate: TranslateService)
   {
+    translate.setDefaultLang('pt');
     
   }
 

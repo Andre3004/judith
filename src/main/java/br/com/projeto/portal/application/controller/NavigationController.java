@@ -22,11 +22,9 @@ public class NavigationController
 	 * @return
 	 */
 	@RequestMapping("/")
-	public ModelAndView home()
+	public String home()
 	{
-		ModelAndView model = new ModelAndView( "modules/home/index" );
-		model.getModel().put( "production", environment.acceptsProfiles( "production" ) );
-		return model;
+		return "projeto/index";
 	}
 
 	/**
