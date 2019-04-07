@@ -90,7 +90,7 @@
         <stella.caelumn.version>2.1.2</stella.caelumn.version>
  
         <!-- Web -->
-        <node.version>v7.5.0</node.version>
+        <node.version>v8.9.0</node.version>
         <npm.version>5.3.0</npm.version>
         <node.path>${user.home}/.node-tfc</node.path>
         <typescript.path>src/main/ts</typescript.path>

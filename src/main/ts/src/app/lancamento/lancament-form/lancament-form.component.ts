@@ -1,8 +1,8 @@
 import { OpenSnackBarService } from './../../open-snackbar/open-snackbar.service';
-import { SituacaoLancamentoValues, Categoria, Terceiro, TipoPessoa, TipoPessoaValues } from './../../../generated/entities';
+import { SituacaoLancamentoValues, Categoria, Terceiro } from './../../../generated/entities';
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatCheckboxChange } from '@angular/material';
-import { TipoContaValues, TipoLancamentoValues, PeriodoValues, Lancamento, Conta } from 'src/generated/entities';
+import { TipoLancamentoValues, PeriodoValues, Lancamento, Conta } from 'src/generated/entities';
 import { ContaService, LancamentoService } from 'src/generated/services';
 
 @Component({
