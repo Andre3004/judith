@@ -136,5 +136,7 @@ export class LancamentFormComponent implements OnInit
       this.lancamento.categoria.subCategorias.filter( categoria => categoria.id != id).forEach(categoria => categoria.isSelected = false)
       this.lancamento.categoria.subCategorias[index].isSelected = true;
     }
+    else
+      this.lancamento.categoria.subCategorias[index].isSelected = false;
   }
 }

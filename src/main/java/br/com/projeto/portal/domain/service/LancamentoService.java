@@ -54,10 +54,10 @@ public class LancamentoService
 	{
 
 
-		Assert.isTrue( lancamento.getCategoria() != null, "Categoria é obrigatório" );
+		Assert.isTrue( lancamento.getCategoria() != null, "O campo categoria deve ser preenchido." );
 		Assert.isTrue( lancamento.getCategoria().getSubCategorias() != null, "Essa categoria não possui sub categorias" );
 		Assert.isTrue( lancamento
-				.getCategoria().getSubCategorias().stream().filter( subCategoria -> subCategoria.getIsSelected() != null && subCategoria.getIsSelected() ).count() > 0, "Nenhuma sub categoria selecionada" );
+				.getCategoria().getSubCategorias().stream().filter( subCategoria -> subCategoria.getIsSelected() != null && subCategoria.getIsSelected() ).count() > 0, "O campo sub categoria deve ser selecionado." );
 
 		lancamento.getCategoria().getSubCategorias().forEach( categoria -> this.categoriaRepository.saveAndFlush( categoria ));
 

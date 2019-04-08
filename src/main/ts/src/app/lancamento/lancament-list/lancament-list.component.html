@@ -28,7 +28,7 @@
         </div>
 
         <div>
-            <button (click)="onOpenDialogLancamento()" class="push-left-md push-md" mat-fab color="primary">
+            <button matTooltip="Adicionar lançamento" (click)="onOpenDialogLancamento()" class="push-left-md push-md" mat-fab color="primary">
                 <mat-icon>add</mat-icon>
             </button>
         </div>
@@ -53,7 +53,7 @@
                 <p mat-line> Data do lançamento: {{lancamentoReceita.created | date}} </p>
                 <p mat-line> Situação: {{lancamentoReceita.situacaoLancamento | translate}} </p>
                 <p mat-line> Valor recebido: {{lancamentoReceita.valorPago ? lancamentoReceita.valorPago : '-' }}  </p>
-                <button (click)="onOpenDialogLancamento(lancamentoReceita)" matTooltip="Editar receita" mat-icon-button class="hover-icon-button-add">
+                <button (click)="onOpenDialogLancamento(lancamentoReceita)" matTooltip="Editar lançamento" mat-icon-button class="hover-icon-button-add">
                         <mat-icon>edit</mat-icon>
                 </button>
                 <button matTooltip="Remover lançamento" class="hover-icon-button-remove" mat-icon-button (click)="openConfirmExcluirLancamento(lancamentoReceita.id)">
@@ -73,7 +73,7 @@
                 <p mat-line> Data do lançamento: {{lancamentoDespesa.created | date}} </p>
                 <p mat-line> Situação: {{lancamentoDespesa.situacaoLancamento | translate}} </p>
                 <p mat-line> Valor pago: {{lancamentoDespesa.valorPago ? lancamentoDespesa.valorPago : '-' }} </p>
-                <button (click)="onOpenDialogLancamento(lancamentoDespesa)" matTooltip="Editar despesa" mat-icon-button class="hover-icon-button-add">
+                <button (click)="onOpenDialogLancamento(lancamentoDespesa)" matTooltip="Editar lançamento" mat-icon-button class="hover-icon-button-add">
                         <mat-icon>edit</mat-icon>
                 </button>
                 <button matTooltip="Remover lançamento" class="hover-icon-button-remove" mat-icon-button (click)="openConfirmExcluirLancamento(lancamentoDespesa.id)">
@@ -93,7 +93,7 @@
                 <p mat-line> Data do lançamento: {{lancamentoTransferencia.created | date}} </p>
                 <p mat-line> Situação: {{lancamentoTransferencia.situacaoLancamento | translate}} </p>
                 <p mat-line> Valor transferido: {{lancamentoTransferencia.valorPago ? lancamentoTransferencia.valorPago : '-' }}  </p>
-                <button (click)="onOpenDialogLancamento(lancamentoTransferencia)" matTooltip="Editar transferência" mat-icon-button class="hover-icon-button-add">
+                <button (click)="onOpenDialogLancamento(lancamentoTransferencia)" matTooltip="Editar lançamento" mat-icon-button class="hover-icon-button-add">
                         <mat-icon>edit</mat-icon>
                 </button>
                 <button matTooltip="Remover lançamento" class="hover-icon-button-remove" mat-icon-button (click)="openConfirmExcluirLancamento(lancamentoTransferencia.id)">
