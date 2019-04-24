@@ -3,8 +3,6 @@
  */
 package br.com.projeto.portal.application.configuration;
 
-import br.com.projeto.portal.application.security.AuthenticationFailureHandler;
-import br.com.projeto.portal.application.security.AuthenticationSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,21 +12,24 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-/**
- * @author rodrigo
- */
+
 @Configuration
 public class AuthenticationConfiguration extends GlobalAuthenticationConfigurerAdapter
 {
 	/*-------------------------------------------------------------------
-     * 		 					ATTRIBUTES
+	 * 		 					ATTRIBUTES
 	 *-------------------------------------------------------------------*/
 	/**
 	 *
 	 */
+	private final UserDetailsService userDetailsService;
+
 	@Autowired
-	private UserDetailsService userDetailsService;
-    
+	public AuthenticationConfiguration( UserDetailsService userDetailsService )
+	{
+		this.userDetailsService = userDetailsService;
+	}
+
 	/*-------------------------------------------------------------------
 	 * 		 						BEANS
 	 *-------------------------------------------------------------------*/
@@ -40,39 +41,21 @@ public class AuthenticationConfiguration extends GlobalAuthenticationConfigurerA
 	 * @return
 	 */
 	@Bean
-	public AuthenticationFailureHandler authenticationFailureHandler()
-	{
-		return new AuthenticationFailureHandler();
-	}
-
-	/**
-	 * @return
-	 */
-	@Bean
-	public AuthenticationSuccessHandler authenticationSuccessHandler()
-	{
-		return new AuthenticationSuccessHandler();
-	}
-
-	/**
-	 * @return
-	 */
-	@Bean
 	public PasswordEncoder passwordEncoder()
 	{
 		return new BCryptPasswordEncoder();
 	}
-    
+
 	/*-------------------------------------------------------------------
 	 * 		 					 OVERRIDES
 	 *-------------------------------------------------------------------*/
 	//---------
 	// Authentication Manager
 	//---------
-	
+
 	/**
 	 *
-	 */	
+	 */
 	@Override
 	public void init( AuthenticationManagerBuilder builder ) throws Exception
 	{

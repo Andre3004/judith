@@ -40,7 +40,7 @@
         </mat-card-content>
 
         <mat-card-content *ngIf="card.id == 1"  fxLayoutAlign="center center">
-              <label  [ngClass]="(getSaldo > 0)?'saldo-positivo':'saldo-negativo'"
+              <label  [ngClass]="(getSaldo >= 0)?'saldo-positivo':'saldo-negativo'"
               class="push-top-md mat-display-4">R$ {{getSaldo}}</label>
         </mat-card-content>
 

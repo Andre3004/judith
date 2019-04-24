@@ -18,8 +18,13 @@ public interface ILancamentoRepository  extends JpaRepository<Lancamento, Long>
 			"Where ( cast(:data as date) IS NULL OR lancamento.created >= :data ) AND " +
 			"(:descricao IS NULL OR lower(lancamento.descricao) like lower(concat('%',:descricao,'%')))  AND "+
 			"(lancamento.tipo = :tipo OR :tipo IS NULL) AND "+
-			"(lancamento.conta.id = :contaId OR :contaId IS NULL)")
-	List<Lancamento> listByFilters( @Param( "descricao" ) String descricao, @Param( "data" ) LocalDateTime data, @Param( "tipo" ) TipoLancamento tipo, @Param( "contaId" ) Long contaId );
+			"(lancamento.conta.id = :contaId OR :contaId IS NULL) AND " +
+			"(lancamento.conta.usuario.id = :usuarioId OR :usuarioId IS NULL)")
+	List<Lancamento> listByFilters( @Param( "descricao" ) String descricao,
+									@Param( "data" ) LocalDateTime data,
+									@Param( "tipo" ) TipoLancamento tipo,
+									@Param( "contaId" ) Long contaId,
+									@Param( "usuarioId" ) Long usuarioId);
 
 
 	int countByCategoriaId(long categoriaId);

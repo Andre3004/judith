@@ -162,29 +162,35 @@ export class DashboardComponent implements OnInit
 
   get getSaldo()
   {
-    let saldoIncial = this.contas.map(conta => conta.saldoInicial ).reduce((partial_sum, a) => partial_sum + a); 
-    let lancamentosDespensa = 0;
-    let lancamentosReceita = 0;
+    if(this.contas && this.contas.length > 0)
+    {
+      
+      let saldoIncial = this.contas.map(conta => conta.saldoInicial ).reduce((partial_sum, a) => partial_sum + a); 
+      let lancamentosDespensa = 0;
+      let lancamentosReceita = 0;
+  
+      this.contas.forEach(conta => {
+  
+        if(conta.lancamentos && conta.lancamentos.length > 0)
+        {
+          conta.lancamentos
+            .filter(lancamento => lancamento.situacaoLancamento == "LIQUIDADO")
+            .forEach(lancamento => {
+              if(lancamento.tipo == "RECEITA")
+                lancamentosReceita += lancamento.valorPago;
+              else if (lancamento.tipo == "DESPESA")
+                lancamentosDespensa += lancamento.valorPago;
+              else
+                lancamentosDespensa += lancamento.valorPago;        
+          })
+        }
+  
+      })
+  
+      return saldoIncial + lancamentosReceita - lancamentosDespensa;
+    }
 
-    this.contas.forEach(conta => {
-
-      if(conta.lancamentos && conta.lancamentos.length > 0)
-      {
-        conta.lancamentos
-          .filter(lancamento => lancamento.situacaoLancamento == "LIQUIDADO")
-          .forEach(lancamento => {
-            if(lancamento.tipo == "RECEITA")
-              lancamentosReceita += lancamento.valorPago;
-            else if (lancamento.tipo == "DESPESA")
-              lancamentosDespensa += lancamento.valorPago;
-            else
-              lancamentosDespensa += lancamento.valorPago;        
-        })
-      }
-
-    })
-
-    return saldoIncial + lancamentosReceita - lancamentosDespensa;
+    return 0;
   }
 
 

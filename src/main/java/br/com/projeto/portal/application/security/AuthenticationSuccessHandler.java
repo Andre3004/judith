@@ -5,6 +5,7 @@ import br.com.projeto.portal.domain.repository.IUsuarioRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -14,7 +15,7 @@ import java.util.Calendar;
 import java.util.logging.Logger;
 
 
-
+@Component
 public class AuthenticationSuccessHandler implements org.springframework.security.web.authentication.AuthenticationSuccessHandler
 {
 	/**
@@ -29,9 +30,17 @@ public class AuthenticationSuccessHandler implements org.springframework.securit
 	/**
 	 *
 	 */
-	@Autowired
+
 	private IUsuarioRepository userRepository;
 
+	private ObjectMapper objectMapper;
+
+	@Autowired
+	public AuthenticationSuccessHandler(IUsuarioRepository userRepository, ObjectMapper objectMapper)
+	{
+		this.userRepository = userRepository;
+		this.objectMapper = objectMapper;
+	}
 	/*-------------------------------------------------------------------
 	 * 		 					BEHAVIORS
 	 *-------------------------------------------------------------------*/

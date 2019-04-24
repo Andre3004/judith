@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+import br.com.projeto.portal.application.security.ContextHolder;
 import br.com.projeto.portal.domain.entity.enums.Periodo;
 import br.com.projeto.portal.domain.entity.enums.TipoLancamento;
 import br.com.projeto.portal.domain.entity.lancamento.Categoria;
@@ -72,6 +73,15 @@ public class LancamentoService
 		lancamento.setPeriodoNotificacao( Periodo.DIA );
 		lancamento.setQuantidadeNotificacaoVencimento( 0 );
 
+//		if(lancamento.getTipo().equals( TipoLancamento.TRANSFERENCIA ))
+//		{
+//			Lancamento lancamentoReceita = new Lancamento();
+//			Lancamento lancamentoDespesa = new Lancamento();
+//
+//			lancamentoReceita.set
+//
+//		}
+
 		Lancamento lancamentoSaved = this.lancamentoRepository.saveAndFlush( lancamento );
 
 		for ( Long removedId : idsSubRemoved )
@@ -123,7 +133,7 @@ public class LancamentoService
 		if(data != null)
 			newData = LocalDateTime.of( data, LocalTime.MIN );
 
-		return this.lancamentoRepository.listByFilters(descricao, newData, tipo, lancamentoId);
+		return this.lancamentoRepository.listByFilters(descricao, newData, tipo, lancamentoId, ContextHolder.getAuthenticatedUser().getId() );
 	}
 
 	public List<Terceiro> listAllTerceiros()

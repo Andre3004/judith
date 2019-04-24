@@ -1,9 +1,9 @@
-import { LancamentoService, ContaService, UsuarioService } from './services';
+import { ContaService, LancamentoService, UsuarioService } from './services';
 import { NgModule } from '@angular/core';
 
 @NgModule({
     providers: [
-        LancamentoService, ContaService, UsuarioService
+        ContaService, LancamentoService, UsuarioService
     ]
 })
 export class GeneratedModule {
