@@ -29,7 +29,7 @@ public class ContaServiceIntegrationTests extends AbstractIntegrationTest
 	 *-------------------------------------------------------------------*/
 
 
-	@Test( expected = DataIntegrityViolationException.class )
+	@Test( expected = IllegalArgumentException.class )
 	@Sql({
 			"/dataset/usuario/endereco.sql",
 			"/dataset/usuario/usuario.sql",
@@ -129,7 +129,7 @@ public class ContaServiceIntegrationTests extends AbstractIntegrationTest
 		this.contaService.deleteConta( contaSaved.getId() );
 	}
 
-	@Test( expected = DataIntegrityViolationException.class )
+	@Test( expected = IllegalArgumentException.class )
 	@Sql({
 			"/dataset/usuario/endereco.sql",
 			"/dataset/usuario/usuario.sql",

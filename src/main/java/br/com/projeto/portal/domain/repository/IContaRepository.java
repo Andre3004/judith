@@ -7,9 +7,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IContaRepository extends JpaRepository<Conta, Long>
 {
-	boolean existsByNomeIgnoreCaseAndUsuario_idNot(String nome, Long usuarioId);
+	boolean existsByNomeIgnoreCaseAndUsuario_id(String nome, Long usuarioId);
 
-	boolean existsByNomeIgnoreCaseAndIdNotAndUsuario_idNot(String nome, Long id,  Long usuarioId );
+	boolean existsByNomeIgnoreCaseAndIdNotAndUsuario_id(String nome, Long id,  Long usuarioId );
 
 	List<Conta> findByUsuario_Id(Long usuarioId);
 }

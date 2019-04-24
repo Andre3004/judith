@@ -45,7 +45,7 @@ public class ContaService
 	public Conta insertConta( Conta conta)
 	{
 		Assert.isTrue(conta.getNome() != null && !conta.getNome().equals( "" ), "O campo nome deve ser preenchido");
-		Assert.isTrue(!this.contaRepository.existsByNomeIgnoreCaseAndUsuario_idNot( conta.getNome(), ContextHolder.getAuthenticatedUser().getId() ), "O campo nome já está cadastrado em outro registro.");
+		Assert.isTrue(!this.contaRepository.existsByNomeIgnoreCaseAndUsuario_id( conta.getNome(), ContextHolder.getAuthenticatedUser().getId() ), "O campo nome já está cadastrado em outro registro.");
 
 		conta.setUsuario( ContextHolder.getAuthenticatedUser() );
 
@@ -60,7 +60,7 @@ public class ContaService
 	public Conta updateConta(Conta conta)
 	{
 		Assert.isTrue(conta.getNome() != null && !conta.getNome().equals( "" ), "O campo nome deve ser preenchido");
-		Assert.isTrue(!this.contaRepository.existsByNomeIgnoreCaseAndIdNotAndUsuario_idNot( conta.getNome(), conta.getId(), ContextHolder.getAuthenticatedUser().getId() ), "O campo nome já está cadastrado em outro registro.");
+		Assert.isTrue(!this.contaRepository.existsByNomeIgnoreCaseAndIdNotAndUsuario_id( conta.getNome(), conta.getId(), ContextHolder.getAuthenticatedUser().getId() ), "O campo nome já está cadastrado em outro registro.");
 		return this.contaRepository.save( this.contaRepository.save( conta ) );
 	}
 
