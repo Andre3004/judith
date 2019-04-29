@@ -139,4 +139,9 @@ export class LancamentFormComponent implements OnInit
     else
       this.lancamento.categoria.subCategorias[index].isSelected = false;
   }
+
+  get getTotalRecorrencia()
+  {
+    return 0;
+  }
 }

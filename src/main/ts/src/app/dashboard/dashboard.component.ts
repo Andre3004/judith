@@ -85,7 +85,7 @@ export class DashboardComponent implements OnInit
   public openConfirmExcluirConta(id): void
   {
     this._dialogService.openConfirm({
-      message: 'Tem certeza que deseja excluir esta conta ?',
+      message: 'Tem certeza que deseja excluir esta conta. Todos os lançamentos serão excluídos ?',
       viewContainerRef: this._viewContainerRef,
       title: 'Excluir conta',
       cancelButton: 'CANCELAR',

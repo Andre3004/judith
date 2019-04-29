@@ -69,7 +69,7 @@ public class LancamentoService
 		lancamento.setCategoria( this.categoriaRepository.findOne( subCategoriaSelectedId ) );
 
 		lancamento.setBaixaAutomatica( false );
-		lancamento.setRepetir( false );
+		lancamento.setRepetir( lancamento.getRepetir() != null ? lancamento.getRepetir() : false );
 		lancamento.setPeriodoNotificacao( Periodo.DIA );
 		lancamento.setQuantidadeNotificacaoVencimento( 0 );
 

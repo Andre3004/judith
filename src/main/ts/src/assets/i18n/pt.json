@@ -7,5 +7,13 @@
 	"DESPESA": "Despesa",
 	"TRANSFERENCIA": "Transferência",
 	"LIQUIDADO": "Liquidado",
-	"PENDENTE": "Pendente"
+	"PENDENTE": "Pendente",
+	"SEGUNDO": "Segundo", 			 
+	"MINUTO": "Minuto", 			 
+	"HORA": "Hora",				 
+	"DIA": "Dia",				 
+	"SEMANA": "Semana", 			 
+	"MES": "Mês",				 
+	"ANO": "Ano",				 
+	"INDEFINITIVAMENTE": "Indefinitivamente"
 }

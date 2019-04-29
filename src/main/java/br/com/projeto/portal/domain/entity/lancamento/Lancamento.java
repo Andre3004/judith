@@ -62,7 +62,6 @@ public class Lancamento extends AbstractEntity implements Serializable
 	@NotNull
 	private Boolean baixaAutomatica;
 
-	@NotNull
 	private LocalDateTime dataPagamento;
 
 	private BigDecimal valorPago;

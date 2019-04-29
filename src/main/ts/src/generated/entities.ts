@@ -34,65 +34,11 @@ export interface IntlString {
     };
 }
 
-export interface Banco {
+export interface Categoria {
     nome?: string,
-    id?: number,
-    created?: Date,
-    updated?: Date
-}
-
-
-export interface Terceiro {
-    nome?: string,
-    id?: number,
-    created?: Date,
-    updated?: Date
-}
-
-
-export let PeriodoValues: string[] = ['SEGUNDO', 'MINUTO', 'HORA', 'DIA', 'SEMANA', 'MES', 'ANO'];
-export type Periodo = 'SEGUNDO' | 'MINUTO' | 'HORA' | 'DIA' | 'SEMANA' | 'MES' | 'ANO';
-
-
-export let SituacaoLancamentoValues: string[] = ['LIQUIDADO', 'PENDENTE'];
-export type SituacaoLancamento = 'LIQUIDADO' | 'PENDENTE';
-
-
-export interface Conta {
-    nome?: string,
-    saldoInicial?: number,
-    saldo?: number,
-    tipo?: TipoConta,
-    banco?: Banco,
-    dataUltAltSaldo?: Date,
-    usuario?: Usuario,
-    lancamentos?: Lancamento[],
-    id?: number,
-    created?: Date,
-    updated?: Date
-}
-
-
-export let TipoLancamentoValues: string[] = ['RECEITA', 'DESPESA', 'TRANSFERENCIA'];
-export type TipoLancamento = 'RECEITA' | 'DESPESA' | 'TRANSFERENCIA';
-
-
-export let FormaPagamentoValues: string[] = ['FIXA', 'PARCELADO'];
-export type FormaPagamento = 'FIXA' | 'PARCELADO';
-
-
-export let TipoContaValues: string[] = ['CONTROLE_INTERNO', 'CARTAO_CREDITO', 'CONTA_CORRENTE', 'POUPANCA'];
-export type TipoConta = 'CONTROLE_INTERNO' | 'CARTAO_CREDITO' | 'CONTA_CORRENTE' | 'POUPANCA';
-
-
-export interface Usuario {
-    nome?: string,
-    cpf?: string,
-    email?: string,
-    senha?: string,
-    telefone?: string,
-    endereco?: Endereco,
-    contas?: Conta[],
+    categoriaPai?: Categoria,
+    isSelected?: Boolean,
+    subCategorias?: Categoria[],
     id?: number,
     created?: Date,
     updated?: Date
@@ -127,23 +73,77 @@ export interface Lancamento {
 }
 
 
-export interface Categoria {
-    nome?: string,
-    categoriaPai?: Categoria,
-    isSelected?: Boolean,
-    subCategorias?: Categoria[],
-    id?: number,
-    created?: Date,
-    updated?: Date
-}
-
-
 export interface Endereco {
     bairro?: string,
     complemento?: string,
     cidade?: string,
     cep?: string,
     numero?: number,
+    id?: number,
+    created?: Date,
+    updated?: Date
+}
+
+
+export let TipoLancamentoValues: string[] = ['RECEITA', 'DESPESA', 'TRANSFERENCIA'];
+export type TipoLancamento = 'RECEITA' | 'DESPESA' | 'TRANSFERENCIA';
+
+
+export let PeriodoValues: string[] = ['SEGUNDO', 'MINUTO', 'HORA', 'DIA', 'SEMANA', 'MES', 'ANO', 'INDEFINITIVAMENTE'];
+export type Periodo = 'SEGUNDO' | 'MINUTO' | 'HORA' | 'DIA' | 'SEMANA' | 'MES' | 'ANO' | 'INDEFINITIVAMENTE';
+
+
+export interface Usuario {
+    nome?: string,
+    cpf?: string,
+    email?: string,
+    senha?: string,
+    telefone?: string,
+    endereco?: Endereco,
+    contas?: Conta[],
+    id?: number,
+    created?: Date,
+    updated?: Date
+}
+
+
+export let TipoContaValues: string[] = ['CONTROLE_INTERNO', 'CARTAO_CREDITO', 'CONTA_CORRENTE', 'POUPANCA'];
+export type TipoConta = 'CONTROLE_INTERNO' | 'CARTAO_CREDITO' | 'CONTA_CORRENTE' | 'POUPANCA';
+
+
+export let SituacaoLancamentoValues: string[] = ['LIQUIDADO', 'PENDENTE'];
+export type SituacaoLancamento = 'LIQUIDADO' | 'PENDENTE';
+
+
+export interface Banco {
+    nome?: string,
+    id?: number,
+    created?: Date,
+    updated?: Date
+}
+
+
+export let FormaPagamentoValues: string[] = ['FIXA', 'PARCELADO'];
+export type FormaPagamento = 'FIXA' | 'PARCELADO';
+
+
+export interface Terceiro {
+    nome?: string,
+    id?: number,
+    created?: Date,
+    updated?: Date
+}
+
+
+export interface Conta {
+    nome?: string,
+    saldoInicial?: number,
+    saldo?: number,
+    tipo?: TipoConta,
+    banco?: Banco,
+    dataUltAltSaldo?: Date,
+    usuario?: Usuario,
+    lancamentos?: Lancamento[],
     id?: number,
     created?: Date,
     updated?: Date

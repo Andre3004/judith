@@ -4,137 +4,148 @@
   </mat-dialog-title>
 
   <form fxLayout="column">
-  <mat-dialog-content fxLayout="column">
+    <mat-dialog-content fxLayout="column">
 
-    <div fxFlex>
-      <mat-form-field fxFlex>
-        <mat-select required placeholder="Tipo de lançamento" [(ngModel)]="lancamento.tipo" name="tipo">
-          <mat-option *ngFor="let tipo of tipos"   [value]="tipo" >{{tipo | translate}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <mat-form-field fxFlex class="push-left-md">
-        <mat-select required  [compareWith]="compareObjects" placeholder="Conta"  [(ngModel)]="lancamento.conta"  name="conta">
-          <mat-option *ngFor="let conta of contas" [value]="conta">{{conta.nome}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <mat-form-field *ngIf="lancamento.tipo == 'TRANSFERENCIA'" fxFlex class="push-left-md">
-        <mat-select required [compareWith]="compareObjects" placeholder="Conta destino" [(ngModel)]="lancamento.contaDestino"  name="contaDestino">
-          <mat-option *ngFor="let contaDestino of contas" [value]="contaDestino">{{contaDestino.nome}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <mat-form-field fxFlex class="push-left-md">
-        <mat-select required placeholder="Situação" [(ngModel)]="lancamento.situacaoLancamento" name="situacaoLancamento">
-          <mat-option *ngFor="let situacao of situacoes" [value]="situacao" >{{situacao | translate}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <mat-form-field fxFlex class="push-left-md">
-        <mat-select required placeholder="Terceiro" [compareWith]="compareObjects" [(ngModel)]="lancamento.favorecidoPagador" name="favorecidoPagador">
-          <mat-option *ngFor="let terceiro of terceiros" [value]="terceiro" >{{terceiro.nome | translate}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-      
-    </div>
-
-    <div fxFlex>
-      <mat-form-field fxFlex>
-        <input matInput required placeholder="Valor" type="number"  [(ngModel)]="lancamento.valor"  name="valor">
-      </mat-form-field>
-      
-      <mat-form-field class="push-left-md" fxFlex>
-        <input matInput placeholder="Valor pago" type="number"  [(ngModel)]="lancamento.valorPago"  name="valorPago">
-      </mat-form-field>
-
-      <mat-form-field fxFlex class="push-left-md">
-        <input required [(ngModel)]="lancamento.dataPagamento"  name="dataPagamento" placeholder="Data pagamento" matInput [matDatepicker]="dataPagamento">
-        <mat-datepicker-toggle matSuffix [for]="dataPagamento"></mat-datepicker-toggle>
-        <mat-datepicker #dataPagamento></mat-datepicker>
-      </mat-form-field>
-
-      <mat-form-field fxFlex class="push-left-md">
-        <input required [(ngModel)]="lancamento.dataVencimento"  name="dataVencimento" placeholder="Data vencimento" matInput [matDatepicker]="dataVencimento">
-        <mat-datepicker-toggle matSuffix [for]="dataVencimento"></mat-datepicker-toggle>
-        <mat-datepicker #dataVencimento></mat-datepicker>
-      </mat-form-field>
-    </div>
-
-    <mat-form-field>
-      <textarea required matInput placeholder="Descrição" [(ngModel)]="lancamento.descricao"  name="descricao"></textarea>
-    </mat-form-field>
-
-
-    <div fxFlex  fxLayout="column">
-
-      <div  fxLayout="row" fxFlex fxLayoutAlign=" center">
-
-        <mat-form-field fxFlex >
-          <mat-select required placeholder="Categoria" [compareWith]="compareObjects" [(ngModel)]="lancamento.categoria" name="categoria">
-            <mat-option *ngFor="let categoria of categorias" [value]="categoria" >{{categoria.nome | translate}}</mat-option>
+      <div fxFlex>
+        <mat-form-field fxFlex>
+          <mat-select required placeholder="Tipo de lançamento" [(ngModel)]="lancamento.tipo" name="tipo">
+            <mat-option *ngFor="let tipo of tipos" [value]="tipo">{{tipo | translate}}</mat-option>
           </mat-select>
         </mat-form-field>
 
-        <button *ngIf="lancamento.categoria" matTooltip="Adicionar Sub categoria" (click)="addSubCategoria(lancamento.categoria)" class="push-left-md hover-icon-button-add" mat-icon-button>
-            <mat-icon >add_circle_outline</mat-icon>
-          </button>
+        <mat-form-field fxFlex class="push-left-md">
+          <mat-select required [compareWith]="compareObjects" placeholder="Conta" [(ngModel)]="lancamento.conta" name="conta">
+            <mat-option *ngFor="let conta of contas" [value]="conta">{{conta.nome}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="lancamento.tipo == 'TRANSFERENCIA'" fxFlex class="push-left-md">
+          <mat-select required [compareWith]="compareObjects" placeholder="Conta destino" [(ngModel)]="lancamento.contaDestino" name="contaDestino">
+            <mat-option *ngFor="let contaDestino of contas" [value]="contaDestino">{{contaDestino.nome}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field fxFlex class="push-left-md">
+          <mat-select required placeholder="Situação" [(ngModel)]="lancamento.situacaoLancamento" name="situacaoLancamento">
+            <mat-option *ngFor="let situacao of situacoes" [value]="situacao">{{situacao | translate}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="lancamento.tipo != 'TRANSFERENCIA'" fxFlex class="push-left-md">
+          <mat-select required placeholder="Terceiro" [compareWith]="compareObjects" [(ngModel)]="lancamento.favorecidoPagador" name="favorecidoPagador">
+            <mat-option *ngFor="let terceiro of terceiros" [value]="terceiro">{{terceiro.nome | translate}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
       </div>
 
+      <div fxFlex>
+        <mat-form-field fxFlex>
+          <input matInput required placeholder="Valor" type="number" [(ngModel)]="lancamento.valor" name="valor">
+        </mat-form-field>
 
-      <div  fxLayout="row wrap" *ngIf="lancamento.categoria" >
-        <div  class="push-right-md" fxLayout="row"  fxLayoutAlign=" center" *ngFor="let subCategoria of lancamento.categoria.subCategorias; let i = index" >
-          
-          <button matTooltip="Remover Sub categoria" class="hover-icon-button-remove" (click)="removeSubCategoria(lancamento.categoria, i)" mat-icon-button>
-            <mat-icon >remove_circle_outline</mat-icon>
-          </button>
+        <mat-form-field class="push-left-md" fxFlex>
+          <input matInput placeholder="Valor pago" type="number" [(ngModel)]="lancamento.valorPago" name="valorPago">
+        </mat-form-field>
 
-          <mat-icon>bookmark_border</mat-icon>
-          <mat-form-field>
-            <input maxlength="144" matInput placeholder="Nome da Sub Categoria" [(ngModel)]="subCategoria.nome" name="subCategoria{{i}}">
+        <mat-form-field *ngIf="lancamento.tipo != 'RECEITA'" fxFlex class="push-left-md">
+          <input required [(ngModel)]="lancamento.dataPagamento" name="dataPagamento" placeholder="Data pagamento" matInput [matDatepicker]="dataPagamento">
+          <mat-datepicker-toggle matSuffix [for]="dataPagamento"></mat-datepicker-toggle>
+          <mat-datepicker #dataPagamento></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field fxFlex class="push-left-md">
+          <input required [(ngModel)]="lancamento.dataVencimento" name="dataVencimento" placeholder="Data vencimento" matInput [matDatepicker]="dataVencimento">
+          <mat-datepicker-toggle matSuffix [for]="dataVencimento"></mat-datepicker-toggle>
+          <mat-datepicker #dataVencimento></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <mat-form-field>
+        <textarea required matInput placeholder="Descrição" [(ngModel)]="lancamento.descricao" name="descricao"></textarea>
+      </mat-form-field>
+
+
+      <div fxFlex fxLayout="column">
+
+        <div fxLayout="row" fxFlex fxLayoutAlign=" center">
+
+          <mat-form-field fxFlex>
+            <mat-select required placeholder="Categoria" [compareWith]="compareObjects" [(ngModel)]="lancamento.categoria" name="categoria">
+              <mat-option *ngFor="let categoria of categorias" [value]="categoria">{{categoria.nome | translate}}</mat-option>
+            </mat-select>
           </mat-form-field>
 
-          <mat-checkbox  [checked]="subCategoria.isSelected" name="isSelected" (change)="onChangeSelectSubCategoria(subCategoria.id, i ,$event)"></mat-checkbox>
+          <button *ngIf="lancamento.categoria" matTooltip="Adicionar Sub categoria" (click)="addSubCategoria(lancamento.categoria)" class="push-left-md hover-icon-button-add" mat-icon-button>
+            <mat-icon>add_circle_outline</mat-icon>
+          </button>
+        </div>
+
+
+        <div fxLayout="row wrap" *ngIf="lancamento.categoria">
+          <div class="push-right-md" fxLayout="row" fxLayoutAlign=" center" *ngFor="let subCategoria of lancamento.categoria.subCategorias; let i = index">
+
+            <button matTooltip="Remover Sub categoria" class="hover-icon-button-remove" (click)="removeSubCategoria(lancamento.categoria, i)" mat-icon-button>
+              <mat-icon>remove_circle_outline</mat-icon>
+            </button>
+
+            <mat-icon>bookmark_border</mat-icon>
+            <mat-form-field>
+              <input maxlength="144" matInput placeholder="Nome da Sub Categoria" [(ngModel)]="subCategoria.nome" name="subCategoria{{i}}">
+            </mat-form-field>
+
+            <mat-checkbox [checked]="subCategoria.isSelected" name="isSelected" (change)="onChangeSelectSubCategoria(subCategoria.id, i ,$event)"></mat-checkbox>
+
+          </div>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign=" center" fxLayoutGap="30px">
+
+          <mat-checkbox [(ngModel)]="lancamento.repetir" name="repetir">Repetir ?</mat-checkbox>
+
+          <mat-form-field fxFlex="50" *ngIf="lancamento.repetir">
+            <mat-select placeholder="Periodo">
+              <mat-option *ngFor="let periodo of periodos" [value]="periodo">{{periodo | translate}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+         
+          <mat-form-field  fxFlex="20" *ngIf="lancamento.repetir">
+            <input type="number" matInput placeholder="Repetir a cada" [(ngModel)]="lancamento.quantidadePeriodo" name="quantidadePeriodo">
+          </mat-form-field>
+
+          <mat-form-field  fxFlex="20" *ngIf="lancamento.repetir">
+            <input type="number" matInput placeholder="Inicio da parcela" [(ngModel)]="lancamento.parcelasPagas" name="parcelasPagas">
+          </mat-form-field>
+
+          <label *ngIf="lancamento.repetir">de</label>
+
+          <mat-form-field  fxFlex="20" *ngIf="lancamento.repetir">
+            <input type="number" matInput placeholder="Final da parcela" [(ngModel)]="lancamento.parcelasTotal" name="parcelasTotal">
+          </mat-form-field>
+
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign=" center" fxLayoutGap="30px" class="push-top-sm">
+
+            <mat-form-field  fxFlex="20" *ngIf="lancamento.repetir">
+              <input type="number" matInput placeholder="Número de ocorrências" [(ngModel)]="lancamento.quantidadeRepeticaoRecorrencia" name="quantidadeRepeticaoRecorrencia">
+            </mat-form-field>
+
+            <label *ngIf="lancamento.repetir">Totalizando R$: {{getTotalRecorrencia}}</label>
           
         </div>
+
       </div>
 
+      <mat-divider class="push-bottom-md push-top-md"></mat-divider>
 
-      <!-- <mat-divider class="push-right-md push-left-md" [vertical]="true"></mat-divider>
-      <div fxFlex fxLayout="column">
-        <label>Repetir</label>
-
-        <mat-radio-group class="push-top-sm">
-          <mat-radio-button [value]="1">Fixo</mat-radio-button>
-          <mat-radio-button class="push-left-md" [value]="2">Parcelado</mat-radio-button>
-        </mat-radio-group>
-      </div> -->
-
-    </div>
-
-    <mat-divider class="push-bottom-md push-top-md"></mat-divider>
-
-    <!-- <div fxFlex>
-      <mat-form-field fxFlex>
-        <mat-select placeholder="Periodo">
-          <mat-option *ngFor="let periodo of periodos" [value]="periodo">{{periodo}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <mat-form-field fxFlex class="push-left-md">
-        <input matInput placeholder="Quantidade parcelas" type="number">
-      </mat-form-field>
-
-    </div> -->
-
-
-  </mat-dialog-content>
-</form>
+    </mat-dialog-content>
+  </form>
 
 
   <mat-dialog-actions fxLayoutAlign="end">
     <button (click)="onNoClick()" mat-raised-button class="default-white-button"
-      color="primary">
+            color="primary">
       SALVAR
     </button>
     <button mat-dialog-close mat-raised-button class="default-white-button
