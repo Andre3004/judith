@@ -1,11 +1,12 @@
 import { OpenSnackBarService } from './../../open-snackbar/open-snackbar.service';
 import { ContaService, LancamentoService } from 'src/generated/services';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatBottomSheet } from '@angular/material';
 import { Component, OnInit } from '@angular/core';
 import { TipoLancamentoValues, Lancamento } from 'src/generated/entities';
 import { LancamentFormComponent } from '../lancament-form/lancament-form.component';
 import { TdDialogService } from '@covalent/core';
 import { ActivatedRoute } from '@angular/router';
+import { FilterVencidosComponent } from './filter-vencidos/filter-vencidos.component';
 
 @Component({
   selector: 'app-lancament-list',
@@ -27,7 +28,9 @@ export class LancamentListComponent implements OnInit
     descricao: "", 
     data: null, 
     tipo: null,
-    contaId:null
+    contaId:null,
+    dataInicial: null, 
+    dataFinal: null
   }
   
   public meses = ['Janeiro',
@@ -51,7 +54,8 @@ export class LancamentListComponent implements OnInit
     private _dialogService: TdDialogService, 
     private openSnackBarService: OpenSnackBarService,
     public activatedRoute: ActivatedRoute,
-    private contaService: ContaService)
+    private contaService: ContaService,
+    private bottomSheet: MatBottomSheet)
   { }
 
   ngOnInit()
@@ -59,9 +63,13 @@ export class LancamentListComponent implements OnInit
     this.onListAllContasWithoutUser();
     this.onListAllLancamenos();
 
-    if(this.activatedRoute.snapshot.params['tipo'])
+    if(this.activatedRoute.snapshot.params['tipo'] && !this.activatedRoute.snapshot.params['id'])
     { 
       this.onOpenDialogLancamento(null, this.activatedRoute.snapshot.params['tipo']);
+    }
+    else if(this.activatedRoute.snapshot.params['tipo'] && this.activatedRoute.snapshot.params['id'])
+    { 
+      this.onOpenDialogLancamento(null, this.activatedRoute.snapshot.params['tipo'], this.activatedRoute.snapshot.params['id']);
     }
   }
 
@@ -70,9 +78,10 @@ export class LancamentListComponent implements OnInit
   {
     this.lancamentoService.listLancamentoByFilters(
       this.filters.descricao, 
-      this.filters.data, 
       this.filters.tipo, 
-      this.filters.contaId, ).subscribe(lancamentos => {
+      this.filters.contaId,
+      this.filters.dataInicial, 
+      this.filters.dataFinal,  ).subscribe(lancamentos => {
 
           this.lancamentosReceita = lancamentos.filter( lancamento => lancamento.tipo == 'RECEITA');
           this.lancamentosDespesa = lancamentos.filter( lancamento => lancamento.tipo == 'DESPESA');
@@ -89,36 +98,13 @@ export class LancamentListComponent implements OnInit
     })
   }
 
-  public changeMonth(direction)
-  {
-    if (direction == 'left')
-    {
-      this.currentMonth -= 1
-      if (this.currentMonth < 0)
-      {
-        this.currentMonth = 11;
-        this.currentYear -= 1;
-      }
-    }
-    else if (direction == 'right')
-      this.currentMonth += 1
-    if (this.currentMonth > 11)
-    {
-      this.currentMonth = 0;
-      this.currentYear += 1;
-    }
 
-    this.filters.data = new Date(this.currentYear, this.currentMonth, 0);
-
-    this.onListAllLancamenos();
-  }
-
-  public onOpenDialogLancamento(lancamento, tipo)
+  public onOpenDialogLancamento(lancamento, tipo, id=null)
   {
     const dialogRef = this.dialog.open(LancamentFormComponent, {
       width: '1100px',
       height: 'auto',
-      data: {lancamento: lancamento, tipo: tipo}
+      data: {lancamento: lancamento, tipo: tipo, id: id}
     });
 
     dialogRef.afterClosed().subscribe(result =>
@@ -146,6 +132,18 @@ export class LancamentListComponent implements OnInit
           this.onListAllLancamenos();
         }, err => this.openSnackBarService.open(err.message))
       }
+    });
+  }
+
+  public openBottomSheet(): void {
+    this.bottomSheet.open(FilterVencidosComponent).afterDismissed().subscribe( dias => {
+        if(dias){
+          this.lancamentoService.listLancamentoProximosAvencer(dias).subscribe( lancamentos => {
+            this.lancamentosReceita = lancamentos.filter( lancamento => lancamento.tipo == 'RECEITA');
+            this.lancamentosDespesa = lancamentos.filter( lancamento => lancamento.tipo == 'DESPESA');
+            this.lancamentosTransferencia = lancamentos.filter( lancamento => lancamento.tipo == 'TRANSFERENCIA');
+          })
+        }
     });
   }
 

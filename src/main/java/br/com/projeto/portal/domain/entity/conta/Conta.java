@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,7 +16,9 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 import br.com.eits.common.domain.entity.AbstractEntity;
+import br.com.projeto.portal.domain.entity.enums.SituacaoLancamento;
 import br.com.projeto.portal.domain.entity.enums.TipoConta;
+import br.com.projeto.portal.domain.entity.enums.TipoLancamento;
 import br.com.projeto.portal.domain.entity.lancamento.Lancamento;
 import br.com.projeto.portal.domain.entity.usuario.Usuario;
 import lombok.Data;
@@ -37,10 +40,10 @@ public class Conta extends AbstractEntity
 	@Column(unique = true)
 	private String nome;
 
-	private Double saldoInicial = 0.0;
+	private Double saldoInicial;
 
 	@NotNull
-	private Double saldo = 0.0;
+	private Double saldo;
 
 	@NotNull
 	private TipoConta tipo;
@@ -53,7 +56,16 @@ public class Conta extends AbstractEntity
 	@ManyToOne
 	private Usuario usuario;
 
+	private Boolean isDisabled = false;
 
 	@OneToMany(mappedBy = "conta", fetch = FetchType.EAGER)
 	private List<Lancamento> lancamentos = new ArrayList<Lancamento>();
+
+	private Double transferencias;
+
+	public Conta(){
+		this.saldoInicial = 0.0;
+		this.saldo = 0.0;
+		this.transferencias = 0.0;
+	}
 }

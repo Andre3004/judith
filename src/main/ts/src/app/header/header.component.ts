@@ -6,6 +6,7 @@ import { LoadingMode } from '@covalent/core';
 import { LoadingType } from '@covalent/core';
 import { TdLoadingService } from '@covalent/core';
 import { OpenSnackBarService } from '../open-snackbar/open-snackbar.service';
+import { LancamentoService } from 'src/generated/services';
 
 @Component({
   selector: 'header',
@@ -24,6 +25,9 @@ export class HeaderComponent implements OnInit
     {title: "Lançamentos", icon: 'attach_money', router: 'lancamentos'}
   ]
 
+  public lancamentosPendentes = [];
+
+  public view = false;
   /*-------------------------------------------------------------------
   *                           CONSTRUCTOR
   *-------------------------------------------------------------------*/
@@ -36,7 +40,9 @@ export class HeaderComponent implements OnInit
     private matDialog: MatDialog,
     private openSnackBarService: OpenSnackBarService,
     private router: Router,
-    private tdLoadingService: TdLoadingService,)
+    private tdLoadingService: TdLoadingService,
+    private lancamentoService: LancamentoService,
+    private _router: Router)
   {
     
 
@@ -46,11 +52,21 @@ export class HeaderComponent implements OnInit
   *-------------------------------------------------------------------*/
   ngOnInit()
   {
-
+    this.onListNotificacoes();
 
   }
 
 
+  onListNotificacoes()
+  {
+      this.lancamentoService.listLancamentosPendentesToNotificacao().subscribe( result => {
+        this.lancamentosPendentes = result;
+      }, err => console.log(`error`, err))
+  }
+
+  goToLancamento(lancamentoPendente){
+    this._router.navigate(['lancamentos/', lancamentoPendente.tipo, lancamentoPendente.id]);
+  }
   /**
    * 
    */

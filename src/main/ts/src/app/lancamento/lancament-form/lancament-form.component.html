@@ -101,39 +101,55 @@
 
         <div fxLayout="row" fxLayoutAlign=" center" fxLayoutGap="30px">
 
-          <mat-checkbox [(ngModel)]="lancamento.repetir" name="repetir">Repetir ?</mat-checkbox>
+          <mat-checkbox [disabled]="lancamento.repetir && lancamento.id" [(ngModel)]="lancamento.repetir" name="repetir">Repetir ?</mat-checkbox>
+
+
+          <!-- <mat-checkbox [disabled]="lancamento.repetir && lancamento.id" *ngIf="lancamento.repetir" [(ngModel)]="lancamento.indefinivamente" name="indefinivamente">Indefinivamente ?</mat-checkbox> -->
+
+          <mat-form-field  fxFlex="20" *ngIf="lancamento.repetir">
+            <input [disabled]="lancamento.repetir && lancamento.id" type="number" matInput placeholder="Repetir a cada" [(ngModel)]="lancamento.quantidadePeriodo" name="quantidadePeriodo">
+          </mat-form-field>
 
           <mat-form-field fxFlex="50" *ngIf="lancamento.repetir">
-            <mat-select placeholder="Periodo">
+            <mat-select  [disabled]="lancamento.repetir && lancamento.id" placeholder="Periodo" [(ngModel)]="lancamento.periodoPagamento" name="periodoPagamento">
               <mat-option *ngFor="let periodo of periodos" [value]="periodo">{{periodo | translate}}</mat-option>
             </mat-select>
-          </mat-form-field>
-         
-          <mat-form-field  fxFlex="20" *ngIf="lancamento.repetir">
-            <input type="number" matInput placeholder="Repetir a cada" [(ngModel)]="lancamento.quantidadePeriodo" name="quantidadePeriodo">
-          </mat-form-field>
-
-          <mat-form-field  fxFlex="20" *ngIf="lancamento.repetir">
-            <input type="number" matInput placeholder="Inicio da parcela" [(ngModel)]="lancamento.parcelasPagas" name="parcelasPagas">
-          </mat-form-field>
-
-          <label *ngIf="lancamento.repetir">de</label>
-
-          <mat-form-field  fxFlex="20" *ngIf="lancamento.repetir">
-            <input type="number" matInput placeholder="Final da parcela" [(ngModel)]="lancamento.parcelasTotal" name="parcelasTotal">
           </mat-form-field>
 
         </div>
 
         <div fxLayout="row" fxLayoutAlign=" center" fxLayoutGap="30px" class="push-top-sm">
 
-            <mat-form-field  fxFlex="20" *ngIf="lancamento.repetir">
-              <input type="number" matInput placeholder="Número de ocorrências" [(ngModel)]="lancamento.quantidadeRepeticaoRecorrencia" name="quantidadeRepeticaoRecorrencia">
-            </mat-form-field>
+          <mat-form-field fxFlex="20" *ngIf="lancamento.repetir && !lancamento.indefinivamente">
+            <input  [disabled]="lancamento.repetir && lancamento.id" type="number" matInput placeholder="Inicio da parcela" [(ngModel)]="lancamento.parcelasPagas" name="parcelasPagas">
+          </mat-form-field>
 
-            <label *ngIf="lancamento.repetir">Totalizando R$: {{getTotalRecorrencia}}</label>
-          
+          <label *ngIf="lancamento.repetir && !lancamento.indefinivamente">de</label>
+
+          <mat-form-field fxFlex="20" *ngIf="lancamento.repetir && !lancamento.indefinivamente">
+            <input  [disabled]="lancamento.repetir && lancamento.id" type="number" matInput placeholder="Final da parcela" [(ngModel)]="lancamento.parcelasTotal" name="parcelasTotal">
+          </mat-form-field>
+
+          <label>Número de ocorrências: {{lancamento.quantidadeRepeticaoRecorrencia ? lancamento.quantidadeRepeticaoRecorrencia : 0}}</label>
+          <label *ngIf="lancamento.repetir">Totalizando R$: {{getTotalRecorrencia}}</label>
+
         </div>
+
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign=" center" fxLayoutGap="30px" class="push-top-sm">
+        <mat-icon style="cursor: pointer;" *ngIf="!lancamento.haveNotification" (click)="lancamento.haveNotification = !lancamento.haveNotification">notifications</mat-icon>
+        <mat-icon style="cursor: pointer;" *ngIf="lancamento.haveNotification" (click)="lancamento.haveNotification = !lancamento.haveNotification">notifications_active</mat-icon>
+
+        <mat-form-field fxFlex="20" *ngIf="lancamento.haveNotification">
+          <input type="number" matInput placeholder="Repetir a cada" [(ngModel)]="lancamento.quantidadeNotificacaoVencimento" name="quantidadeNotificacaoVencimento">
+        </mat-form-field>
+
+        <mat-form-field fxFlex="50" *ngIf="lancamento.haveNotification">
+          <mat-select placeholder="Periodo de notificação" [(ngModel)]="lancamento.periodoNotificacao" name="periodoNotificacao">
+            <mat-option *ngFor="let periodo of periodos" [value]="periodo">{{periodo | translate}}</mat-option>
+          </mat-select>
+        </mat-form-field>
 
       </div>
 

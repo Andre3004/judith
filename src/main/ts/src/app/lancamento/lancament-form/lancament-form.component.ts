@@ -17,7 +17,7 @@ export class LancamentFormComponent implements OnInit
 
   public periodos = PeriodoValues;
 
-  public lancamento: Lancamento = {}
+  public lancamento: Lancamento = { haveNotification: false}
 
   public contas: Conta[] = [];
 
@@ -27,7 +27,7 @@ export class LancamentFormComponent implements OnInit
 
   public subCategoriasRemovedIds: any[] = [];
 
-  public terceiros : Terceiro[] = [];
+  public terceiros: Terceiro[] = [];
 
   constructor(public dialogRef: MatDialogRef<LancamentFormComponent>,
     private contaService: ContaService,
@@ -37,18 +37,30 @@ export class LancamentFormComponent implements OnInit
 
   ngOnInit()
   {
-    if(this.data.lancamento)
+    if (this.data.lancamento)
     {
       this.lancamento = this.data.lancamento;
       let subCategoriaId = this.lancamento.categoria.id;
       this.lancamento.categoria = this.lancamento.categoria.categoriaPai;
       this.lancamento.categoria.subCategorias.filter(subCategoria => subCategoria.id == subCategoriaId)[0].isSelected = true;
-      this.lancamento.categoria.subCategorias.filter(subCategoria => subCategoria.id != subCategoriaId).forEach( subCategoria => subCategoria.isSelected = false);
+      this.lancamento.categoria.subCategorias.filter(subCategoria => subCategoria.id != subCategoriaId).forEach(subCategoria => subCategoria.isSelected = false);
     }
 
-    if(this.data.tipo)
+    if (this.data.tipo)
     {
       this.lancamento.tipo = this.data.tipo;
+    }
+
+    if (this.data.id)
+    {
+      this.lancamentoService.findLancamentoById(this.data.id).subscribe( result => {
+        this.lancamento = result;
+
+        let subCategoriaId = this.lancamento.categoria.id;
+        this.lancamento.categoria = this.lancamento.categoria.categoriaPai;
+        this.lancamento.categoria.subCategorias.filter(subCategoria => subCategoria.id == subCategoriaId)[0].isSelected = true;
+        this.lancamento.categoria.subCategorias.filter(subCategoria => subCategoria.id != subCategoriaId).forEach(subCategoria => subCategoria.isSelected = false);
+      }, err => console.log(err))
     }
 
     this.onListAllContasWithoutUser();
@@ -58,16 +70,16 @@ export class LancamentFormComponent implements OnInit
 
   onNoClick(): void
   {
-    if(this.lancamento.tipo && this.lancamento.tipo == 'TRANSFERENCIA' && !this.lancamento.contaDestino)
+    if (this.lancamento.tipo && this.lancamento.tipo == 'TRANSFERENCIA' && !this.lancamento.contaDestino)
     {
       this.openSnackBarService.open("O campo conta destino deve ser preenchido")
       return;
     }
     else
     {
-      if(this.lancamento.contaDestino && this.lancamento.conta && this.lancamento.contaDestino.id && this.lancamento.conta.id)
+      if (this.lancamento.contaDestino && this.lancamento.conta && this.lancamento.contaDestino.id && this.lancamento.conta.id)
       {
-        if(this.lancamento.contaDestino.id == this.lancamento.conta.id)
+        if (this.lancamento.contaDestino.id == this.lancamento.conta.id)
         {
           this.openSnackBarService.open("A conta destino e a conta origem não podem ser as mesmas.")
           return;
@@ -75,17 +87,18 @@ export class LancamentFormComponent implements OnInit
       }
     }
 
-    if(this.lancamento.situacaoLancamento && this.lancamento.situacaoLancamento == 'LIQUIDADO' && !this.lancamento.valorPago)
+    if (this.lancamento.situacaoLancamento && this.lancamento.situacaoLancamento == 'LIQUIDADO' && !this.lancamento.valorPago)
     {
       this.openSnackBarService.open("O campo valor pago deve ser preenchido")
       return;
     }
 
-    this.lancamentoService.insertLancamento(this.lancamento, this.subCategoriasRemovedIds).subscribe( result => {
+    this.lancamentoService.insertLancamento(this.lancamento, this.subCategoriasRemovedIds).subscribe(result =>
+    {
       this.openSnackBarService.open("Lancamento salvo com sucesso!")
       this.dialogRef.close();
-    }, err => this.openSnackBarService.open(err.message.split('.')[0]) )
-    
+    }, err => this.openSnackBarService.open(err.message.split('.')[0]))
+
   }
 
   private onListAllContasWithoutUser(): any
@@ -98,8 +111,8 @@ export class LancamentFormComponent implements OnInit
 
   public addSubCategoria(categoria)
   {
-    if(!categoria.subCategorias) categoria.subCategorias = [];
-    categoria.subCategorias.push({nome: "", categoriaPai: categoria});
+    if (!categoria.subCategorias) categoria.subCategorias = [];
+    categoria.subCategorias.push({ nome: "", categoriaPai: categoria });
   }
 
   private listAllCategorias(): any
@@ -112,14 +125,15 @@ export class LancamentFormComponent implements OnInit
 
   public removeSubCategoria(categoria, i)
   {
-    if(categoria.subCategorias[i].id)
+    if (categoria.subCategorias[i].id)
       this.subCategoriasRemovedIds.push(categoria.subCategorias[i].id);
     categoria.subCategorias.splice(i, 1);
   }
 
   public listAllTerceiros()
   {
-    this.lancamentoService.listAllTerceiros().subscribe(terceiros => {
+    this.lancamentoService.listAllTerceiros().subscribe(terceiros =>
+    {
       this.terceiros = terceiros;
     }, err => console.log(err.message))
   }
@@ -131,9 +145,9 @@ export class LancamentFormComponent implements OnInit
 
   public onChangeSelectSubCategoria(id, index, event: MatCheckboxChange)
   {
-    if(event.checked)
+    if (event.checked)
     {
-      this.lancamento.categoria.subCategorias.filter( categoria => categoria.id != id).forEach(categoria => categoria.isSelected = false)
+      this.lancamento.categoria.subCategorias.filter(categoria => categoria.id != id).forEach(categoria => categoria.isSelected = false)
       this.lancamento.categoria.subCategorias[index].isSelected = true;
     }
     else
@@ -142,6 +156,15 @@ export class LancamentFormComponent implements OnInit
 
   get getTotalRecorrencia()
   {
-    return 0;
+    let totalOcorrencias = 0;
+    let ocorrencias = this.lancamento.parcelasTotal - this.lancamento.parcelasPagas;
+    this.lancamento.quantidadeRepeticaoRecorrencia = isNaN(ocorrencias) ? 0 : ocorrencias+1;
+
+    if (!isNaN(ocorrencias) && this.lancamento.valor)
+    {
+      totalOcorrencias = (ocorrencias + 1) * this.lancamento.valor;
+    }
+
+    return totalOcorrencias;
   }
 }

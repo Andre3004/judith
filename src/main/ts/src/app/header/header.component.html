@@ -9,10 +9,7 @@
                 <label class="push-left-md"> {{menu.title}}</label>
             </button>
         </p>
-        <!-- <button  mat-button >
-           
-            <h3>  </h3>
-        </button> -->
+
     </mat-sidenav>
 
     <td-layout-nav class="header-toolbar">
@@ -23,6 +20,30 @@
             </button>
             <h3 class="push-left-md">PROJETO</h3>
 
+            <div fxFlex></div>
+              <button (click)="view = true" class="overflow-visible" mat-icon-button [matMenuTriggerFor]="notificationsMenu">
+                <td-notification-count [notifications]="view ? 0 : lancamentosPendentes?.length" [limit]="9">
+                  <mat-icon>notifications</mat-icon>
+                </td-notification-count>
+              </button>
+              <mat-menu #notificationsMenu="matMenu" [overlapTrigger]="false">
+                <td-menu>
+                  <div td-menu-header style="padding: 3%;" class="mat-subheading-2 push-none">Lançamentos pendentes</div>
+                  <mat-nav-list dense>
+                    <div *ngFor="let lancamentoPendente of lancamentosPendentes" >
+                      <a mat-list-item style="padding-top: 3%;padding-bottom: 3%;" (click)="goToLancamento(lancamentoPendente)">
+                        <mat-icon matListAvatar>notifications</mat-icon>
+                        <h4 matLine><span class="text-wrap">{{lancamentoPendente?.descricao}}</span></h4>
+                        <p matLine>Data vencimento: {{lancamentoPendente?.dataVencimento | date:'dd/MM/yyy'}}</p>
+                      </a>
+                      <mat-divider *ngIf="!last"></mat-divider>
+                    </div>
+                  </mat-nav-list>
+                  <!-- <button mat-button color="accent" td-menu-footer>
+                    See All Notifications
+                  </button> -->
+                </td-menu>
+              </mat-menu>
 
             <button mat-button class="push-left-md" [matMenuTriggerFor]="menu">
             </button>

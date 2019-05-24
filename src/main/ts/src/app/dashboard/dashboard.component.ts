@@ -7,7 +7,7 @@ import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { MatDialog } from '@angular/material';
 import { ContaFormComponent } from '../conta/conta-form/conta-form.component';
 import { TdDialogService } from '@covalent/core';
-import { ContaService } from 'src/generated/services';
+import { ContaService, LancamentoService } from 'src/generated/services';
 import { Conta } from 'src/generated/entities';
 import { Router } from '@angular/router';
 
@@ -60,11 +60,21 @@ export class DashboardComponent implements OnInit
     private contaService: ContaService,
     private _dialogService: TdDialogService,
     private _router: Router,
-    private _viewContainerRef: ViewContainerRef) { }
+    private _viewContainerRef: ViewContainerRef,
+    private lancamentoService: LancamentoService) { }
 
   ngOnInit(): void
   {
     this.onListAllContasWithoutUser();
+
+  }
+
+  onListNotificacoes()
+  {
+    this.lancamentoService.listLancamentosPendentesToNotificacao().subscribe(result =>
+    {
+      console.log(`notificacoes`, result);
+    }, err => console.log(`error`, err))
   }
 
   //CONTA
@@ -82,7 +92,7 @@ export class DashboardComponent implements OnInit
     });
   }
 
-  public openConfirmExcluirConta(id): void
+  public openConfirmExcluirConta(conta): void
   {
     this._dialogService.openConfirm({
       message: 'Tem certeza que deseja excluir esta conta. Todos os lançamentos serão excluídos ?',
@@ -93,12 +103,35 @@ export class DashboardComponent implements OnInit
       width: '500px',
     }).afterClosed().subscribe((accept: boolean) =>
     {
+      2
       if (accept)
       {
-        this.contaService.deleteConta(id).subscribe(result =>
+        this.contaService.deleteConta(conta.id).subscribe(result =>
         {
           this.openSnackBarService.open("Conta excluída com sucesso!");
-          
+
+          this.onListAllContasWithoutUser();
+        }, err => this.openSnackBarService.open(err.message))
+      }
+    });
+  }
+
+  public openConfirmDisableConta(conta: Conta): void
+  {
+    this._dialogService.openConfirm({
+      message: conta.isDisabled ? 'Tem certeza que deseja habilitar esta conta ?' : 'Tem certeza que deseja desabilitar esta conta ?',
+      viewContainerRef: this._viewContainerRef,
+      title: 'Desabilitar conta',
+      cancelButton: 'CANCELAR',
+      acceptButton: 'CONFIMAR',
+      width: '500px',
+    }).afterClosed().subscribe((accept: boolean) =>
+    {
+      if (accept)
+      {
+        this.contaService.disableConta(conta.id, !conta.isDisabled).subscribe(result =>
+        {
+          this.openSnackBarService.open(result.isDisabled ? "Conta desabilitada com sucesso!" : "Conta habilitada com sucesso!");
           this.onListAllContasWithoutUser();
         }, err => this.openSnackBarService.open(err.message))
       }
@@ -109,12 +142,14 @@ export class DashboardComponent implements OnInit
   {
     this.contaService.listAllContas().subscribe(contas =>
     {
-    this.contas = contas.sort((a, b) =>
-    {
-      if (a.nome < b.nome) { return -1; }
-      if (a.nome > b.nome) { return 1; }
-      return 0;
-    })
+      this.contas = contas.sort((a, b) =>
+      {
+        if (a.nome < b.nome) { return -1; }
+        if (a.nome > b.nome) { return 1; }
+        return 0;
+      })
+
+      console.log(this.contas)
     }, err => console.log(err))
   }
 
@@ -134,24 +169,24 @@ export class DashboardComponent implements OnInit
     let lancamentosReceita = 0;
 
 
-    if(conta.lancamentos && conta.lancamentos.length > 0)
+    if (conta.lancamentos && conta.lancamentos.length > 0)
     {
       conta.lancamentos
         .filter(lancamento => lancamento.situacaoLancamento == "LIQUIDADO")
-        .forEach(lancamento => {
-          if(lancamento.tipo == "RECEITA")
+        .forEach(lancamento =>
+        {
+          if (lancamento.tipo == "RECEITA")
             lancamentosReceita += lancamento.valorPago;
           else if (lancamento.tipo == "DESPESA")
             lancamentosDespensa += lancamento.valorPago;
-          else
-            lancamentosDespensa += lancamento.valorPago;        
-      })
+        })
     }
 
 
-    return conta.saldoInicial + lancamentosReceita - lancamentosDespensa;
+    var result = conta.saldoInicial + lancamentosReceita - lancamentosDespensa + conta.transferencias;
 
-    
+    return isNaN(result) ? 0 : result;
+
   }
 
   public onClickLancamentoRapido(tipo: TipoLancamento)
@@ -162,32 +197,35 @@ export class DashboardComponent implements OnInit
 
   get getSaldo()
   {
-    if(this.contas && this.contas.length > 0)
+    if (this.contas && this.contas.length > 0)
     {
-      
-      let saldoIncial = this.contas.map(conta => conta.saldoInicial ).reduce((partial_sum, a) => partial_sum + a); 
+
+      let saldoIncial = this.contas.map(conta => conta.saldoInicial).reduce((partial_sum, a) => partial_sum + a);
+      let transferencias = this.contas.map(conta => conta.transferencias).reduce((partial_sum, a) => partial_sum + a);
       let lancamentosDespensa = 0;
       let lancamentosReceita = 0;
-  
-      this.contas.forEach(conta => {
-  
-        if(conta.lancamentos && conta.lancamentos.length > 0)
+
+      this.contas.forEach(conta =>
+      {
+
+        if (conta.lancamentos && conta.lancamentos.length > 0)
         {
           conta.lancamentos
             .filter(lancamento => lancamento.situacaoLancamento == "LIQUIDADO")
-            .forEach(lancamento => {
-              if(lancamento.tipo == "RECEITA")
+            .forEach(lancamento =>
+            {
+              if (lancamento.tipo == "RECEITA")
                 lancamentosReceita += lancamento.valorPago;
               else if (lancamento.tipo == "DESPESA")
                 lancamentosDespensa += lancamento.valorPago;
-              else
-                lancamentosDespensa += lancamento.valorPago;        
-          })
+            })
         }
-  
+
       })
-  
-      return saldoIncial + lancamentosReceita - lancamentosDespensa;
+
+      var result = saldoIncial + lancamentosReceita - lancamentosDespensa + transferencias;
+
+      return isNaN(result) ? 0 : result;
     }
 
     return 0;

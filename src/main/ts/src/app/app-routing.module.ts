@@ -10,7 +10,8 @@ const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
   { path: 'categorias', component: CategoriaFormComponent },
   { path: 'lancamentos', component: LancamentListComponent },
-  { path: 'lancamentos/:tipo', component: LancamentListComponent }
+  { path: 'lancamentos/:tipo', component: LancamentListComponent },
+  { path: 'lancamentos/:tipo/:id', component: LancamentListComponent }
 ];
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(routes, { useHash: true });

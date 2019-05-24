@@ -29,7 +29,7 @@ import
   MatToolbarModule,
   MatTooltipModule,
   MAT_DATE_LOCALE,
-  MAT_DATE_FORMATS, MatGridListModule, MatTreeModule, MatNativeDateModule
+  MAT_DATE_FORMATS, MatGridListModule, MatTreeModule, MatNativeDateModule, MatBottomSheetModule
 } from '@angular/material';
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -51,7 +51,8 @@ import
   CovalentPagingModule,
   CovalentStepsModule,
   TdDialogService,
-  TdLayoutComponent
+  TdLayoutComponent,
+  CovalentNotificationsModule
 } from '@covalent/core';
 
 import { CovalentSearchModule } from '@covalent/core/search';
@@ -78,6 +79,7 @@ import { LancamentListComponent } from './lancamento/lancament-list/lancament-li
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {BreadcrumbsModule} from "ng6-breadcrumbs";
+import { FilterVencidosComponent } from './lancamento/lancament-list/filter-vencidos/filter-vencidos.component';
 
 
 registerLocaleData(localeBr, 'pt')
@@ -90,7 +92,8 @@ registerLocaleData(localeBr, 'pt')
     ContaFormComponent,
     CategoriaFormComponent,
     LancamentFormComponent,
-    LancamentListComponent
+    LancamentListComponent,
+    FilterVencidosComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -143,6 +146,8 @@ registerLocaleData(localeBr, 'pt')
     CovalentSearchModule,
     MatNativeDateModule,
     BreadcrumbsModule,
+    CovalentNotificationsModule,
+    MatBottomSheetModule,
     TranslateModule.forRoot({
       loader: {
           provide: TranslateLoader,
@@ -151,7 +156,7 @@ registerLocaleData(localeBr, 'pt')
       }
   })
   ],
-  entryComponents: [ContaFormComponent, LancamentFormComponent],
+  entryComponents: [ContaFormComponent, LancamentFormComponent, FilterVencidosComponent],
   providers: [
     OpenSnackBarService,
     appRoutingProviders,

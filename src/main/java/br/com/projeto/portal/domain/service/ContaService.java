@@ -39,13 +39,14 @@ public class ContaService
 
 	/**
 	 * Método para inserir um conta
+	 *
 	 * @param conta
 	 * @return
 	 */
-	public Conta insertConta( Conta conta)
+	public Conta insertConta( Conta conta )
 	{
-		Assert.isTrue(conta.getNome() != null && !conta.getNome().equals( "" ), "O campo nome deve ser preenchido");
-		Assert.isTrue(!this.contaRepository.existsByNomeIgnoreCaseAndUsuario_id( conta.getNome(), ContextHolder.getAuthenticatedUser().getId() ), "O campo nome já está cadastrado em outro registro.");
+		Assert.isTrue( conta.getNome() != null && !conta.getNome().equals( "" ), "O campo nome deve ser preenchido" );
+		Assert.isTrue( !this.contaRepository.existsByNomeIgnoreCaseAndUsuario_id( conta.getNome(), ContextHolder.getAuthenticatedUser().getId() ), "O campo nome já está cadastrado em outro registro." );
 
 		conta.setUsuario( ContextHolder.getAuthenticatedUser() );
 
@@ -54,21 +55,23 @@ public class ContaService
 
 	/**
 	 * Método para atualizar um conta
+	 *
 	 * @param conta
 	 * @return
 	 */
-	public Conta updateConta(Conta conta)
+	public Conta updateConta( Conta conta )
 	{
-		Assert.isTrue(conta.getNome() != null && !conta.getNome().equals( "" ), "O campo nome deve ser preenchido");
-		Assert.isTrue(!this.contaRepository.existsByNomeIgnoreCaseAndIdNotAndUsuario_id( conta.getNome(), conta.getId(), ContextHolder.getAuthenticatedUser().getId() ), "O campo nome já está cadastrado em outro registro.");
-		return this.contaRepository.save( this.contaRepository.save( conta ) );
+		Assert.isTrue( conta.getNome() != null && !conta.getNome().equals( "" ), "O campo nome deve ser preenchido" );
+		Assert.isTrue( !this.contaRepository.existsByNomeIgnoreCaseAndIdNotAndUsuario_id( conta.getNome(), conta.getId(), ContextHolder.getAuthenticatedUser().getId() ), "O campo nome já está cadastrado em outro registro." );
+		return this.contaRepository.saveAndFlush( conta );
 	}
 
 	/**
 	 * Método para exlcuir um conta
+	 *
 	 * @param id
 	 */
-	public void deleteConta(long id)
+	public void deleteConta( long id )
 	{
 		List<Lancamento> lancamentos = this.lancamentoRepository.findByContaId( id );
 		for ( Lancamento lancamento : lancamentos )
@@ -78,6 +81,16 @@ public class ContaService
 
 		this.contaRepository.delete( id );
 		this.contaRepository.flush();
+	}
+
+	public Conta disableConta( long id, Boolean flagDisable )
+	{
+		Conta conta = this.contaRepository.findOne( id );
+		Assert.isTrue( conta.getIsDisabled(), "Conta não está desabilitada" );
+
+		conta.setIsDisabled( flagDisable );
+
+		return this.contaRepository.saveAndFlush( conta );
 	}
 
 	/**
