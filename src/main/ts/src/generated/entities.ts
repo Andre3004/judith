@@ -34,8 +34,11 @@ export interface IntlString {
     };
 }
 
-export interface Banco {
+export interface Categoria {
     nome?: string,
+    categoriaPai?: Categoria,
+    isSelected?: Boolean,
+    subCategorias?: Categoria[],
     id?: number,
     created?: Date,
     updated?: Date
@@ -53,6 +56,54 @@ export interface Conta {
     isDisabled?: Boolean,
     lancamentos?: Lancamento[],
     transferencias?: number,
+    id?: number,
+    created?: Date,
+    updated?: Date
+}
+
+
+export let TipoContaValues: string[] = ['CONTROLE_INTERNO', 'CARTAO_CREDITO', 'CONTA_CORRENTE', 'POUPANCA'];
+export type TipoConta = 'CONTROLE_INTERNO' | 'CARTAO_CREDITO' | 'CONTA_CORRENTE' | 'POUPANCA';
+
+
+export interface Terceiro {
+    nome?: string,
+    id?: number,
+    created?: Date,
+    updated?: Date
+}
+
+
+export interface Banco {
+    nome?: string,
+    id?: number,
+    created?: Date,
+    updated?: Date
+}
+
+
+export let PeriodoValues: string[] = ['DIA', 'MES', 'ANO'];
+export type Periodo = 'DIA' | 'MES' | 'ANO';
+
+
+export let TipoLancamentoValues: string[] = ['RECEITA', 'DESPESA', 'TRANSFERENCIA'];
+export type TipoLancamento = 'RECEITA' | 'DESPESA' | 'TRANSFERENCIA';
+
+
+export let SituacaoLancamentoValues: string[] = ['LIQUIDADO', 'PENDENTE'];
+export type SituacaoLancamento = 'LIQUIDADO' | 'PENDENTE';
+
+
+export let FormaPagamentoValues: string[] = ['FIXA', 'PARCELADO'];
+export type FormaPagamento = 'FIXA' | 'PARCELADO';
+
+
+export interface Endereco {
+    bairro?: string,
+    complemento?: string,
+    cidade?: string,
+    cep?: string,
+    numero?: number,
     id?: number,
     created?: Date,
     updated?: Date
@@ -93,41 +144,6 @@ export interface Lancamento {
 }
 
 
-export let TipoContaValues: string[] = ['CONTROLE_INTERNO', 'CARTAO_CREDITO', 'CONTA_CORRENTE', 'POUPANCA'];
-export type TipoConta = 'CONTROLE_INTERNO' | 'CARTAO_CREDITO' | 'CONTA_CORRENTE' | 'POUPANCA';
-
-
-export interface Terceiro {
-    nome?: string,
-    id?: number,
-    created?: Date,
-    updated?: Date
-}
-
-
-export interface Endereco {
-    bairro?: string,
-    complemento?: string,
-    cidade?: string,
-    cep?: string,
-    numero?: number,
-    id?: number,
-    created?: Date,
-    updated?: Date
-}
-
-
-export interface Categoria {
-    nome?: string,
-    categoriaPai?: Categoria,
-    isSelected?: Boolean,
-    subCategorias?: Categoria[],
-    id?: number,
-    created?: Date,
-    updated?: Date
-}
-
-
 export interface Usuario {
     nome?: string,
     cpf?: string,
@@ -140,22 +156,6 @@ export interface Usuario {
     created?: Date,
     updated?: Date
 }
-
-
-export let FormaPagamentoValues: string[] = ['FIXA', 'PARCELADO'];
-export type FormaPagamento = 'FIXA' | 'PARCELADO';
-
-
-export let SituacaoLancamentoValues: string[] = ['LIQUIDADO', 'PENDENTE'];
-export type SituacaoLancamento = 'LIQUIDADO' | 'PENDENTE';
-
-
-export let PeriodoValues: string[] = ['DIA', 'MES', 'ANO'];
-export type Periodo = 'DIA' | 'MES' | 'ANO';
-
-
-export let TipoLancamentoValues: string[] = ['RECEITA', 'DESPESA', 'TRANSFERENCIA'];
-export type TipoLancamento = 'RECEITA' | 'DESPESA' | 'TRANSFERENCIA';
 
 
 

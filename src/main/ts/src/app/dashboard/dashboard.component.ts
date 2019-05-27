@@ -1,7 +1,7 @@
 import { TipoLancamento } from './../../generated/entities';
 import { OpenSnackBarService } from './../open-snackbar/open-snackbar.service';
 import { LancamentFormComponent } from './../lancamento/lancament-form/lancament-form.component';
-import { Component, ViewContainerRef, OnInit } from '@angular/core';
+import { Component, ViewContainerRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { MatDialog } from '@angular/material';
@@ -11,11 +11,50 @@ import { ContaService, LancamentoService } from 'src/generated/services';
 import { Conta } from 'src/generated/entities';
 import { Router } from '@angular/router';
 
+import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
+import * as pluginDataLabels from 'chartjs-plugin-datalabels';
+import { Label } from 'ng2-charts';
+
+import
+{
+  startOfDay,
+  endOfDay,
+  subDays,
+  addDays,
+  endOfMonth,
+  isSameDay,
+  isSameMonth,
+  addHours
+} from 'date-fns';
+import { Subject } from 'rxjs';
+import
+{
+  CalendarEvent,
+  CalendarEventAction,
+  CalendarEventTimesChangedEvent,
+  CalendarView
+} from 'angular-calendar';
+
 export interface Section
 {
   name: string;
   updated: Date;
 }
+
+const colors: any = {
+  red: {
+    primary: '#ad2121',
+    secondary: '#FAE3E3'
+  },
+  blue: {
+    primary: '#1e90ff',
+    secondary: '#D1E8FF'
+  },
+  yellow: {
+    primary: '#e3bc08',
+    secondary: '#FDF1BA'
+  }
+};
 
 
 @Component({
@@ -27,6 +66,7 @@ export class DashboardComponent implements OnInit
 {
 
   public contas: Conta[] = [];
+  public lancamentosPendentes = [];
 
   /** Based on the screen size, switch from standard to one column per row */
   cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
@@ -38,8 +78,8 @@ export class DashboardComponent implements OnInit
           { id: 1, title: 'SALDO', cols: 1, rows: 1 },
           { id: 2, title: 'LANÇAMENTO RÁPIDO', cols: 1, rows: 1 },
           { id: 3, title: 'CONTAS', cols: 2, rows: 2 },
-          { id: 4, title: 'GRÁFICO', cols: 1, rows: 1 },
-          { id: 5, title: 'DETALHAMENTO', cols: 1, rows: 1 }
+          { id: 4, title: 'LANÇAMENTOS PENDENTES', cols: 1, rows: 2 },
+          { id: 5, title: 'CALENDÁRIO', cols: 2, rows: 2 },
         ];
       }
 
@@ -47,8 +87,8 @@ export class DashboardComponent implements OnInit
         { id: 1, title: 'SALDO', cols: 1, rows: 1 },
         { id: 2, title: 'LANÇAMENTO RÁPIDO', cols: 1, rows: 1 },
         { id: 3, title: 'CONTAS', cols: 1, rows: 2 },
-        { id: 4, title: 'GRÁFICO', cols: 1, rows: 1 },
-        { id: 5, title: 'DETALHAMENTO', cols: 1, rows: 1 }
+        { id: 4, title: 'LANÇAMENTOS PENDENTES', cols: 1, rows: 2 },
+        { id: 5, title: 'CALENDÁRIO', cols: 2, rows: 3 },
       ];
     })
   );
@@ -149,6 +189,35 @@ export class DashboardComponent implements OnInit
         return 0;
       })
 
+      this.contas.forEach(conta =>
+      {
+
+        conta.lancamentos.forEach(lancamento =>
+        {
+
+          if(lancamento.situacaoLancamento == 'PENDENTE')
+            this.lancamentosPendentes.push(lancamento)
+
+          this.events.push({
+            start: lancamento.dataVencimento,
+            end: lancamento.dataVencimento,
+            title: lancamento.descricao,
+            color: colors.blue,
+            allDay: false,
+            resizable: {
+              beforeStart: true,
+              afterEnd: true
+            },
+            draggable: true
+          })
+
+
+
+
+        })
+
+      })
+
       console.log(this.contas)
     }, err => console.log(err))
   }
@@ -231,6 +300,147 @@ export class DashboardComponent implements OnInit
     return 0;
   }
 
+  ////////////////////////////
+  /////////////////////////////
 
 
+  public barChartOptions: ChartOptions = {
+    responsive: true,
+    // We use these empty structures as placeholders for dynamic theming.
+    scales: { xAxes: [{}], yAxes: [{}] },
+    plugins: {
+      datalabels: {
+        anchor: 'end',
+        align: 'end',
+      }
+    }
+  };
+  public barChartLabels: Label[] = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
+  public barChartType: ChartType = 'bar';
+  public barChartLegend = true;
+  public barChartPlugins = [pluginDataLabels];
+
+  public barChartData: ChartDataSets[] = [
+    { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
+    { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' },
+    { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series C' }
+  ];
+
+  // events
+  public chartClicked({ event, active }: { event: MouseEvent, active: {}[] }): void
+  {
+    console.log(event, active);
+  }
+
+
+  public randomize(): void
+  {
+    // Only Change 3 values
+    const data = [
+      Math.round(Math.random() * 100),
+      59,
+      80,
+      (Math.random() * 100),
+      56,
+      (Math.random() * 100),
+      40];
+    this.barChartData[0].data = data;
+  }
+
+
+  ///////////////////CALENDER
+
+  view: CalendarView = CalendarView.Month;
+
+  CalendarView = CalendarView;
+
+  viewDate: Date = new Date();
+
+  modalData: {
+    action: string;
+    event: CalendarEvent;
+  };
+
+  refresh: Subject<any> = new Subject();
+
+  events: CalendarEvent[] = [];
+
+  activeDayIsOpen: boolean = true;
+
+  dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void
+  {
+    if (isSameMonth(date, this.viewDate))
+    {
+      this.viewDate = date;
+      if (
+        (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
+        events.length === 0
+      )
+      {
+        this.activeDayIsOpen = false;
+      } else
+      {
+        this.activeDayIsOpen = true;
+      }
+    }
+  }
+
+  eventTimesChanged({
+    event,
+    newStart,
+    newEnd
+  }: CalendarEventTimesChangedEvent): void
+  {
+    this.events = this.events.map(iEvent =>
+    {
+      if (iEvent === event)
+      {
+        return {
+          ...event,
+          start: newStart,
+          end: newEnd
+        };
+      }
+      return iEvent;
+    });
+    this.handleEvent('Dropped or resized', event);
+  }
+
+  handleEvent(action: string, event: CalendarEvent): void
+  {
+    this.modalData = { event, action };
+  }
+
+  addEvent(): void
+  {
+    this.events = [
+      ...this.events,
+      {
+        title: 'New event',
+        start: startOfDay(new Date()),
+        end: endOfDay(new Date()),
+        color: colors.red,
+        draggable: true,
+        resizable: {
+          beforeStart: true,
+          afterEnd: true
+        }
+      }
+    ];
+  }
+
+  deleteEvent(eventToDelete: CalendarEvent)
+  {
+    this.events = this.events.filter(event => event !== eventToDelete);
+  }
+
+  setView(view: CalendarView)
+  {
+    this.view = view;
+  }
+
+  closeOpenMonthViewDay()
+  {
+    this.activeDayIsOpen = false;
+  }
 }

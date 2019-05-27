@@ -6,67 +6,164 @@
           <mat-card-title *ngIf="card.id != 3">
             {{card.title}}
           </mat-card-title>
-          <mat-card-title  *ngIf="card.id == 3">
-              <label>{{card.title}}</label>
+          <mat-card-title *ngIf="card.id == 3">
+            <label>{{card.title}}</label>
 
-              <button matTooltip="Adicionar conta" (click)="openDialogFormConta(null)" class="more-button" mat-fab color="primary">
-                <mat-icon>add</mat-icon>
-              </button>
+            <button matTooltip="Adicionar conta" (click)="openDialogFormConta(null)" class="more-button" mat-fab color="primary">
+              <mat-icon>add</mat-icon>
+            </button>
           </mat-card-title>
         </mat-card-header>
-        
-        <mat-card-content *ngIf="card.id == 2"  fxLayoutAlign="space-around center" class="push-top-lg">
-          
+
+        <mat-card-content *ngIf="card.id == 4">
+          <mat-list >
+            <mat-list-item *ngFor="let lancamento of lancamentosPendentes" >
+              <h3 matLine>Descrição: {{lancamento?.descricao}}</h3>
+              <p mat-line> Data do vencimento: {{lancamento.dataVencimento | date}} </p>
+            </mat-list-item>
+
+          </mat-list>
+        </mat-card-content>
+
+        <mat-card-content *ngIf="card.id == 2" fxLayoutAlign="space-around center" class="push-top-lg">
+
           <div fxLayout="column">
             <button mat-fab (click)="onClickLancamentoRapido('RECEITA')">
               <mat-icon>add</mat-icon>
             </button>
-            <label class="push-top-sm">RECEITA</label>            
+            <label class="push-top-sm">RECEITA</label>
           </div>
 
-          <div fxLayout="column" >
-            <button  mat-fab color="warn" (click)="onClickLancamentoRapido('DESPESA')">
+          <div fxLayout="column">
+            <button mat-fab color="warn" (click)="onClickLancamentoRapido('DESPESA')">
               <mat-icon>remove</mat-icon>
             </button>
             <label class="push-top-sm">DESPESA</label>
           </div>
 
-          <div fxLayout="column" fxLayoutAlign=" center" >
-            <button  mat-fab style="background-color: green" (click)="onClickLancamentoRapido('TRANSFERENCIA')">
+          <div fxLayout="column" fxLayoutAlign=" center">
+            <button mat-fab style="background-color: green" (click)="onClickLancamentoRapido('TRANSFERENCIA')">
               <mat-icon>euro_symbol</mat-icon>
             </button>
             <label class="push-top-sm">TRANSFERÊNCIA</label>
           </div>
         </mat-card-content>
 
-        <mat-card-content *ngIf="card.id == 1"  fxLayoutAlign="center center">
-              <label  [ngClass]="(getSaldo >= 0)?'saldo-positivo':'saldo-negativo'"
-              class="push-top-md mat-display-4">R$ {{getSaldo}}</label>
+        <mat-card-content *ngIf="card.id == 1" fxLayoutAlign="center center">
+          <label [ngClass]="(getSaldo >= 0)?'saldo-positivo':'saldo-negativo'"
+                 class="push-top-md mat-display-4">R$ {{getSaldo}}</label>
         </mat-card-content>
 
 
         <mat-card-content *ngIf="card.id == 3">
-            <mat-list *ngIf="contas.length > 0">
-              <h3 mat-subheader>Minhas contas</h3>
-              <mat-list-item *ngFor="let conta of contas">
-                <mat-icon mat-list-icon>account_balance_wallet</mat-icon>
-                <h4 mat-line>{{conta.nome}}</h4>
-                <p mat-line>Saldo final: {{getSaldoConta(conta)}} </p>
-                <p mat-line>Data de criação: {{conta.created | date}} </p>
-                <button (click)="openDialogFormConta(conta)" matTooltip="Editar conta" mat-icon-button class="hover-icon-button-add">
-                    <mat-icon>edit</mat-icon>
-                </button>
-                <button matTooltip="Remover conta" class="hover-icon-button-remove" mat-icon-button (click)="openConfirmExcluirConta(conta)">
-                    <mat-icon mat-icon-button >delete</mat-icon>
-                </button>
-                <mat-divider *ngIf="!last"></mat-divider>
-              </mat-list-item>
-             
-            </mat-list>
+          <mat-list *ngIf="contas.length > 0">
+            <h3 mat-subheader>Minhas contas</h3>
+            <mat-list-item *ngFor="let conta of contas">
+              <mat-icon mat-list-icon>account_balance_wallet</mat-icon>
+              <h4 mat-line>{{conta.nome}}</h4>
+              <p mat-line>Saldo final: {{getSaldoConta(conta)}} </p>
+              <p mat-line>Data de criação: {{conta.created | date}} </p>
+              <button (click)="openDialogFormConta(conta)" matTooltip="Editar conta" mat-icon-button class="hover-icon-button-add">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button matTooltip="Remover conta" class="hover-icon-button-remove" mat-icon-button (click)="openConfirmExcluirConta(conta)">
+                <mat-icon mat-icon-button>delete</mat-icon>
+              </button>
+              <mat-divider *ngIf="!last"></mat-divider>
+            </mat-list-item>
 
-            <div *ngIf="!contas.length" fxLayoutAlign="center center">
-              <h3 >Nenhuma conta encontrada.</h3>
+          </mat-list>
+
+          <div *ngIf="!contas.length" fxLayoutAlign="center center">
+            <h3>Nenhuma conta encontrada.</h3>
+          </div>
+        </mat-card-content>
+
+
+        <mat-card-content *ngIf="card.id == 5">
+          <div class="row text-center">
+            <div class="col-md-4">
+              <div class="btn-group">
+                <div
+                     class="btn btn-primary"
+                     mwlCalendarPreviousView
+                     [view]="view"
+                     [(viewDate)]="viewDate"
+                     (viewDateChange)="closeOpenMonthViewDay()">
+                  Previous
+                </div>
+                <div
+                     class="btn btn-outline-secondary"
+                     mwlCalendarToday
+                     [(viewDate)]="viewDate">
+                  Today
+                </div>
+                <div
+                     class="btn btn-primary"
+                     mwlCalendarNextView
+                     [view]="view"
+                     [(viewDate)]="viewDate"
+                     (viewDateChange)="closeOpenMonthViewDay()">
+                  Next
+                </div>
+              </div>
             </div>
+            <div class="col-md-4">
+              <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+            </div>
+            <div class="col-md-4">
+              <div class="btn-group">
+                <div
+                     class="btn btn-primary"
+                     (click)="setView(CalendarView.Month)"
+                     [class.active]="view === CalendarView.Month">
+                  Month
+                </div>
+                <div
+                     class="btn btn-primary"
+                     (click)="setView(CalendarView.Week)"
+                     [class.active]="view === CalendarView.Week">
+                  Week
+                </div>
+                <div
+                     class="btn btn-primary"
+                     (click)="setView(CalendarView.Day)"
+                     [class.active]="view === CalendarView.Day">
+                  Day
+                </div>
+              </div>
+            </div>
+          </div>
+          <br />
+          <div [ngSwitch]="view">
+            <mwl-calendar-month-view
+                                     *ngSwitchCase="CalendarView.Month"
+                                     [viewDate]="viewDate"
+                                     [events]="events"
+                                     [refresh]="refresh"
+                                     [activeDayIsOpen]="activeDayIsOpen"
+                                     (dayClicked)="dayClicked($event.day)"
+                                     (eventClicked)="handleEvent('Clicked', $event.event)"
+                                     (eventTimesChanged)="eventTimesChanged($event)">
+            </mwl-calendar-month-view>
+            <mwl-calendar-week-view
+                                    *ngSwitchCase="CalendarView.Week"
+                                    [viewDate]="viewDate"
+                                    [events]="events"
+                                    [refresh]="refresh"
+                                    (eventClicked)="handleEvent('Clicked', $event.event)"
+                                    (eventTimesChanged)="eventTimesChanged($event)">
+            </mwl-calendar-week-view>
+            <mwl-calendar-day-view
+                                   *ngSwitchCase="CalendarView.Day"
+                                   [viewDate]="viewDate"
+                                   [events]="events"
+                                   [refresh]="refresh"
+                                   (eventClicked)="handleEvent('Clicked', $event.event)"
+                                   (eventTimesChanged)="eventTimesChanged($event)">
+            </mwl-calendar-day-view>
+          </div>
+
         </mat-card-content>
       </mat-card>
     </mat-grid-tile>

@@ -92,12 +92,31 @@
     rxjs "6.3.3"
     source-map "0.7.3"
 
+"@angular-devkit/core@7.3.9", "@angular-devkit/core@^7.3.5":
+  version "7.3.9"
+  resolved "https://npm.eits.com.br:443/@angular-devkit%2fcore/-/core-7.3.9.tgz#bef2aaa0be7219c546fb99ea0ba9dd3a6dcd288a"
+  integrity sha512-SaxD+nKFW3iCBKsxNR7+66J30EexW/y7tm8m5AvUH+GwSAgIj0ZYmRUzFEPggcaLVA4WnE/YWqIXZMJW5dT7gw==
+  dependencies:
+    ajv "6.9.1"
+    chokidar "2.0.4"
+    fast-json-stable-stringify "2.0.0"
+    rxjs "6.3.3"
+    source-map "0.7.3"
+
 "@angular-devkit/schematics@7.3.6":
   version "7.3.6"
   resolved "https://npm.eits.com.br:443/@angular-devkit%2fschematics/-/schematics-7.3.6.tgz#5580b730b1bae5397f5860cfb0d7270fec6e6deb"
   integrity sha512-YXF7QusmMy3D9H0vNczc1n5BkuEHLwt7cW33euNeGNgTIsD0n6DrUhgClurXicnr2GNPSDYE5+3115lmJkhyrg==
   dependencies:
     "@angular-devkit/core" "7.3.6"
+    rxjs "6.3.3"
+
+"@angular-devkit/schematics@7.3.9", "@angular-devkit/schematics@^7.3.5":
+  version "7.3.9"
+  resolved "https://npm.eits.com.br:443/@angular-devkit%2fschematics/-/schematics-7.3.9.tgz#4fe7bc878b116b157a3adf00583c28c951215877"
+  integrity sha512-xzROGCYp7aQbeJ3V6YC0MND7wKEAdWqmm/GaCufEk0dDS8ZGe0sQhcM2oBRa2nQqGQNeThFIH51kx+FayrJP0w==
+  dependencies:
+    "@angular-devkit/core" "7.3.9"
     rxjs "6.3.3"
 
 "@angular/animations@^7.2.9":
@@ -349,6 +368,15 @@
     "@angular-devkit/schematics" "7.3.6"
     typescript "3.2.4"
 
+"@schematics/angular@^7.3.5":
+  version "7.3.9"
+  resolved "https://npm.eits.com.br:443/@schematics%2fangular/-/angular-7.3.9.tgz#f57baf1cd9588d4f1035974d06fd8f3d54df021a"
+  integrity sha512-B3lytFtFeYNLfWdlrIzvy3ulFRccD2/zkoL0734J+DAGfUz7vbysJ50RwYL46sQUcKdZdvb48ktfu1S8yooP6Q==
+  dependencies:
+    "@angular-devkit/core" "7.3.9"
+    "@angular-devkit/schematics" "7.3.9"
+    typescript "3.2.4"
+
 "@schematics/update@0.13.6":
   version "0.13.6"
   resolved "https://npm.eits.com.br:443/@schematics%2fupdate/-/update-0.13.6.tgz#7d114b50e99af0b77ea537a50341a81a80240a02"
@@ -363,7 +391,12 @@
     semver "5.6.0"
     semver-intersect "1.4.0"
 
-"@types/jasmine@*":
+"@types/chart.js@^2.7.48":
+  version "2.7.52"
+  resolved "https://npm.eits.com.br:443/@types%2fchart.js/-/chart.js-2.7.52.tgz#30a12c838fa8909ea76918afeaaf48069d18b2dc"
+  integrity sha512-h4Md9c0FYPoqHyPeo3sG+wBIDFGz6GubulKUopsmFkSSW2ieyI2phjlj+FjqzTwhrWwR9dbw/HlCW3axj+tWug==
+
+"@types/jasmine@*", "@types/jasmine@^3.0.0":
   version "3.3.12"
   resolved "https://npm.eits.com.br:443/@types%2fjasmine/-/jasmine-3.3.12.tgz#bf282cb540e9ad7a0a04b742082c073b655eab39"
   integrity sha512-lXvr2xFQEVQLkIhuGaR3GC1L9lMU1IxeWnAF/wNY5ZWpC4p9dgxkKkzMp7pntpAdv9pZSnYqgsBkCg32MXSZMg==
@@ -384,6 +417,11 @@
   version "11.11.3"
   resolved "https://npm.eits.com.br:443/@types%2fnode/-/node-11.11.3.tgz#7c6b0f8eaf16ae530795de2ad1b85d34bf2f5c58"
   integrity sha512-wp6IOGu1lxsfnrD+5mX6qwSwWuqsdkKKxTN4aQc4wByHAKZJf9/D4KXPQ1POUjEbnCP5LMggB0OEFNY9OTsMqg==
+
+"@types/node@^8.0.31":
+  version "8.10.48"
+  resolved "https://npm.eits.com.br:443/@types%2fnode/-/node-8.10.48.tgz#e385073561643a9ba6199a1985ffc03530f90781"
+  integrity sha512-c35YEBTkL4rzXY2ucpSKy+UYHjUBIIkuJbWYbsGIrKLEWU5dgJMmLkkIb3qeC3O3Tpb1ZQCwecscvJTDjDjkRw==
 
 "@types/node@~8.9.4":
   version "8.9.5"
@@ -672,6 +710,37 @@ amdefine@>=0.0.4:
   resolved "https://npm.eits.com.br:443/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
   integrity sha1-SlKCrBZHKek2Gbz9OtFR+BfOkfU=
 
+angular-calendar@~0.27.8:
+  version "0.27.8"
+  resolved "https://npm.eits.com.br:443/angular-calendar/-/angular-calendar-0.27.8.tgz#a8e5f1ad5ac64d204b6f5037f59e03e56556697c"
+  integrity sha512-XDZtFOq6DVM0ba/JfdZwBk4dmCO8e+ZwYLor4USYaoBWUqfZC6qkpcRc1DvcbpGfIRo4kh/0RlHDcGSl55bjCQ==
+  dependencies:
+    angular-draggable-droppable "^4.3.0"
+    angular-resizable-element "^3.2.4"
+    calendar-utils "^0.3.1"
+    positioning "^1.4.0"
+    tslib "^1.9.0"
+
+angular-draggable-droppable@^4.3.0:
+  version "4.3.0"
+  resolved "https://npm.eits.com.br:443/angular-draggable-droppable/-/angular-draggable-droppable-4.3.0.tgz#17357d7578db6ea2b7310915cde129e09906d319"
+  integrity sha512-IDUeUxZ0+0Y+ya/CDV5PMc5b3sjr4/aIVcTmo+jJhUusOWrCSKogxZDW7cK61B34/YVllb2K5gkzfzvLiYfQZw==
+  dependencies:
+    dom-autoscroller "^2.3.4"
+    tslib "^1.9.0"
+
+angular-resizable-element@^3.2.4:
+  version "3.2.4"
+  resolved "https://npm.eits.com.br:443/angular-resizable-element/-/angular-resizable-element-3.2.4.tgz#f3d29b77ae72b6f9e359f5fba06821c353fe86d4"
+  integrity sha512-Qd/WRTaJgmDJoeWzmK0F52I3X0nLtFPirmsVC2ceic4EQ/3X2yYFCOWgCtH+PvMZct6Whoky3OQLqCpFXQsKHQ==
+  dependencies:
+    tslib "^1.9.0"
+
+animation-frame-polyfill@^1.0.0:
+  version "1.0.1"
+  resolved "https://npm.eits.com.br:443/animation-frame-polyfill/-/animation-frame-polyfill-1.0.1.tgz#5f5ad993a78794bd176acde5b6dce62867410c9d"
+  integrity sha1-X1rZk6eHlL0Xas3lttzmKGdBDJ0=
+
 ansi-colors@^3.0.0:
   version "3.2.4"
   resolved "https://npm.eits.com.br:443/ansi-colors/-/ansi-colors-3.2.4.tgz#e3a3da4bfbae6c86a9c285625de124a234026fbf"
@@ -783,6 +852,11 @@ array-flatten@^2.1.0:
   version "2.1.2"
   resolved "https://npm.eits.com.br:443/array-flatten/-/array-flatten-2.1.2.tgz#24ef80a28c1a893617e2149b0c6d0d788293b099"
   integrity sha512-hNfzcOV8W4NdualtqBFPyVO+54DSJuZGY9qT4pRroB6S9e3iiido2ISIC5h9R2sPJ8H3FHCIiEnsv1lPXO3KtQ==
+
+array-from@^2.1.1:
+  version "2.1.1"
+  resolved "https://npm.eits.com.br:443/array-from/-/array-from-2.1.1.tgz#cfe9d8c26628b9dc5aecc62a9f5d8f1f352c1195"
+  integrity sha1-z+nYwmYoudxa7MYqn12PHzUsEZU=
 
 array-union@^1.0.1:
   version "1.0.2"
@@ -1331,6 +1405,11 @@ cache-base@^1.0.1:
     union-value "^1.0.0"
     unset-value "^1.0.0"
 
+calendar-utils@^0.3.1:
+  version "0.3.1"
+  resolved "https://npm.eits.com.br:443/calendar-utils/-/calendar-utils-0.3.1.tgz#128fef4cef4ca4a7de42a7801e7307e497d32014"
+  integrity sha512-0XSJ/dP6QDeO9higbWZmf/ZE9mAUq05HdUONbSNpmwhKfKQ8zf6fMdU6M0ySv0q+TkdwjaGy0DFTRzSUZMsTVw==
+
 callsite@1.0.0:
   version "1.0.0"
   resolved "https://npm.eits.com.br:443/callsite/-/callsite-1.0.0.tgz#280398e5d664bd74038b6f0905153e6e8af1bc20"
@@ -1398,6 +1477,34 @@ chardet@^0.7.0:
   version "0.7.0"
   resolved "https://npm.eits.com.br:443/chardet/-/chardet-0.7.0.tgz#90094849f0937f2eedc2425d0d28a9e5f0cbad9e"
   integrity sha512-mT8iDcrh03qDGRRmoA2hmBJnxpllMR+0/0qlzjqZES6NdiWDcZkCNAk4rPFZ9Q85r27unkiNNg8ZOiwZXBHwcA==
+
+chart.js@~2.8.0:
+  version "2.8.0"
+  resolved "https://npm.eits.com.br:443/chart.js/-/chart.js-2.8.0.tgz#b703b10d0f4ec5079eaefdcd6ca32dc8f826e0e9"
+  integrity sha512-Di3wUL4BFvqI5FB5K26aQ+hvWh8wnP9A3DWGvXHVkO13D3DSnaSsdZx29cXlEsYKVkn1E2az+ZYFS4t0zi8x0w==
+  dependencies:
+    chartjs-color "^2.1.0"
+    moment "^2.10.2"
+
+chartjs-color-string@^0.6.0:
+  version "0.6.0"
+  resolved "https://npm.eits.com.br:443/chartjs-color-string/-/chartjs-color-string-0.6.0.tgz#1df096621c0e70720a64f4135ea171d051402f71"
+  integrity sha512-TIB5OKn1hPJvO7JcteW4WY/63v6KwEdt6udfnDE9iCAZgy+V4SrbSxoIbTw/xkUIapjEI4ExGtD0+6D3KyFd7A==
+  dependencies:
+    color-name "^1.0.0"
+
+chartjs-color@^2.1.0:
+  version "2.3.0"
+  resolved "https://npm.eits.com.br:443/chartjs-color/-/chartjs-color-2.3.0.tgz#0e7e1e8dba37eae8415fd3db38bf572007dd958f"
+  integrity sha512-hEvVheqczsoHD+fZ+tfPUE+1+RbV6b+eksp2LwAhwRTVXEjCSEavvk+Hg3H6SZfGlPh/UfmWKGIvZbtobOEm3g==
+  dependencies:
+    chartjs-color-string "^0.6.0"
+    color-convert "^0.5.3"
+
+chartjs-plugin-datalabels@~0.6.0:
+  version "0.6.0"
+  resolved "https://npm.eits.com.br:443/chartjs-plugin-datalabels/-/chartjs-plugin-datalabels-0.6.0.tgz#cbbb4a3429c9fdfa88b974d46b5363b2d095f339"
+  integrity sha512-3APqqeqVHlxjusTO0hETfNjq9HWCISLkjxQfAKgbnTfjZe60knOzVxDAgLGnpRvnzQvZUtwSlnJX2MHIuIUe8w==
 
 chokidar@2.0.4:
   version "2.0.4"
@@ -1555,6 +1662,11 @@ collection-visit@^1.0.0:
     map-visit "^1.0.0"
     object-visit "^1.0.0"
 
+color-convert@^0.5.3:
+  version "0.5.3"
+  resolved "https://npm.eits.com.br:443/color-convert/-/color-convert-0.5.3.tgz#bdb6c69ce660fadffe0b0007cc447e1b9f7282bd"
+  integrity sha1-vbbGnOZg+t/+CwAHzER+G59ygr0=
+
 color-convert@^1.9.0:
   version "1.9.3"
   resolved "https://npm.eits.com.br:443/color-convert/-/color-convert-1.9.3.tgz#bb71850690e1f136567de629d2d5471deda4c1e8"
@@ -1566,6 +1678,11 @@ color-name@1.1.3:
   version "1.1.3"
   resolved "https://npm.eits.com.br:443/color-name/-/color-name-1.1.3.tgz#a7d0558bd89c42f795dd42328f740831ca53bc25"
   integrity sha1-p9BVi9icQveV3UIyj3QIMcpTvCU=
+
+color-name@^1.0.0:
+  version "1.1.4"
+  resolved "https://npm.eits.com.br:443/color-name/-/color-name-1.1.4.tgz#c2a09a87acbde69543de6f63fa3995c826c536a2"
+  integrity sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==
 
 colors@1.1.2:
   version "1.1.2"
@@ -1790,6 +1907,13 @@ create-hmac@^1.1.0, create-hmac@^1.1.2, create-hmac@^1.1.4:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
+create-point-cb@^1.0.0:
+  version "1.2.0"
+  resolved "https://npm.eits.com.br:443/create-point-cb/-/create-point-cb-1.2.0.tgz#1bce47fc4fc01855ee12138d676b0cb2a7cbce71"
+  integrity sha1-G85H/E/AGFXuEhONZ2sMsqfLznE=
+  dependencies:
+    type-func "^1.0.1"
+
 cross-spawn@^3.0.0:
   version "3.0.1"
   resolved "https://npm.eits.com.br:443/cross-spawn/-/cross-spawn-3.0.1.tgz#1256037ecb9f0c5f79e3d6ef135e30770184b982"
@@ -1884,6 +2008,11 @@ dashdash@^1.12.0:
   integrity sha1-hTz6D3y+L+1d4gMmuN1YEDX24vA=
   dependencies:
     assert-plus "^1.0.0"
+
+date-fns@~1.30.1:
+  version "1.30.1"
+  resolved "https://npm.eits.com.br:443/date-fns/-/date-fns-1.30.1.tgz#2e71bf0b119153dbb4cc4e88d9ea5acfb50dc05c"
+  integrity sha512-hBSVCvSmWC+QypYObzwGOd9wqdDpOt+0wl0KbU+R+uuZBS1jN8VsD1ss3irQDknRj5NvxiTF6oj/nDRnN/UQNw==
 
 date-format@^2.0.0:
   version "2.0.0"
@@ -2108,6 +2237,30 @@ dns-txt@^2.0.2:
   dependencies:
     buffer-indexof "^1.0.0"
 
+dom-autoscroller@^2.3.4:
+  version "2.3.4"
+  resolved "https://npm.eits.com.br:443/dom-autoscroller/-/dom-autoscroller-2.3.4.tgz#1ed25cbde2bdf3bf3eb762937089b20ecef190bd"
+  integrity sha512-HcAdt/2Dq9x4CG6LWXc2x9Iq0MJPAu8fuzHncclq7byufqYEYVtx9sZ/dyzR+gdj4qwEC9p27Lw1G2HRRYX6jQ==
+  dependencies:
+    animation-frame-polyfill "^1.0.0"
+    create-point-cb "^1.0.0"
+    dom-mousemove-dispatcher "^1.0.1"
+    dom-plane "^1.0.1"
+    dom-set "^1.0.1"
+    type-func "^1.0.1"
+
+dom-mousemove-dispatcher@^1.0.1:
+  version "1.0.1"
+  resolved "https://npm.eits.com.br:443/dom-mousemove-dispatcher/-/dom-mousemove-dispatcher-1.0.1.tgz#a24a6ddf93b27bb3694f72087546a57fc7e9140f"
+  integrity sha1-okpt35Oye7NpT3IIdUalf8fpFA8=
+
+dom-plane@^1.0.1:
+  version "1.0.2"
+  resolved "https://npm.eits.com.br:443/dom-plane/-/dom-plane-1.0.2.tgz#f8c85e697c587f147e8fc2fac1de078c1fe4172c"
+  integrity sha1-+MheaXxYfxR+j8L6wd4HjB/kFyw=
+  dependencies:
+    create-point-cb "^1.0.0"
+
 dom-serialize@^2.2.0:
   version "2.2.1"
   resolved "https://npm.eits.com.br:443/dom-serialize/-/dom-serialize-2.2.1.tgz#562ae8999f44be5ea3076f5419dcd59eb43ac95b"
@@ -2117,6 +2270,15 @@ dom-serialize@^2.2.0:
     ent "~2.2.0"
     extend "^3.0.0"
     void-elements "^2.0.0"
+
+dom-set@^1.0.1:
+  version "1.1.1"
+  resolved "https://npm.eits.com.br:443/dom-set/-/dom-set-1.1.1.tgz#5c2c610ee4839b520ed5f98ddbcbe314c0fa954a"
+  integrity sha1-XCxhDuSDm1IO1fmN28vjFMD6lUo=
+  dependencies:
+    array-from "^2.1.1"
+    is-array "^1.0.1"
+    iselement "^1.1.4"
 
 domain-browser@^1.1.1:
   version "1.2.0"
@@ -3321,6 +3483,11 @@ is-accessor-descriptor@^1.0.0:
   dependencies:
     kind-of "^6.0.0"
 
+is-array@^1.0.1:
+  version "1.0.1"
+  resolved "https://npm.eits.com.br:443/is-array/-/is-array-1.0.1.tgz#e9850cc2cc860c3bc0977e84ccf0dd464584279a"
+  integrity sha1-6YUMwsyGDDvAl36EzPDdRkWEJ5o=
+
 is-arrayish@^0.2.1:
   version "0.2.1"
   resolved "https://npm.eits.com.br:443/is-arrayish/-/is-arrayish-0.2.1.tgz#77c99840527aa8ecb1a8ba697b80645a7a926a9d"
@@ -3505,6 +3672,11 @@ isbinaryfile@^3.0.0:
   dependencies:
     buffer-alloc "^1.2.0"
 
+iselement@^1.1.4:
+  version "1.1.4"
+  resolved "https://npm.eits.com.br:443/iselement/-/iselement-1.1.4.tgz#7e55b52a8ebca50a7e2e80e5b8d2840f32353146"
+  integrity sha1-flW1Ko68pQp+LoDluNKEDzI1MUY=
+
 isexe@^2.0.0:
   version "2.0.0"
   resolved "https://npm.eits.com.br:443/isexe/-/isexe-2.0.0.tgz#e8fbf374dc556ff8947a10dcb0572d633f2cfa10"
@@ -3636,6 +3808,11 @@ jasmine-core@~2.99.1:
   resolved "https://npm.eits.com.br:443/jasmine-core/-/jasmine-core-2.99.1.tgz#e6400df1e6b56e130b61c4bcd093daa7f6e8ca15"
   integrity sha1-5kAN8ea1bhMLYcS80JPap/boyhU=
 
+jasmine-core@~3.4.0:
+  version "3.4.0"
+  resolved "https://npm.eits.com.br:443/jasmine-core/-/jasmine-core-3.4.0.tgz#2a74618e966026530c3518f03e9f845d26473ce3"
+  integrity sha512-HU/YxV4i6GcmiH4duATwAbJQMlE0MsDIR5XmSVxURxKHn3aGAdbY1/ZJFmVRbKtnLwIxxMJD7gYaPsypcbYimg==
+
 jasmine-spec-reporter@~4.2.1:
   version "4.2.1"
   resolved "https://npm.eits.com.br:443/jasmine-spec-reporter/-/jasmine-spec-reporter-4.2.1.tgz#1d632aec0341670ad324f92ba84b4b32b35e9e22"
@@ -3651,6 +3828,14 @@ jasmine@2.8.0:
     exit "^0.1.2"
     glob "^7.0.6"
     jasmine-core "~2.8.0"
+
+jasmine@^3.0.0:
+  version "3.4.0"
+  resolved "https://npm.eits.com.br:443/jasmine/-/jasmine-3.4.0.tgz#0fa68903ff0c9697459cd044b44f4dcef5ec8bdc"
+  integrity sha512-sR9b4n+fnBFDEd7VS2el2DeHgKcPiMVn44rtKFumq9q7P/t8WrxsVIZPob4UDdgcDNCwyDqwxCt4k9TDRmjPoQ==
+  dependencies:
+    glob "^7.1.3"
+    jasmine-core "~3.4.0"
 
 jasminewd2@^2.1.0:
   version "2.2.0"
@@ -4354,6 +4539,11 @@ mkdirp@0.5.x, "mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.5.0:
   dependencies:
     minimist "0.0.8"
 
+moment@^2.10.2:
+  version "2.24.0"
+  resolved "https://npm.eits.com.br:443/moment/-/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
+  integrity sha512-bV7f+6l2QigeBBZSM/6yTNq4P2fNpSWj/0e7jQcy87A8e7o2nAfP/34/2ky5Vw4B9S446EtIhodAzkFCcR4dQg==
+
 moment@~2.22.2:
   version "2.22.2"
   resolved "https://npm.eits.com.br:443/moment/-/moment-2.22.2.tgz#3c257f9839fc0e93ff53149632239eb90783ff66"
@@ -4439,6 +4629,28 @@ neo-async@^2.5.0, neo-async@^2.6.0:
   version "2.6.0"
   resolved "https://npm.eits.com.br:443/neo-async/-/neo-async-2.6.0.tgz#b9d15e4d71c6762908654b5183ed38b753340835"
   integrity sha512-MFh0d/Wa7vkKO3Y3LlacqAEeHK0mckVqzDieUKTT+KGxi+zIpeVsFxymkIiRpbpDziHc290Xr9A1O4Om7otoRA==
+
+ng2-charts-schematics@~0.1.7:
+  version "0.1.7"
+  resolved "https://npm.eits.com.br:443/ng2-charts-schematics/-/ng2-charts-schematics-0.1.7.tgz#ffd77d471229392ef5fbd053cad99ab18a97fe49"
+  integrity sha512-qkNtaVHv+gXW2dtMDD4IGsVbShBOT1yzsjuALvL3hVjJ961SUKXH/k5keQi8mb22yrH1q742qmI42lDu+xvYYQ==
+  dependencies:
+    "@angular-devkit/core" "^7.3.5"
+    "@angular-devkit/schematics" "^7.3.5"
+    "@schematics/angular" "^7.3.5"
+    "@types/jasmine" "^3.0.0"
+    "@types/node" "^8.0.31"
+    jasmine "^3.0.0"
+    typescript "~3.2.2"
+
+ng2-charts@~2.2.3:
+  version "2.2.3"
+  resolved "https://npm.eits.com.br:443/ng2-charts/-/ng2-charts-2.2.3.tgz#ca2b9fc1f2bd908b48e826bb6cca2161830afa44"
+  integrity sha512-Kxj2bewn537xGFVkR7AgDmfqV+YH4hIL4R36EjlUI9WCWnphzY+VKZGX+D+usXd8e+znuqly+sbGHjddLxupUA==
+  dependencies:
+    "@types/chart.js" "^2.7.48"
+    lodash "^4.17.11"
+    tslib "^1.9.0"
 
 ng6-breadcrumbs@~1.0.7:
   version "1.0.7"
@@ -5124,6 +5336,11 @@ portfinder@^1.0.9:
     async "^1.5.2"
     debug "^2.2.0"
     mkdirp "0.5.x"
+
+positioning@^1.4.0:
+  version "1.4.0"
+  resolved "https://npm.eits.com.br:443/positioning/-/positioning-1.4.0.tgz#4aeca0eed70a50e38766348a89ebec7df1b6a2e7"
+  integrity sha512-LbN+mgAXtcDdN46xMJ3yZwjndqqYJODaO5qKmU+MVMu5tL3K2dlm1Qha/zh1k2JAFym5HDaZpnPfO4gr91VTRw==
 
 posix-character-classes@^0.1.0:
   version "0.1.1"
@@ -6718,6 +6935,11 @@ tweetnacl@^0.14.3, tweetnacl@~0.14.0:
   version "0.14.5"
   resolved "https://npm.eits.com.br:443/tweetnacl/-/tweetnacl-0.14.5.tgz#5ae68177f192d4456269d108afa93ff8743f4f64"
   integrity sha1-WuaBd/GS1EViadEIr6k/+HQ/T2Q=
+
+type-func@^1.0.1:
+  version "1.0.3"
+  resolved "https://npm.eits.com.br:443/type-func/-/type-func-1.0.3.tgz#ab184234ae80d8d50057cefeff3b2d97d08ae9b0"
+  integrity sha1-qxhCNK6A2NUAV87+/zstl9CK6bA=
 
 type-is@~1.6.16:
   version "1.6.16"

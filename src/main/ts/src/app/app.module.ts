@@ -80,6 +80,9 @@ import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {BreadcrumbsModule} from "ng6-breadcrumbs";
 import { FilterVencidosComponent } from './lancamento/lancament-list/filter-vencidos/filter-vencidos.component';
+import { ChartsModule } from 'ng2-charts';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
 
 registerLocaleData(localeBr, 'pt')
@@ -96,6 +99,10 @@ registerLocaleData(localeBr, 'pt')
     FilterVencidosComponent
   ],
   imports: [
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory
+    }),
     BrowserAnimationsModule,
     BrowserModule,
     GeneratedModule,
@@ -148,6 +155,7 @@ registerLocaleData(localeBr, 'pt')
     BreadcrumbsModule,
     CovalentNotificationsModule,
     MatBottomSheetModule,
+    ChartsModule,
     TranslateModule.forRoot({
       loader: {
           provide: TranslateLoader,

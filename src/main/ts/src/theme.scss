@@ -1,5 +1,7 @@
 @import '~@angular/material/theming';
 @import '~@covalent/core/theming/all-theme';
+@import "../node_modules/angular-calendar/css/angular-calendar.css";
+
 
 $typography: mat-typography-config(
   $font-family: 'Roboto, monospace',
