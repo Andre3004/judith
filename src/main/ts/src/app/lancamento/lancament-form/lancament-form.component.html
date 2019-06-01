@@ -59,11 +59,30 @@
           <mat-datepicker-toggle matSuffix [for]="dataVencimento"></mat-datepicker-toggle>
           <mat-datepicker #dataVencimento></mat-datepicker>
         </mat-form-field>
+
+
       </div>
+
 
       <mat-form-field>
         <textarea required matInput placeholder="Descrição" [(ngModel)]="lancamento.descricao" name="descricao"></textarea>
       </mat-form-field>
+
+      <div fxLayout="column" class="push-left">
+        <span class="tc-grey-500 mat-caption" *ngIf="!fotoImage">ADICIONAR ANEXO</span>
+        <span class="tc-grey-500 mat-caption" *ngIf="nomeArquivo">{{nomeArquivo}}</span>
+        <button type="button" (click)="fotoInput.click()" mat-button class="push-bottom bgc-grey-200 tc-grey-800">
+          <span matTooltip="Selecionar Anexo" *ngIf="!fotoImage">SELECIONAR ANEXO</span>
+          <span matTooltip="Alterar abexi" *ngIf="fotoImage">ALTERAR ANEXO</span>
+        </button>
+        <button type="button" matTooltip="Remover anexo" *ngIf="fotoImage" (click)="removeAnexo()"
+                mat-button class="bgc-warn tc-white">
+          REMOVER
+        </button>
+        <input hidden type="file" #fotoInput (change)="setLancamentoAnexo($event)">
+      </div>
+
+      <button mat-button (click)="downloadFile()">download</button>
 
 
       <div fxFlex fxLayout="column">
@@ -106,12 +125,12 @@
 
           <!-- <mat-checkbox [disabled]="lancamento.repetir && lancamento.id" *ngIf="lancamento.repetir" [(ngModel)]="lancamento.indefinivamente" name="indefinivamente">Indefinivamente ?</mat-checkbox> -->
 
-          <mat-form-field  fxFlex="20" *ngIf="lancamento.repetir">
+          <mat-form-field fxFlex="20" *ngIf="lancamento.repetir">
             <input [disabled]="lancamento.repetir && lancamento.id" type="number" matInput placeholder="Repetir a cada" [(ngModel)]="lancamento.quantidadePeriodo" name="quantidadePeriodo">
           </mat-form-field>
 
           <mat-form-field fxFlex="50" *ngIf="lancamento.repetir">
-            <mat-select  [disabled]="lancamento.repetir && lancamento.id" placeholder="Periodo" [(ngModel)]="lancamento.periodoPagamento" name="periodoPagamento">
+            <mat-select [disabled]="lancamento.repetir && lancamento.id" placeholder="Periodo" [(ngModel)]="lancamento.periodoPagamento" name="periodoPagamento">
               <mat-option *ngFor="let periodo of periodos" [value]="periodo">{{periodo | translate}}</mat-option>
             </mat-select>
           </mat-form-field>
@@ -121,13 +140,13 @@
         <div fxLayout="row" fxLayoutAlign=" center" fxLayoutGap="30px" class="push-top-sm">
 
           <mat-form-field fxFlex="20" *ngIf="lancamento.repetir && !lancamento.indefinivamente">
-            <input  [disabled]="lancamento.repetir && lancamento.id" type="number" matInput placeholder="Inicio da parcela" [(ngModel)]="lancamento.parcelasPagas" name="parcelasPagas">
+            <input [disabled]="lancamento.repetir && lancamento.id" type="number" matInput placeholder="Inicio da parcela" [(ngModel)]="lancamento.parcelasPagas" name="parcelasPagas">
           </mat-form-field>
 
           <label *ngIf="lancamento.repetir && !lancamento.indefinivamente">de</label>
 
           <mat-form-field fxFlex="20" *ngIf="lancamento.repetir && !lancamento.indefinivamente">
-            <input  [disabled]="lancamento.repetir && lancamento.id" type="number" matInput placeholder="Final da parcela" [(ngModel)]="lancamento.parcelasTotal" name="parcelasTotal">
+            <input [disabled]="lancamento.repetir && lancamento.id" type="number" matInput placeholder="Final da parcela" [(ngModel)]="lancamento.parcelasTotal" name="parcelasTotal">
           </mat-form-field>
 
           <label>Número de ocorrências: {{lancamento.quantidadeRepeticaoRecorrencia ? lancamento.quantidadeRepeticaoRecorrencia : 0}}</label>

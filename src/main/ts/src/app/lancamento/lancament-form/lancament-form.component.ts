@@ -3,7 +3,7 @@ import { SituacaoLancamentoValues, Categoria, Terceiro } from './../../../genera
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatCheckboxChange } from '@angular/material';
 import { TipoLancamentoValues, PeriodoValues, Lancamento, Conta } from 'src/generated/entities';
-import { ContaService, LancamentoService } from 'src/generated/services';
+import { ContaService, LancamentoService, ArquivoService } from 'src/generated/services';
 
 @Component({
   selector: 'app-lancament-form',
@@ -17,7 +17,7 @@ export class LancamentFormComponent implements OnInit
 
   public periodos = PeriodoValues;
 
-  public lancamento: Lancamento = { haveNotification: false}
+  public lancamento: Lancamento = { haveNotification: false }
 
   public contas: Conta[] = [];
 
@@ -29,8 +29,15 @@ export class LancamentFormComponent implements OnInit
 
   public terceiros: Terceiro[] = [];
 
+  /**
+   * 
+   */
+  public fotoImage: any;
+  nomeArquivo: any;
+
   constructor(public dialogRef: MatDialogRef<LancamentFormComponent>,
     private contaService: ContaService,
+    private arquivoService: ArquivoService,
     private lancamentoService: LancamentoService,
     private openSnackBarService: OpenSnackBarService,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
@@ -53,7 +60,8 @@ export class LancamentFormComponent implements OnInit
 
     if (this.data.id)
     {
-      this.lancamentoService.findLancamentoById(this.data.id).subscribe( result => {
+      this.lancamentoService.findLancamentoById(this.data.id).subscribe(result =>
+      {
         this.lancamento = result;
 
         let subCategoriaId = this.lancamento.categoria.id;
@@ -158,7 +166,7 @@ export class LancamentFormComponent implements OnInit
   {
     let totalOcorrencias = 0;
     let ocorrencias = this.lancamento.parcelasTotal - this.lancamento.parcelasPagas;
-    this.lancamento.quantidadeRepeticaoRecorrencia = isNaN(ocorrencias) ? 0 : ocorrencias+1;
+    this.lancamento.quantidadeRepeticaoRecorrencia = isNaN(ocorrencias) ? 0 : ocorrencias + 1;
 
     if (!isNaN(ocorrencias) && this.lancamento.valor)
     {
@@ -166,5 +174,49 @@ export class LancamentFormComponent implements OnInit
     }
 
     return totalOcorrencias;
+  }
+
+  public removeAnexo()
+  {
+    this.lancamento.anexo = null;
+    this.lancamento.anexoUuid = null;
+    this.fotoImage = null;
+  }
+
+  public downloadFile()
+  {
+    this.arquivoService.downloadArquivoByUuid(this.lancamento.anexoUuid).subscribe(result =>{
+      window.location.href = result;
+    }, (exception) => this.openSnackBarService.open(exception.message))
+  }
+
+  public setLancamentoAnexo(event)
+  {
+    if (event.target.files[0])
+    {
+      if (event.target.files[0].size <= 10000000) //10MB
+      {
+        this.lancamento.anexo = event.target;
+
+        this.nomeArquivo = event.target.files[0].name;
+
+        let reader = new FileReader();
+
+        reader.onload = (event: any) =>
+        {
+          this.fotoImage = event.target.result;
+        };
+        this.lancamento.anexoUuid = null;
+        reader.readAsDataURL(event.target.files[0]);
+      }
+      else
+      {
+        this.openSnackBarService.open("O tamanho da foto não pode ser maior que 10MB");
+      }
+    }
+    else
+    {
+      this.lancamento.anexo = null;
+    }
   }
 }

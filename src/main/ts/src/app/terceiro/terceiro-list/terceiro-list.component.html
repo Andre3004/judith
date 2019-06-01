@@ -1,0 +1,28 @@
+<mat-toolbar>
+  Terceiros
+
+  <div fxFlex></div>
+
+  <button (click)="onOpenDialog()" mat-raised-button color="primary">NOVO TERCEIRO</button>
+</mat-toolbar>
+
+
+<mat-card>
+  <td-data-table
+                 #dataTable
+                 [data]="terceiros"
+                 [columns]="columns">
+
+    <ng-template tdDataTableTemplate="opcoes" let-value="value" let-row="row">
+
+
+      <button (click)="onOpenDialog(row)" matTooltip="Editar terceiro" mat-icon-button class="hover-icon-button-add">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button matTooltip="Remover terceiro" class="hover-icon-button-remove" mat-icon-button (click)="onRemove(row)">
+        <mat-icon mat-icon-button>delete</mat-icon>
+      </button>
+    </ng-template>
+  </td-data-table>
+
+</mat-card>

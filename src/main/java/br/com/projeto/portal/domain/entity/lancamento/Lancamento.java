@@ -7,10 +7,12 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import br.com.eits.common.domain.entity.AbstractEntity;
@@ -24,6 +26,7 @@ import br.com.projeto.portal.domain.entity.usuario.Terceiro;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.directwebremoting.annotations.DataTransferObject;
+import org.directwebremoting.io.FileTransfer;
 
 @Data
 @Entity
@@ -114,6 +117,25 @@ public class Lancamento extends AbstractEntity implements Serializable
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "lancamentoPai")
 	private List<Lancamento> lancamentosRecorrentes = new ArrayList<Lancamento>();
 
+	/**
+	 * Foto da pessoa
+	 */
+	@Column
+	private String anexoUuid;
+
+	/**
+	 *
+	 */
+	@Transient
+	private byte[] anexoByte;
+
+	/**
+	 *
+	 */
+	@Transient
+	private FileTransfer anexo;
+
+	private String nomeArquivo;
 	/*-------------------------------------------------------------------
 	 * 		 					CONSTRUCTORS
 	 *-------------------------------------------------------------------*/

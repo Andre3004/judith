@@ -45,69 +45,12 @@ export interface Categoria {
 }
 
 
-export interface Conta {
-    nome?: string,
-    saldoInicial?: number,
-    saldo?: number,
-    tipo?: TipoConta,
-    banco?: Banco,
-    dataUltAltSaldo?: Date,
-    usuario?: Usuario,
-    isDisabled?: Boolean,
-    lancamentos?: Lancamento[],
-    transferencias?: number,
-    id?: number,
-    created?: Date,
-    updated?: Date
-}
-
-
 export let TipoContaValues: string[] = ['CONTROLE_INTERNO', 'CARTAO_CREDITO', 'CONTA_CORRENTE', 'POUPANCA'];
 export type TipoConta = 'CONTROLE_INTERNO' | 'CARTAO_CREDITO' | 'CONTA_CORRENTE' | 'POUPANCA';
 
 
-export interface Terceiro {
-    nome?: string,
-    id?: number,
-    created?: Date,
-    updated?: Date
-}
-
-
-export interface Banco {
-    nome?: string,
-    id?: number,
-    created?: Date,
-    updated?: Date
-}
-
-
-export let PeriodoValues: string[] = ['DIA', 'MES', 'ANO'];
-export type Periodo = 'DIA' | 'MES' | 'ANO';
-
-
-export let TipoLancamentoValues: string[] = ['RECEITA', 'DESPESA', 'TRANSFERENCIA'];
-export type TipoLancamento = 'RECEITA' | 'DESPESA' | 'TRANSFERENCIA';
-
-
 export let SituacaoLancamentoValues: string[] = ['LIQUIDADO', 'PENDENTE'];
 export type SituacaoLancamento = 'LIQUIDADO' | 'PENDENTE';
-
-
-export let FormaPagamentoValues: string[] = ['FIXA', 'PARCELADO'];
-export type FormaPagamento = 'FIXA' | 'PARCELADO';
-
-
-export interface Endereco {
-    bairro?: string,
-    complemento?: string,
-    cidade?: string,
-    cep?: string,
-    numero?: number,
-    id?: number,
-    created?: Date,
-    updated?: Date
-}
 
 
 export interface Lancamento {
@@ -138,10 +81,77 @@ export interface Lancamento {
     saldoFinal?: number,
     lancamentoPai?: Lancamento,
     lancamentosRecorrentes?: Lancamento[],
+    anexoUuid?: string,
+    anexoByte?: number,
+    anexo?: HTMLInputElement,
     id?: number,
     created?: Date,
     updated?: Date
 }
+
+
+export interface Conta {
+    nome?: string,
+    saldoInicial?: number,
+    saldo?: number,
+    tipo?: TipoConta,
+    banco?: Banco,
+    dataUltAltSaldo?: Date,
+    usuario?: Usuario,
+    isDisabled?: Boolean,
+    lancamentos?: Lancamento[],
+    transferencias?: number,
+    id?: number,
+    created?: Date,
+    updated?: Date
+}
+
+
+export let TipoLancamentoValues: string[] = ['RECEITA', 'DESPESA', 'TRANSFERENCIA'];
+export type TipoLancamento = 'RECEITA' | 'DESPESA' | 'TRANSFERENCIA';
+
+
+export interface Terceiro {
+    nome?: string,
+    tipoPessoa?: string,
+    email?: string,
+    telefone?: string,
+    documento?: string,
+    nomeContato?: string,
+    endereco?: Endereco,
+    observacao?: string,
+    id?: number,
+    created?: Date,
+    updated?: Date
+}
+
+
+export interface Banco {
+    nome?: string,
+    id?: number,
+    created?: Date,
+    updated?: Date
+}
+
+
+export interface Endereco {
+    bairro?: string,
+    complemento?: string,
+    cidade?: string,
+    cep?: string,
+    numero?: number,
+    id?: number,
+    created?: Date,
+    updated?: Date
+}
+
+
+export let FormaPagamentoValues: string[] = ['FIXA', 'PARCELADO'];
+export type FormaPagamento = 'FIXA' | 'PARCELADO';
+
+
+export let PeriodoValues: string[] = ['DIA', 'MES', 'ANO'];
+export type Periodo = 'DIA' | 'MES' | 'ANO';
 
 
 export interface Usuario {
@@ -152,6 +162,18 @@ export interface Usuario {
     telefone?: string,
     endereco?: Endereco,
     contas?: Conta[],
+    id?: number,
+    created?: Date,
+    updated?: Date
+}
+
+
+export interface Arquivo {
+    uuid?: string,
+    nomeOriginal?: string,
+    fileTransfer?: HTMLInputElement,
+    rootPath?: string,
+    mimeType?: string,
     id?: number,
     created?: Date,
     updated?: Date

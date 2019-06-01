@@ -83,6 +83,8 @@ import { FilterVencidosComponent } from './lancamento/lancament-list/filter-venc
 import { ChartsModule } from 'ng2-charts';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { TerceiroListComponent } from './terceiro/terceiro-list/terceiro-list.component';
+import { TerceiroFormComponent } from './terceiro/teceiro-form/terceiro-form.component';
 
 
 registerLocaleData(localeBr, 'pt')
@@ -96,7 +98,9 @@ registerLocaleData(localeBr, 'pt')
     CategoriaFormComponent,
     LancamentFormComponent,
     LancamentListComponent,
-    FilterVencidosComponent
+    FilterVencidosComponent,
+    TerceiroListComponent,
+    TerceiroFormComponent
   ],
   imports: [
     CalendarModule.forRoot({
@@ -164,7 +168,7 @@ registerLocaleData(localeBr, 'pt')
       }
   })
   ],
-  entryComponents: [ContaFormComponent, LancamentFormComponent, FilterVencidosComponent],
+  entryComponents: [TerceiroFormComponent, ContaFormComponent, LancamentFormComponent, FilterVencidosComponent],
   providers: [
     OpenSnackBarService,
     appRoutingProviders,

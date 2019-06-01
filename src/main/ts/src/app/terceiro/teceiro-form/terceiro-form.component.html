@@ -1,0 +1,60 @@
+<div>
+  <mat-dialog-title>
+    <h2>{{terceiro.id ? 'ALTERAR TERCEIRO' : 'INSERIR TERCEIRO'}}</h2>
+  </mat-dialog-title>
+
+  <mat-dialog-content fxLayout="column">
+
+    <form #myForm="ngForm" fxLayout="column">
+      <mat-form-field>
+        <input required maxlength="144" matInput placeholder="Nome" [(ngModel)]="terceiro.nome" name="nome">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-select placeholder="Tipo" required [(ngModel)]="terceiro.tipoPessoa" name="tipoPessoa">
+          <mat-option value="F">Física</mat-option>
+          <mat-option value="J">Jurídica</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input maxlength="144" matInput placeholder="E-mail" [(ngModel)]="terceiro.email" name="email">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input maxlength="144" matInput placeholder="Telefone" [(ngModel)]="terceiro.telefone" name="telefone">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input maxlength="144" required matInput placeholder="Documento" [(ngModel)]="terceiro.documento" name="documento">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input maxlength="144"  matInput placeholder="Nome de contato" [(ngModel)]="terceiro.nomeContato" name="nomeContato">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-select placeholder="Endereço"  [(ngModel)]="terceiro.endereco" name="endereco">
+          <mat-option *ngFor="let endereco of enderecos" [value]="endereco">{{endereco?.cep}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+
+      <mat-form-field>
+        <textarea maxlength="500"  matInput placeholder="Observação" [(ngModel)]="terceiro.observacao" name="observacao"></textarea>
+      </mat-form-field>
+    </form>
+
+  </mat-dialog-content>
+
+
+  <mat-dialog-actions fxLayoutAlign="end ">
+    <button (click)="onNoClick(myForm)" mat-raised-button class="default-white-button" color="primary">
+      SALVAR
+    </button>
+    <button mat-dialog-close mat-raised-button class="default-white-button push-left-md bgc-grey-800">
+      CANCELAR
+    </button>
+  </mat-dialog-actions>
+
+</div>

@@ -3,7 +3,9 @@ package br.com.projeto.portal.domain.service;
 import java.util.List;
 
 import br.com.projeto.portal.application.security.ContextHolder;
+import br.com.projeto.portal.domain.entity.usuario.Endereco;
 import br.com.projeto.portal.domain.entity.usuario.Terceiro;
+import br.com.projeto.portal.domain.repository.IEnderecoRepository;
 import br.com.projeto.portal.domain.repository.ITerceiroRepository;
 import org.directwebremoting.annotations.RemoteProxy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,9 @@ public class TerceiroService
 
 	@Autowired
 	private ITerceiroRepository terceiroRepository;
+	@Autowired
+	private IEnderecoRepository enderecoRepository;
+
 
 	/**
 	 * Método para inserir um terceiro
@@ -53,8 +58,18 @@ public class TerceiroService
 		this.terceiroRepository.flush();
 	}
 
-	public Terceiro findByIf( long id )
+	public Terceiro findById( long id )
 	{
 		return this.terceiroRepository.findOne( id );
+	}
+
+	public List<Terceiro> listTerceiros()
+	{
+		return this.terceiroRepository.findAll();
+	}
+
+	public List<Endereco> listEnderecos()
+	{
+		return this.enderecoRepository.findAll();
 	}
 }

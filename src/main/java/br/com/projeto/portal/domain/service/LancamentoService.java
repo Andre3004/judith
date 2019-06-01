@@ -11,6 +11,7 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import br.com.projeto.portal.application.security.ContextHolder;
+import br.com.projeto.portal.domain.entity.Arquivo;
 import br.com.projeto.portal.domain.entity.conta.Conta;
 import br.com.projeto.portal.domain.entity.enums.Periodo;
 import br.com.projeto.portal.domain.entity.enums.SituacaoLancamento;
@@ -18,6 +19,7 @@ import br.com.projeto.portal.domain.entity.enums.TipoLancamento;
 import br.com.projeto.portal.domain.entity.lancamento.Categoria;
 import br.com.projeto.portal.domain.entity.lancamento.Lancamento;
 import br.com.projeto.portal.domain.entity.usuario.Terceiro;
+import br.com.projeto.portal.domain.repository.IArquivoRepository;
 import br.com.projeto.portal.domain.repository.ICategoriaRepository;
 import br.com.projeto.portal.domain.repository.IContaRepository;
 import br.com.projeto.portal.domain.repository.ILancamentoRepository;
@@ -50,7 +52,11 @@ public class LancamentoService
 	@Autowired
 	private IContaRepository contaRepository;
 
+	@Autowired
+	private IArquivoRepository arquivoRepository;
 
+	@Autowired
+	private ArquivoService arquivoService;
 	/*-------------------------------------------------------------------
 	 *				 		     SERVICES
 	 *-------------------------------------------------------------------*/
@@ -69,6 +75,13 @@ public class LancamentoService
 		Assert.isTrue( lancamento.getCategoria().getSubCategorias() != null, "Essa categoria não possui sub categorias" );
 		Assert.isTrue( lancamento
 				.getCategoria().getSubCategorias().stream().filter( subCategoria -> subCategoria.getIsSelected() != null && subCategoria.getIsSelected() ).count() > 0, "O campo sub categoria deve ser selecionado." );
+
+
+		if(lancamento.getAnexo() != null)
+		{
+			Arquivo arquivo = this.arquivoRepository.insert( lancamento.getAnexo() );
+			lancamento.setAnexoUuid( arquivo.getUuid() );
+		}
 
 		lancamento.getCategoria().getSubCategorias().forEach( categoria -> this.categoriaRepository.saveAndFlush( categoria ) );
 
@@ -183,7 +196,30 @@ public class LancamentoService
 	 */
 	public Lancamento findLancamentoById( long id )
 	{
-		return this.lancamentoRepository.findLancamentoById( id );
+		Lancamento lancamento = this.lancamentoRepository.findLancamentoById( id );
+
+		if ( lancamento.getAnexoUuid() != null )
+		{
+			lancamento.setAnexoByte( this.findLancamentoAnexoByUuid( lancamento.getAnexoUuid() ) );
+		}
+		return lancamento;
+	}
+
+	/**
+	 *
+	 */
+	@Transactional(readOnly = true)
+	public byte[] findLancamentoAnexoByUuid( String uuid )
+	{
+		try
+		{
+			return this.arquivoService.findArquivoByUuid( uuid );
+		}
+		catch ( Exception e )
+		{
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	public List<Lancamento> listLancamentoByFilters( String descricao, TipoLancamento tipo, Long contaId, LocalDate dataInicial, LocalDate dataFinal )
@@ -198,8 +234,6 @@ public class LancamentoService
 		{
 			newDataFinal = LocalDateTime.of( dataFinal, LocalTime.MAX );
 		}
-
-
 
 		return this.lancamentoRepository.listByFilters( descricao, tipo, contaId, ContextHolder.getAuthenticatedUser().getId(), newDataInicial, newDataFinal );
 	}
