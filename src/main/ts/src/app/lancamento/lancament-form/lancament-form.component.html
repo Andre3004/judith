@@ -68,21 +68,6 @@
         <textarea required matInput placeholder="Descrição" [(ngModel)]="lancamento.descricao" name="descricao"></textarea>
       </mat-form-field>
 
-      <div fxLayout="column" class="push-left">
-        <span class="tc-grey-500 mat-caption" *ngIf="!fotoImage">ADICIONAR ANEXO</span>
-        <span class="tc-grey-500 mat-caption" *ngIf="nomeArquivo">{{nomeArquivo}}</span>
-        <button type="button" (click)="fotoInput.click()" mat-button class="push-bottom bgc-grey-200 tc-grey-800">
-          <span matTooltip="Selecionar Anexo" *ngIf="!fotoImage">SELECIONAR ANEXO</span>
-          <span matTooltip="Alterar abexi" *ngIf="fotoImage">ALTERAR ANEXO</span>
-        </button>
-        <button type="button" matTooltip="Remover anexo" *ngIf="fotoImage" (click)="removeAnexo()"
-                mat-button class="bgc-warn tc-white">
-          REMOVER
-        </button>
-        <input hidden type="file" #fotoInput (change)="setLancamentoAnexo($event)">
-      </div>
-
-      <button mat-button (click)="downloadFile()">download</button>
 
 
       <div fxFlex fxLayout="column">
@@ -173,6 +158,23 @@
       </div>
 
       <mat-divider class="push-bottom-md push-top-md"></mat-divider>
+
+      <div fxLayout="column" class="push-left">
+        <span class="tc-grey-500 mat-caption" *ngIf="!fotoImage">ADICIONAR ANEXO</span>
+        <span class="tc-grey-500 mat-caption" *ngIf="nomeArquivo">{{nomeArquivo}}</span>
+        <button type="button" (click)="fotoInput.click()" style="color: whitesmoke; background: #001f3f" mat-button class="push-bottom">
+          <span matTooltip="Selecionar Anexo" *ngIf="!fotoImage">SELECIONAR ANEXO</span>
+          <span matTooltip="Alterar abexi" *ngIf="fotoImage">ALTERAR ANEXO</span>
+        </button>
+        <button type="button" matTooltip="Remover anexo" *ngIf="fotoImage" (click)="removeAnexo()"
+                mat-button style="color: whitesmoke; background: #FF4136"  class="push-bottom  " >
+          REMOVER
+        </button>
+        <input hidden type="file" #fotoInput (change)="setLancamentoAnexo($event)">
+        <button mat-button (click)="downloadFile()" style="color: whitesmoke; background: #3D9970" class="push-bottom  ">DOWNLOAD</button>
+
+      </div>
+
 
     </mat-dialog-content>
   </form>
