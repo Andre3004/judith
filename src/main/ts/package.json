@@ -33,7 +33,7 @@
     "ng6-breadcrumbs": "~1.0.7",
     "ng2-charts-schematics": "~0.1.7",
     "ng2-charts": "~2.2.3",
-    "chart.js": "~2.8.0",
+    "chart.js": "~2.9.4",
     "chartjs-plugin-datalabels": "~0.6.0",
     "angular-calendar": "~0.27.8",
     "date-fns": "~1.30.1"
